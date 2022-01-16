@@ -1,2 +1,2 @@
 # srs-team-bug
-Game project from ACM Game Studio's Students Run Studios program, developed Winter-Spring 2022
+Game developed Winter-Spring 2022 as part of ACM Game Studio's Students Run Studios program
