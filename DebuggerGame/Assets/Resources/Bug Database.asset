@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5acea88429b4eac47914a4afc800b00f, type: 3}
+  m_Name: Bug Database
+  m_EditorClassIdentifier: 
+  Bugs:
+  - {fileID: 11400000, guid: 7446de86841fdc84dae29570e29fe6db, type: 2}
+  - {fileID: 11400000, guid: 24767cd8ec21f4540a421ed38a3f5f8c, type: 2}
