@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Bug : MonoBehaviour
+abstract public class Bug : BoardObject
 {
     private bool isCaught = false;
 
