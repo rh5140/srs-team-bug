@@ -12,7 +12,7 @@ abstract public class Bug : BoardObject
         throw new System.NotImplementedException();
     }
 
-    virtual void EndTurn()
+    protected virtual void EndTurn()
     {
         throw new System.NotImplementedException();
     }
