@@ -14,6 +14,7 @@ public class MovementAction : BoardAction
         this.moveSpeed = moveSpeed;
     }
 
+    //Set coordinate of boardObject to be the new location
     public override void ExecuteStart()
     {
         base.ExecuteStart();
@@ -23,6 +24,7 @@ public class MovementAction : BoardAction
         isMoving = true;
     }
 
+    //Move boardObject towards targetPos
     public override void ExecuteUpdate(float progress)
     {
         base.ExecuteUpdate(progress);
