@@ -26,4 +26,14 @@ public class UI_script : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void openCollection()
+    {
+        SceneManager.LoadScene("collection");
+    }
+
+    public void backToMain()
+    {
+        SceneManager.LoadScene("main_menu");
+    }
 }
