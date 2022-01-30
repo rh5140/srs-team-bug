@@ -4,17 +4,10 @@ using UnityEngine;
 
 abstract public class Bug : BoardObject
 {
-    private bool isCaught = false;
+    public bool isCaught { get; private set; } = false;
 
-
-    public void caughtByPlayer()
+    public void Catch()
     {
-        throw new System.NotImplementedException();
+        isCaught = true;
     }
-
-    protected virtual void EndTurn()
-    {
-        throw new System.NotImplementedException();
-    }
-
 }

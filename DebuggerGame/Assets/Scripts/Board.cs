@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    public enum State
+    public enum BoardEvent
     {
         StartTurn,
         EndTurn,
@@ -19,7 +19,11 @@ public class Board : MonoBehaviour
     public const float TimePerAction = 1.0f;
 
 
-    public State state { get; private set; }
+    public List<Rule> rules = new List<Rule>();
+    public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
+
+
+    public BoardEvent lastBoardEvent { get; private set; }
     public float? endTurnTime { get; private set; } = null;
     public float? timeSinceEndTurn
     {
@@ -88,13 +92,13 @@ public class Board : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        state = State.EndTurn;
+        lastBoardEvent = BoardEvent.EndTurn;
         EndTurnEvent?.Invoke();
 
-        state = State.PostEndTurn;
+        lastBoardEvent = BoardEvent.PostEndTurn;
         PostEndTurnEvent?.Invoke();
 
-        state = State.Execute;
+        lastBoardEvent = BoardEvent.Execute;
         ExecuteEvent?.Invoke();
         endTurnTime = Time.time;
 
@@ -112,6 +116,22 @@ public class Board : MonoBehaviour
         maxActions = nActions > maxActions ? nActions : maxActions;
     }
 
+#nullable enable
+    public BoardAction? ApplyRules(BoardObject boardObject, BoardAction boardAction)
+    {
+        var currentAction = boardAction;
+        foreach (var rule in rules)
+        {
+            currentAction = rule.Apply(boardObject, currentAction);
+        }
+        foreach (var rule in namedRules.Values)
+        {
+            currentAction = rule.Apply(boardObject, currentAction);
+        }
+        return currentAction;
+    }
+#nullable restore
+
 
     /// <summary>
     /// Helper function to broadcast "OnStartTurn" after endphase duration.
@@ -121,10 +141,10 @@ public class Board : MonoBehaviour
     private IEnumerator EndTurnCounter(float duration)
     {
         yield return new WaitForSeconds(duration);
-        state = State.PostExecute;
+        lastBoardEvent = BoardEvent.PostExecute;
         PostExecuteEvent?.Invoke();
 
-        state = State.StartTurn;
+        lastBoardEvent = BoardEvent.StartTurn;
         StartTurnEvent?.Invoke();
         endTurnTime = -1f;
         //BroadcastMessage("OnStartTurn", null, SendMessageOptions.DontRequireReceiver);

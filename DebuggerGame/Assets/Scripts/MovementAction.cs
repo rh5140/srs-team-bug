@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class MovementAction : BoardAction
 {
-    public float moveSpeed;
-    private Vector2 targetPos;
-    private bool isMoving;
+    public Vector2 direction { get; private set; }
+    private Vector2 initialPosition;
 
-    public MovementAction(BoardObject boardObject, Vector2 targetPos, float moveSpeed) : base(boardObject)
+    public MovementAction(BoardObject boardObject, Vector2 direction) : base(boardObject)
     {
-        this.targetPos = targetPos;
-        this.moveSpeed = moveSpeed;
+        this.direction = direction;
     }
 
     //Set coordinate of boardObject to be the new location
     public override void ExecuteStart()
     {
         base.ExecuteStart();
-
-        base.boardObject.coordinate += new Vector2Int((int)targetPos.x, (int)targetPos.y);
-
-        isMoving = true;
+        initialPosition = boardObject.transform.position;
     }
 
     //Move boardObject towards targetPos
@@ -29,13 +24,16 @@ public class MovementAction : BoardAction
     {
         base.ExecuteUpdate(progress);
 
-        base.boardObject.transform.position = Vector3.MoveTowards(base.boardObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
+        boardObject.transform.position = Vector2.Lerp(
+            initialPosition,
+            initialPosition + direction,
+            progress
+        );
     }
 
     public override void ExecuteFinish()
     {
         base.ExecuteFinish();
-
-        isMoving = false;
+        boardObject.transform.position = initialPosition + direction;
     }
 }

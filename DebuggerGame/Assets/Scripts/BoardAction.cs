@@ -4,7 +4,9 @@ using UnityEngine;
 
 abstract public class BoardAction
 {
-    protected BoardObject boardObject;
+    public List<Rule> modifiedBy = new List<Rule>();
+
+    public readonly BoardObject boardObject;
     public BoardAction(BoardObject boardObject)
     {
         this.boardObject = boardObject;

@@ -95,7 +95,7 @@ abstract public class BoardObject : MonoBehaviour
     
     protected virtual void Update()
     {
-        if(board.state == Board.State.Execute)
+        if(board.lastBoardEvent == Board.BoardEvent.Execute)
         {
             // Execute all the actions in the queue 
             if (executingAction == null && actions.Count > 0)
@@ -154,6 +154,16 @@ abstract public class BoardObject : MonoBehaviour
     /// <see cref="Board.ExecuteEvent"/>
     virtual protected void OnExecute()
     {
+        for (int i = 0; i < actions.Count; i++)
+        {
+#nullable enable
+            BoardAction? action = board.ApplyRules(this, actions.Dequeue());
+            if (action != null)
+            {
+                actions.Enqueue(action);
+            }
+#nullable restore
+        }
         board.SetMaxActions(actions.Count);
     }
 
