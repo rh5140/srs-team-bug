@@ -128,7 +128,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.StartTurnEvent
     /// </summary>
     /// <see cref="Board.StartTurnEvent"/>
-    virtual protected void OnStartTurn()
+    protected virtual void OnStartTurn()
     { }
 
 
@@ -136,7 +136,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.EndTurnEvent
     /// </summary>
     /// <see cref="Board.EndTurnEvent"/>
-    virtual protected void OnEndTurn()
+    protected virtual void OnEndTurn()
     { }
 
 
@@ -144,7 +144,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PostEndTurnEvent
     /// </summary>
     /// <see cref="Board.PostEndTurnEvent"/>
-    virtual protected void OnPostEndTurn()
+    protected virtual void OnPostEndTurn()
     { }
 
 
@@ -152,7 +152,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.ExecuteEvent
     /// </summary>
     /// <see cref="Board.ExecuteEvent"/>
-    virtual protected void OnExecute()
+    protected virtual void OnExecute()
     {
         board.SetMaxActions(actions.Count);
     }
@@ -162,7 +162,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PostExecuteEvent
     /// </summary>
     /// <see cref="Board.PostExecuteEvent"/>
-    virtual protected void OnPostExecute()
+    protected virtual void OnPostExecute()
     {
         if (executingAction != null)
         {
