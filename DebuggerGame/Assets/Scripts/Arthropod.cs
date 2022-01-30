@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class Bug : BoardObject
+abstract public class Arthropod : BoardObject
 {
     private bool isCaught = false;
 
