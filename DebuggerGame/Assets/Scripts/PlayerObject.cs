@@ -25,16 +25,16 @@ public class PlayerObject : BoardObject
             collection.Load();
         }
 
-        //Temporary to add bugs to collection
+        //Temporary to add arthropods to collection
         if (Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log("ant added");
-            collection.AddBug(collection.database.GetBug[0], 1);
+            collection.AddArthropod(collection.database.GetArthropod[0], 1);
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
             Debug.Log("spider added");
-            collection.AddBug(collection.database.GetBug[1], 1);
+            collection.AddArthropod(collection.database.GetArthropod[1], 1);
         }
     }
 

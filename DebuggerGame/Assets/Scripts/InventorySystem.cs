@@ -9,28 +9,28 @@ using UnityEngine;
 public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
-    public BugDatabaseObject database;
+    public ArthropodDatabase database;
     public List<InventorySlot> Container = new List<InventorySlot>();
 
     private void OnEnable()
     {
 #if UNITY_EDITOR
-        database = (BugDatabaseObject)AssetDatabase.LoadAssetAtPath("Assets/Resources/Bug Database.asset", typeof(BugDatabaseObject));
+        database = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
 #else
-        database = Resources.Load<BugDatabaseObject>("Bug Database");
+        database = Resources.Load<ArthropodDatabase>("Arthropod Database");
 #endif
     }
-    public void AddBug(BugData _bugdata, int _amount)
+    public void AddArthropod(ArthropodData _arthropodData, int _amount)
     {
         for (int i = 0; i < Container.Count; i++)
         {
-            if (Container[i].bugdata == _bugdata)
+            if (Container[i].arthropodData == _arthropodData)
             {
                 Container[i].addAmount(_amount);
                 return;
             }
         }
-        Container.Add(new InventorySlot(database.GetId[_bugdata], _bugdata, _amount));
+        Container.Add(new InventorySlot(database.GetId[_arthropodData], _arthropodData, _amount));
     }
 
     public void Save()
@@ -61,7 +61,7 @@ public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
     {
         for (int i = 0; i < Container.Count; i++)
         {
-            Container[i].bugdata = database.GetBug[Container[i].ID];
+            Container[i].arthropodData = database.GetArthropod[Container[i].ID];
         }
     }
 }
@@ -70,12 +70,12 @@ public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
 public class InventorySlot
 {
     public int ID;
-    public BugData bugdata;
+    public ArthropodData arthropodData;
     public int amount;
-    public InventorySlot(int _id, BugData _bugdata, int _amount)
+    public InventorySlot(int _id, ArthropodData _arthropodData, int _amount)
     {
         ID = _id;
-        bugdata = _bugdata;
+        arthropodData = _arthropodData;
         amount = _amount;
     }
 

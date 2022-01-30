@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5acea88429b4eac47914a4afc800b00f, type: 3}
-  m_Name: Bug Database
+  m_Name: Arthropod Database
   m_EditorClassIdentifier: 
   Bugs:
   - {fileID: 11400000, guid: 7446de86841fdc84dae29570e29fe6db, type: 2}
