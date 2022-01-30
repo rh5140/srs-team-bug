@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acea88429b4eac47914a4afc800b00f, type: 3}
   m_Name: Arthropod Database
   m_EditorClassIdentifier: 
-  Bugs:
+  Arthropods:
   - {fileID: 11400000, guid: 7446de86841fdc84dae29570e29fe6db, type: 2}
   - {fileID: 11400000, guid: 24767cd8ec21f4540a421ed38a3f5f8c, type: 2}
