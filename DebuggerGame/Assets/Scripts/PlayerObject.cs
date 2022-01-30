@@ -12,7 +12,7 @@ public class PlayerObject : BoardObject
     }
 
     // Update is called once per frame
-    protected override void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
