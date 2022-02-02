@@ -10,7 +10,7 @@ public class DisplayInventory : MonoBehaviour
     public int X_SPACE_BETWEEN_SLOTS;
     public int Y_SPACE_BETWEEN_SLOTS;
     public int COLUMNS;
-    Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
+    Dictionary<InventorySlot, GameObject> arthropodsDisplayed = new Dictionary<InventorySlot, GameObject>();
     void Start()
     {
         CreateDisplay();
@@ -26,9 +26,9 @@ public class DisplayInventory : MonoBehaviour
     {
         for (int i = 0; i < inventory.Container.Count; i++)
         {
-            var obj = Instantiate(inventory.Container[i].bugdata.bugIcon, Vector3.zero, Quaternion.identity, transform);
+            var obj = Instantiate(inventory.Container[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-            itemsDisplayed.Add(inventory.Container[i], obj);
+            arthropodsDisplayed.Add(inventory.Container[i], obj);
         }
     }
 
@@ -36,11 +36,11 @@ public class DisplayInventory : MonoBehaviour
     {
         for (int i = 0; i < inventory.Container.Count; i++)
         {
-            if (!itemsDisplayed.ContainsKey(inventory.Container[i]))
+            if (!arthropodsDisplayed.ContainsKey(inventory.Container[i]))
             {
-                var obj = Instantiate(inventory.Container[i].bugdata.bugIcon, Vector3.zero, Quaternion.identity, transform);
+                var obj = Instantiate(inventory.Container[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-                itemsDisplayed.Add(inventory.Container[i], obj);
+                arthropodsDisplayed.Add(inventory.Container[i], obj);
             }
         }
     }

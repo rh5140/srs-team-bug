@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a12a2e1379c2574992d5ab011cfc10b, type: 3}
   m_Name: Ant
   m_EditorClassIdentifier: 
-  bug: {fileID: 0}
-  bugIcon: {fileID: 798838019063768858, guid: 078d6223aac0ee24f8fa3cdd3f83b3cd, type: 3}
-  bugName: Ant
+  arthropod: {fileID: 0}
+  arthropodIcon: {fileID: 798838019063768858, guid: 078d6223aac0ee24f8fa3cdd3f83b3cd, type: 3}
+  arthropodName: 
   description: smol
