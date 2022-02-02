@@ -2,40 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Represents a movement from a coordinate to an adjacent coordinate.
+/// Currently takes in a direction and lerps to the initial position + the direction.
+/// Sets BoardObject.coordinate *after* it finishes executing.
+/// </summary>
 public class MovementAction : BoardAction
 {
-    public float moveSpeed;
-    private Vector2 targetPos;
-    private bool isMoving;
+    public readonly Vector2Int direction;
 
-    public MovementAction(BoardObject boardObject, Vector2 targetPos, float moveSpeed) : base(boardObject)
+    /// <summary>
+    /// Initial position when execution hasn't started yet.
+    /// Used if action aborted.
+    /// </summary>
+    private Vector2 initialPosition;
+
+    public MovementAction(BoardObject boardObject, Vector2Int direction) : base(boardObject)
     {
-        this.targetPos = targetPos;
-        this.moveSpeed = moveSpeed;
+        // TODO: Ensure that direction is a unit vector along an axis
+        this.direction = direction;
     }
 
-    //Set coordinate of boardObject to be the new location
     public override void ExecuteStart()
     {
         base.ExecuteStart();
-
-        base.boardObject.coordinate += new Vector2Int((int)targetPos.x, (int)targetPos.y);
-
-        isMoving = true;
+        initialPosition = boardObject.gameObject.transform.position;
     }
 
-    //Move boardObject towards targetPos
     public override void ExecuteUpdate(float progress)
     {
         base.ExecuteUpdate(progress);
-
-        base.boardObject.transform.position = Vector3.MoveTowards(base.boardObject.transform.position, targetPos, moveSpeed * Time.deltaTime);
+        
+        // linearly go to final position
+        // since ExecuteUpdate is GUARENTEED to be called with progress
+        // being 1.0f at the end, this will end with the final position
+        boardObject.gameObject.transform.position = Vector2.Lerp(
+            initialPosition,
+            initialPosition + direction,
+            progress
+        );
     }
+
 
     public override void ExecuteFinish()
     {
         base.ExecuteFinish();
+        boardObject.coordinate = new Vector2Int((int)initialPosition.x, (int)initialPosition.y) + direction;
+    }
 
-        isMoving = false;
+
+    public override void Abort()
+    {
+        base.Abort();
+        boardObject.gameObject.transform.position = initialPosition;
     }
 }
