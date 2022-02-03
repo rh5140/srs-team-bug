@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : BoardObject
 {
+    public InventorySystem collection;
+
     protected override void Update()
     {
         base.Update();
@@ -32,5 +34,34 @@ public class Player : BoardObject
                 board.EndTurn();
             }
         }
+
+        //temporary keybinds to save/load
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("save");
+            collection.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("load");
+            collection.Load();
+        }
+
+        //Temporary to add arthropods to collection
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("ant added");
+            collection.AddArthropod(collection.database.GetArthropod[0], 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log("spider added");
+            collection.AddArthropod(collection.database.GetArthropod[1], 1);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        collection.Container.Clear();
     }
 }
