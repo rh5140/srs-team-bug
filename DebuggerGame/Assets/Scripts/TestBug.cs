@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class TestBug : Bug
 {
+    BoardAction RuleMap(BoardAction action)
+    {
+        return new NullAction(action.boardObject);
+    }
+
     protected override void Start()
     {
         base.Start();
-        board.rules.Add(
-            Rule.Builder(this)
-                .ForAll<Player>()
-                .DisableMovementInDirection(Vector2.right)
-                .WhileNotCaptured()
-                .Build()
+        AddActionRule(
+            new EFMActionRule(
+                this,
+                board,
+                enableConditions: new List<List<EFMActionRule.EnablePredicate>> { new List<EFMActionRule.EnablePredicate>
+                    {
+                        (BoardObject creator, Board board) => creator is Bug bug && !bug.isCaught && bug.rulesEnabled
+                    }
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && movementAction.direction.normalized == Vector2.up,
+                map: RuleMap
+            )
         );
     }
 }

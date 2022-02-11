@@ -26,25 +26,25 @@ abstract public class BoardObject : MonoBehaviour
     /// The index of the currently executing action to be used to offset execution progress
     /// </summary>
     /// <see cref="executingActionProgress"/>
-    protected int? executingActionIndex = null;
+    protected int? executingActionOffset = null;
 
     /// <summary>
     /// The progress from 0 to 1 of the currently executing action.
     /// Uses `Board.actionsSinceEndTurn' and offsets it by executingActionIndex
     /// </summary>
     /// <see cref="Board.actionsSinceEndTurn"/>
-    /// <see cref="executingActionIndex"/>
+    /// <see cref="executingActionOffset"/>
     protected float? executingActionProgress
     {
         get { 
-            if (board.actionsSinceEndTurn != null && executingActionIndex != null)
+            if (board.actionsSinceEndTurn != null && executingActionOffset != null)
             {
                 // This line makes more sense in terms of time
                 // If we just started executing the second action (index = 1) and it takes 1 second to
                 // execute an action, then it should be offset by 1.
                 // If we are executing the third action (index = 2), then it should be offset by 2, and so on.
                 // So the pattern is offset by the action index
-                return Mathf.Clamp01(board.actionsSinceEndTurn.Value - executingActionIndex.Value);
+                return Mathf.Clamp01(board.actionsSinceEndTurn.Value - executingActionOffset.Value);
             }
             else
             {
@@ -61,9 +61,9 @@ abstract public class BoardObject : MonoBehaviour
     {
         get
         {
-            if (board.actionsSinceEndTurn != null && executingActionIndex != null)
+            if (board.actionsSinceEndTurn != null && executingActionOffset != null)
             {
-                return board.actionsSinceEndTurn.Value - executingActionIndex.Value > 1f;
+                return board.actionsSinceEndTurn.Value - executingActionOffset.Value > 1f;
             }
             else
             {
@@ -85,26 +85,35 @@ abstract public class BoardObject : MonoBehaviour
         // so that empty handlers won't bloat the event, but
         // there shouldb't be a significant performance gain so it's
         // not necessary
-        board.StartTurnEvent += OnStartTurn;
-        board.EndTurnEvent += OnEndTurn;
-        board.PostEndTurnEvent += OnPostEndTurn;
-        board.ExecuteEvent += OnExecute;
-        board.PostExecuteEvent += OnPostExecute;
+        board.StartTurnEvent.AddListener(OnStartTurn);
+        board.EndTurnEvent.AddListener(OnEndTurn);
+        board.PostEndTurnEvent.AddListener(OnPostEndTurn);
+        board.PreExecuteEvent.AddListener(OnPreExecute);
+        board.ExecuteEvent.AddListener(OnExecute);
+        board.PostExecuteEvent.AddListener(OnPostExecute);
     }
 
     
     protected virtual void Update()
     {
-        if(board.lastBoardEvent == Board.BoardEvent.Execute)
+        if(board.lastBoardEvent == Board.EventState.Execute)
         {
             // Execute all the actions in the queue 
-            if (executingAction == null && actions.Count > 0)
+            while (executingAction == null && actions.Count > 0)
             {
                 // If the previous action finished/we have not started executing, get new action if available
                 // and increase the index by 1 (or set to 0 if not previously set)
                 executingAction = actions.Dequeue();
                 executingAction.ExecuteStart();
-                executingActionIndex = executingActionIndex + 1 ?? 0; // either increment if nonnull or set to 0
+                if (executingAction.usesTime)
+                {
+                    executingActionOffset = executingActionOffset + 1 ?? 0; // either increment if nonnull or set to 0
+                }
+                else
+                {
+                    executingAction.ExecuteFinish();
+                    executingAction = null;
+                }
             }
 
 
@@ -149,23 +158,29 @@ abstract public class BoardObject : MonoBehaviour
 
 
     /// <summary>
+    /// Handler for Board.PreExecuteEvent
+    /// </summary>
+    /// <see cref="Board.PreExecuteEvent"/>
+    virtual protected void OnPreExecute()
+    {
+        int maxActions = 0;
+        for (int i = 0; i < actions.Count; i++)
+        {
+            BoardAction action = board.ApplyRules(this, actions.Dequeue());
+            actions.Enqueue(action);
+            // If the action uses a turn, then add 1 to max actions
+            maxActions += action.usesTime ? 1 : 0;
+        }
+        board.SetMaxActions(maxActions);
+        // See BoardObject.Update for continuation of the logic
+    }
+
+    /// <summary>
     /// Handler for Board.ExecuteEvent
     /// </summary>
     /// <see cref="Board.ExecuteEvent"/>
     virtual protected void OnExecute()
-    {
-        for (int i = 0; i < actions.Count; i++)
-        {
-#nullable enable
-            BoardAction? action = board.ApplyRules(this, actions.Dequeue());
-            if (action != null)
-            {
-                actions.Enqueue(action);
-            }
-#nullable restore
-        }
-        board.SetMaxActions(actions.Count);
-    }
+    { }
 
 
     /// <summary>
@@ -180,6 +195,6 @@ abstract public class BoardObject : MonoBehaviour
             executingAction?.ExecuteFinish();
             executingAction = null;
         }
-        executingActionIndex = null;
+        executingActionOffset = null;
     }
 }

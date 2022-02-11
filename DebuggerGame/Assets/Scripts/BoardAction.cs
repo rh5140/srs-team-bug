@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class BoardAction
+public abstract class BoardAction
 {
-    public List<Rule> modifiedBy = new List<Rule>();
-
     public readonly BoardObject boardObject;
+
+    /// <summary>
+    /// True if the action takes time. 
+    /// Otherwise, only ExecuteStart and ExecuteFinish will be called
+    /// </summary>
+    public virtual bool usesTime => true;
+
+    public List<IActionRule> modifiedBy = new List<IActionRule>();
+
     public BoardAction(BoardObject boardObject)
     {
         this.boardObject = boardObject;
