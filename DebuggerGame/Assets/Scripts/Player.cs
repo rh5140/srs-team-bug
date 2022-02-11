@@ -7,7 +7,7 @@ public class Player : BoardObject
     protected override void Update()
     {
         base.Update();
-        if (board.lastBoardEvent == Board.BoardEvent.StartTurn)
+        if (board.lastBoardEvent == Board.EventState.StartTurn)
         {
             // only move if during a turn
 
