@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBug : Bug
+public class TestBug : Arthropod
 {
     BoardAction RuleMap(BoardAction action)
     {
@@ -17,12 +17,13 @@ public class TestBug : Bug
                 this,
                 board,
                 enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board) => creator is Bug bug && !bug.isCaught && bug.rulesEnabled
+                    (BoardObject creator, Board board)
+                        => creator is Arthropod arthropod && !arthropod.isCaught && arthropod.rulesEnabled
                 },
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
-                    && movementAction.direction.normalized == Vector2.up,
+                    && movementAction.direction.y > 0,
                 map: RuleMap
             )
         );

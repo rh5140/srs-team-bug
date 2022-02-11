@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a12a2e1379c2574992d5ab011cfc10b, type: 3}
   m_Name: Spider
   m_EditorClassIdentifier: 
-  bug: {fileID: 0}
-  bugIcon: {fileID: 4401431814983482737, guid: af9904cc58566dc4cb163cb774db5a83, type: 3}
-  bugName: Spider
+  arthropod: {fileID: 0}
+  arthropodIcon: {fileID: 4401431814983482737, guid: af9904cc58566dc4cb163cb774db5a83, type: 3}
+  arthropodName: 
   description: 8 legs

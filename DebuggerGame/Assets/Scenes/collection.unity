@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 295060731}
   - component: {fileID: 295060730}
   - component: {fileID: 295060729}
+  - component: {fileID: 295060732}
   m_Layer: 5
   m_Name: CollectionScreen
   m_TagString: Untagged
@@ -218,6 +219,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295060727}
   m_CullTransparentMesh: 1
+--- !u!114 &295060732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295060727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ba0a5bb48bbb94ba2ee9d25f0838c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1039761033}
 --- !u!1 &961056621
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,11 +341,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039761032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea6441f2433b1cc43abd95a4e56bed37, type: 3}
+  m_Script: {fileID: 11500000, guid: c019abcf1f65670468e093479e6044c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
-  collection: {fileID: 0}
+  collection: {fileID: 11400000, guid: 4a00f76f703a91048a3bb07867ef3c11, type: 2}
 --- !u!4 &1039761034
 Transform:
   m_ObjectHideFlags: 0
@@ -340,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039761032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 454, y: 259.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerObject : BoardObject
+public class CollectionTest : MonoBehaviour
 {
-    public InventorySystem collection;
+    public Player player;
     // Start is called before the first frame update
-    protected override void Start()
+    void Start()
     {
         
     }
@@ -16,30 +16,24 @@ public class PlayerObject : BoardObject
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            player.collection.Save();
             Debug.Log("save");
-            collection.Save();
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
+            player.collection.Load();
             Debug.Log("load");
-            collection.Load();
         }
 
-        //Temporary to add bugs to collection
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log("ant added");
-            collection.AddBug(collection.database.GetBug[0], 1);
+            player.collection.AddArthropod(player.collection.database.GetArthropod[0], 1);
+            Debug.Log("ant");
         }
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            Debug.Log("spider added");
-            collection.AddBug(collection.database.GetBug[1], 1);
+            player.collection.AddArthropod(player.collection.database.GetArthropod[1], 1);
+            Debug.Log("spider");
         }
-    }
-
-    private void OnApplicationQuit()
-    {
-        collection.Container.Clear();
     }
 }

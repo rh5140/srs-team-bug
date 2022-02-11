@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : BoardObject
 {
+    public InventorySystem collection;
+
     protected override void Update()
     {
         base.Update();
@@ -33,5 +35,10 @@ public class Player : BoardObject
                 board.EndTurn();
             }
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        collection?.Container.Clear();
     }
 }
