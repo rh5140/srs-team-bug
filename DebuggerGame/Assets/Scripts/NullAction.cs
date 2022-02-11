@@ -9,6 +9,6 @@ public class NullAction : BoardAction
     public NullAction(
         BoardObject actor,
         BoardAction oldAction = null,
-        IActionRule modifiedBy = null) : base(actor, oldAction, modifiedBy)
+        IActionRule modifiedBy = null) : base(actor)
     { }
 }
