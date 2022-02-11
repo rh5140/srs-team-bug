@@ -16,10 +16,8 @@ public class TestBug : Bug
             new EFMActionRule(
                 this,
                 board,
-                enableConditions: new List<List<EFMActionRule.EnablePredicate>> { new List<EFMActionRule.EnablePredicate>
-                    {
-                        (BoardObject creator, Board board) => creator is Bug bug && !bug.isCaught && bug.rulesEnabled
-                    }
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board) => creator is Bug bug && !bug.isCaught && bug.rulesEnabled
                 },
                 filter: (BoardAction action) =>
                     action.boardObject is Player

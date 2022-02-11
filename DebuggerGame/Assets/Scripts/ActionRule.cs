@@ -16,18 +16,18 @@ public class EFMActionRule : IActionRule
     public BoardObject creator { get; private set; }
     public Board board { get; private set; }
 
-    public List<List<EnablePredicate>> enableConditions;
+    public List<EnableCondition> enableConditions;
     private Filter filter;
     private Map map;
 
-    public delegate bool EnablePredicate(BoardObject creator, Board board);
+    public delegate bool EnableCondition(BoardObject creator, Board board);
     public delegate bool Filter(BoardAction action);
     public delegate BoardAction Map(BoardAction action);
 
     public EFMActionRule(
         BoardObject creator,
         Board board, 
-        List<List<EnablePredicate>> enableConditions,
+        List<EnableCondition> enableConditions,
         Filter filter,
         Map map)
     {
@@ -41,26 +41,21 @@ public class EFMActionRule : IActionRule
 
     public BoardAction Execute(BoardAction action)
     {
-        bool enabled = true;
         if(enableConditions != null)
         {
-            foreach (List<EnablePredicate> predicateSet in enableConditions)
+            foreach (EnableCondition enableCondition in enableConditions)
             {
-                bool predicateSetResult = false;
-                foreach (EnablePredicate predicate in predicateSet)
+                if(enableCondition(creator, board) == false)
                 {
-                    predicateSetResult |= predicate(creator, board);
+                    return action;
                 }
-                enabled &= predicateSetResult;
             }
         }
 
-        if(enabled)
+        // filter?.Invoke ?? true means invoke if filter is nonnull, otherwise true
+        if (filter?.Invoke(action) ?? true)
         {
-            if (filter?.Invoke(action) ?? true)
-            {
-                return map(action);
-            }
+            return map(action);
         }
         return action;
     }
