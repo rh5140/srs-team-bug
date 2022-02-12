@@ -5,13 +5,14 @@ using UnityEngine;
 public class Player : BoardObject
 {
     public InventorySystem collection;
-    
+
     protected override void Update()
     {
         base.Update();
-        if (board.state == Board.State.StartTurn) {
+        if (board.lastBoardEvent == Board.EventState.StartTurn)
+        {
             // only move if during a turn
-            
+
             Vector2 input = new Vector2(
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical")
@@ -38,6 +39,6 @@ public class Player : BoardObject
 
     private void OnApplicationQuit()
     {
-        collection.Container.Clear();
+        collection?.Container.Clear();
     }
 }

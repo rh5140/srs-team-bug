@@ -2,15 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class Board : MonoBehaviour
 {
-    public enum State
+    /// <summary>
+    /// Separate event class equivalent to UnityEvent in case serialization is 
+    /// required.
+    /// </summary>
+    public class Event : UnityEvent { }
+
+    public enum EventState
     {
         StartTurn,
         EndTurn,
         PostEndTurn,
+        PreExecute,
         Execute,
         PostExecute,
     }
@@ -19,7 +26,11 @@ public class Board : MonoBehaviour
     public const float TimePerAction = 1.0f;
 
 
-    public State state { get; private set; }
+    //public List<Rule> rules = new List<Rule>();
+    //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
+
+
+    public EventState lastBoardEvent { get; private set; }
     public float? endTurnTime { get; private set; } = null;
     public float? timeSinceEndTurn
     {
@@ -37,49 +48,56 @@ public class Board : MonoBehaviour
         }
     }
 
-
-    private int maxActions = 0;
-
-    // NOTE: `Action<Arg1, Arg2, ...>` = `delegate void Action(Arg1, Arg2, ...)`
-    // Action has nothing to do with BoardAction
-
     /// <summary>
     /// Event raised after the execute phase has passed 
     /// maxActions actions (ie. actionsSinceEndTurn > maxActions). 
     /// Used for logic at the start of the turn (eg. collisions)
     /// </summary>
-    public event Action StartTurnEvent;
+    public Event StartTurnEvent = new Event();
 
     /// <summary>
     /// Event raised after Board.EndTurn() was called. 
     /// Used for setting up actions.
     /// </summary>
     /// <see cref="EndTurn"/>
-    public event Action EndTurnEvent;
+    public Event EndTurnEvent = new Event();
 
     /// <summary>
     /// Event raised immediately after EndTurnEvent
     /// </summary>
-    public event Action PostEndTurnEvent;
+    public Event PostEndTurnEvent = new Event();
+
+
+    /// <summary>
+    /// Event raised immediately before PostEndTurnEvent. 
+    /// In this time, BoardObjects should perform rule checks on actions.
+    /// </summary>
+    public Event PreExecuteEvent = new Event();
+
 
     /// <summary>
     /// Event raised immediately after PostEndTurnEvent. 
     /// In this time, BoardObjects should execute their actions. 
     /// The phase lasts maxActions * TimePerAction seconds.
     /// </summary>
-    public event Action ExecuteEvent;
+    public Event ExecuteEvent = new Event();
 
     /// <summary>
     /// Event raised immediately after the execution phase (before StartTurnEvent). 
     /// In this time, BoardObjects should execute their actions. 
     /// The phase lasts maxActions * TimePerAction seconds.
     /// </summary>
-    public event Action PostExecuteEvent;
+    public Event PostExecuteEvent = new Event();
 
+
+    public List<IActionRule> actionRules = new List<IActionRule>();
+
+
+    private int maxActions = 0;
 
     private void Start()
     {
-        StartTurnEvent += this.OnStartTurn;
+        StartTurnEvent.AddListener(this.OnStartTurn);
     }
 
 
@@ -88,17 +106,20 @@ public class Board : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        state = State.EndTurn;
-        EndTurnEvent?.Invoke();
+        lastBoardEvent = EventState.EndTurn;
+        EndTurnEvent.Invoke();
 
-        state = State.PostEndTurn;
-        PostEndTurnEvent?.Invoke();
+        lastBoardEvent = EventState.PostEndTurn;
+        PostEndTurnEvent.Invoke();
 
-        state = State.Execute;
-        ExecuteEvent?.Invoke();
         endTurnTime = Time.time;
 
-        //BroadcastMessage("OnEndTurn", null, SendMessageOptions.DontRequireReceiver);
+        lastBoardEvent = EventState.PreExecute;
+        PreExecuteEvent.Invoke();
+
+        lastBoardEvent = EventState.Execute;
+        ExecuteEvent.Invoke();
+
         StartCoroutine(EndTurnCounter(TimePerAction * maxActions));
     }
 
@@ -112,6 +133,22 @@ public class Board : MonoBehaviour
         maxActions = nActions > maxActions ? nActions : maxActions;
     }
 
+    public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
+    {
+        var currentAction = boardAction;
+        foreach (var rule in actionRules)
+        {
+            var newAction = rule.Execute(currentAction);
+            if (!ReferenceEquals(newAction, currentAction))
+            {
+                newAction.modifiedBy = currentAction.modifiedBy;
+                newAction.modifiedBy.Add(rule);
+            }
+            currentAction = newAction;
+        }
+        return currentAction;
+    }
+
 
     /// <summary>
     /// Helper function to broadcast "OnStartTurn" after endphase duration.
@@ -121,19 +158,18 @@ public class Board : MonoBehaviour
     private IEnumerator EndTurnCounter(float duration)
     {
         yield return new WaitForSeconds(duration);
-        state = State.PostExecute;
-        PostExecuteEvent?.Invoke();
+        lastBoardEvent = EventState.PostExecute;
+        PostExecuteEvent.Invoke();
 
-        state = State.StartTurn;
-        StartTurnEvent?.Invoke();
-        endTurnTime = -1f;
-        //BroadcastMessage("OnStartTurn", null, SendMessageOptions.DontRequireReceiver);
+        lastBoardEvent = EventState.StartTurn;
+        StartTurnEvent.Invoke();
+        endTurnTime = null;
     }
 
     /// <summary>
     /// Receiver to OnStartTurn message. Resets max actions for the next turn.
     /// </summary>
-    void OnStartTurn()
+    private void OnStartTurn()
     {
         maxActions = 0;
     }

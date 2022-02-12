@@ -4,17 +4,22 @@ using UnityEngine;
 
 abstract public class Arthropod : BoardObject
 {
-    private bool isCaught = false;
+    public bool isCaught { get; private set; } = false;
+    public bool rulesEnabled = true;
 
 
-    public void caughtByPlayer()
+    public List<IActionRule> rules { get; protected set; } = new List<IActionRule>();
+
+    public void Catch()
     {
-        throw new System.NotImplementedException();
+        isCaught = true;
     }
 
-    protected virtual void EndTurn()
-    {
-        throw new System.NotImplementedException();
-    }
 
+
+    protected void AddActionRule(IActionRule rule)
+    {
+        rules.Add(rule);
+        board.actionRules.Add(rule);
+    }
 }
