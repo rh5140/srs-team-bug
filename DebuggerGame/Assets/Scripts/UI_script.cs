@@ -19,7 +19,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("level 1");
+        SceneManager.LoadScene("world_map");
     }
 
     public void quit_game()
