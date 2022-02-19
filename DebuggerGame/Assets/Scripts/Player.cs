@@ -42,13 +42,16 @@ public class Player : BoardObject
         base.OnStartTurn();
 
         /*
-        Note: The bug overlap has to be checked for at the beginning of the turn since position has to update,
+        Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
         however there is currently no implementation for actions to be executed at the beginning of turn 
         (they only currently execute at the execute phase), so this behavior is hardcoded for now in a slapdash manner.
-        that the implementation of bug will be a gameobject
+        i.e bugs may play animations or have certain actions before being cause, which is not accounted for 
+        in this implementation. Deletion of the bug during OnStartTurn might also mess with the logic of other
+        board objects that rely on the existence of the bug(that is getting caught) to function.
+
         TODO: Action based implementation of the overlap checking.
         */
-        //actions.Enqueue(DetectBugOverlap());
+        //actions.Enqueue(DetectBugOverlap()); ?
 
         Collider2D[] objectsOverlap = null;
         objectsOverlap = Physics2D.OverlapBoxAll((Vector2)this.transform.position, new Vector2(0.1f, 0.1f), 0f, int.MinValue, int.MaxValue);
@@ -58,6 +61,7 @@ public class Player : BoardObject
             {
                 //newCol.gameObject.GetComponent<>().OnCaught(); Call the OnCaught Method for bugs, since the way to access the class of the bug is unknown, left blank.
                 board.BugCountUpdate();
+                
                 break;
             }
         }
@@ -68,7 +72,7 @@ public class Player : BoardObject
 
     }
 
-
+    /*
     /// <summary>
     /// DetectBugOverlap detects if player is overlapping a bug, then returns an action that will collect the bug.
     /// </summary>
@@ -79,6 +83,7 @@ public class Player : BoardObject
         //TODO: Action based implementation
         return null;
     }
+    */
 
 
     private void OnApplicationQuit()
