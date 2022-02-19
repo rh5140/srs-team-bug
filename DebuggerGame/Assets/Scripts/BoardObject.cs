@@ -78,7 +78,13 @@ abstract public class BoardObject : MonoBehaviour
         // TODO: If there is an offset from the grid, implement for coordinate
         coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
-        board = GetComponentInParent<Board>();
+
+        //Note (Felix): The player class in this case is not a child of board in the hierarchy so look for it in Scene instead
+        //board = GetComponentInParent<Board>();
+        //Temp solution
+        board = GameObject.Find("Board").GetComponent<Board>();
+        
+        
 
         // Add handlers
         // In future, handlers may be added in the implementation

@@ -22,6 +22,18 @@ public class Board : MonoBehaviour
         PostExecute,
     }
 
+    //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
+    private int numBugs; //Number of bugs currently left in the stage
+
+    public void BugCountUpdate()
+    {
+        numBugs--;
+    }
+    public int GetNumBugs()
+    {
+        return numBugs;
+    }
+
 
     public const float TimePerAction = 1.0f;
 
@@ -98,6 +110,10 @@ public class Board : MonoBehaviour
     private void Start()
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
+
+        //Bug counting initialization
+        numBugs = GameObject.FindGameObjectsWithTag("Bug").Length;
+
     }
 
 

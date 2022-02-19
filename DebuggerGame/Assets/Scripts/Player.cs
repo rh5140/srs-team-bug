@@ -37,6 +37,50 @@ public class Player : BoardObject
         }
     }
 
+    protected override void OnStartTurn()
+    {
+        base.OnStartTurn();
+
+        /*
+        Note: The bug overlap has to be checked for at the beginning of the turn since position has to update,
+        however there is currently no implementation for actions to be executed at the beginning of turn 
+        (they only currently execute at the execute phase), so this behavior is hardcoded for now in a slapdash manner.
+        that the implementation of bug will be a gameobject
+        TODO: Action based implementation of the overlap checking.
+        */
+        //actions.Enqueue(DetectBugOverlap());
+
+        Collider2D[] objectsOverlap = null;
+        objectsOverlap = Physics2D.OverlapBoxAll((Vector2)this.transform.position, new Vector2(0.1f, 0.1f), 0f, int.MinValue, int.MaxValue);
+        foreach (Collider2D newCol in objectsOverlap)
+        {
+            if (newCol.gameObject.tag.Equals("Bug")) //temporary identification for bug gameobjects (REPLACE THIS) 
+            {
+                //newCol.gameObject.GetComponent<>().OnCaught(); Call the OnCaught Method for bugs, since the way to access the class of the bug is unknown, left blank.
+                board.BugCountUpdate();
+                break;
+            }
+        }
+
+
+
+        
+
+    }
+
+
+    /// <summary>
+    /// DetectBugOverlap detects if player is overlapping a bug, then returns an action that will collect the bug.
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    private BoardAction DetectBugOverlap()
+    {
+        //TODO: Action based implementation
+        return null;
+    }
+
+
     private void OnApplicationQuit()
     {
         collection?.Container.Clear();
