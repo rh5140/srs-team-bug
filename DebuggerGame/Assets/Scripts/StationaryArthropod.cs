@@ -24,15 +24,9 @@ public class StationaryArthropod : Arthropod
 
                 filter: (BoardAction action) =>
                     action.boardObject is Player
-                    && action is MovementAction movementAction
-                    && movementAction.direction.y > 0,
+                    && action is MovementAction movementAction,
                 map: RuleMap
             )
         );
-    }
-
-    void Update()
-    {
-        
     }
 }
