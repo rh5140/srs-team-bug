@@ -25,6 +25,13 @@ public class Board : MonoBehaviour
 
     public const float TimePerAction = 1.0f;
 
+    public int width = 5;
+    public int height = 5;
+    public bool boundsEnabled = true;
+    BoardAction BoundsMap(BoardAction action)
+    {
+        return new NullAction(action.boardObject);
+    }
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -98,6 +105,24 @@ public class Board : MonoBehaviour
     private void Start()
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
+        actionRules.Add(
+            new EFMActionRule(
+                null,
+                this,
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board)
+                        => board != null && boundsEnabled
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
+                        action.boardObject.coordinate.x + movementAction.direction.x > width ||
+                        action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
+                        action.boardObject.coordinate.y + movementAction.direction.y > height),
+                map: BoundsMap
+            )
+        );
     }
 
 
