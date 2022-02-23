@@ -25,6 +25,7 @@ public class Board : MonoBehaviour
 
     public const float TimePerAction = 1.0f;
 
+    //Bounds
     public int width = 5;
     public int height = 5;
     public bool boundsEnabled = true;
