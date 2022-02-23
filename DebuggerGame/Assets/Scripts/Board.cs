@@ -149,6 +149,25 @@ public class Board : MonoBehaviour
         return currentAction;
     }
 
+    private List<bool> winConditions = new List<bool>();
+
+    public bool gameWon;
+
+    // add a bool to winConditions and return its index
+    public int AllocateWinCondition()
+    {
+        winConditions.Add(false);
+        return winConditions.Count - 1;
+    }
+
+    // set the win condition and test for whether all are met
+    // if all are met, then gg
+    public int SetWinCondition(int index, bool value)
+    {
+        winConditions[index] = value;
+        gameWon = !winConditions.Contains(false);
+    }
+
 
     /// <summary>
     /// Helper function to broadcast "OnStartTurn" after endphase duration.
