@@ -151,7 +151,7 @@ public class Board : MonoBehaviour
 
     private List<bool> winConditions = new List<bool>();
 
-    public bool gameWon;
+    public bool gameWon = false;
 
     // add a bool to winConditions and return its index
     public int AllocateWinCondition()
@@ -162,7 +162,7 @@ public class Board : MonoBehaviour
 
     // set the win condition and test for whether all are met
     // if all are met, then gg
-    public int SetWinCondition(int index, bool value)
+    public void SetWinCondition(int index, bool value)
     {
         winConditions[index] = value;
         gameWon = !winConditions.Contains(false);
