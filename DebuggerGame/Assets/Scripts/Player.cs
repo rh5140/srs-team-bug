@@ -53,22 +53,39 @@ public class Player : BoardObject
         */
         //actions.Enqueue(DetectBugOverlap()); ?
 
+
+
+        /* Physics based implementation for bug catching 
         Collider2D[] objectsOverlap = null;
         objectsOverlap = Physics2D.OverlapBoxAll((Vector2)this.transform.position, new Vector2(0.1f, 0.1f), 0f, int.MinValue, int.MaxValue);
         foreach (Collider2D newCol in objectsOverlap)
         {
-            if (newCol.gameObject.tag.Equals("Bug")) //temporary identification for bug gameobjects (REPLACE THIS) 
+            Debug.Log("Overlap");
+            if (newCol.gameObject.GetComponent<Arthropod>() != null) //temporary identification for bug gameobjects (REPLACE THIS) 
             {
-                //newCol.gameObject.GetComponent<>().OnCaught(); Call the OnCaught Method for bugs, since the way to access the class of the bug is unknown, left blank.
+                newCol.gameObject.GetComponent<Arthropod>().Catch(); 
                 board.BugCountUpdate();
-                
                 break;
             }
         }
+        */
 
-
-
+        //Coordinate based implementation for bug catching
+        Arthropod[] ArthropodList =  (Arthropod[]) GameObject.FindObjectsOfType(typeof(Arthropod));
+        foreach (Arthropod currArth in ArthropodList)
+        {
+            if (currArth.coordinate == this.coordinate)
+            {
+                currArth.Catch();
+                board.BugCountUpdate();
+                break;
+            }
+        }
         
+
+
+
+
 
     }
 

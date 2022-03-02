@@ -120,7 +120,8 @@ public class Board : MonoBehaviour
         StartTurnEvent.AddListener(this.OnStartTurn);
 
         //Bug counting initialization
-        numBugs = GameObject.FindGameObjectsWithTag("Bug").Length;
+        numBugs = GameObject.FindObjectsOfType(typeof(Arthropod)).Length;
+        Debug.Log("numBugs: " + numBugs);
 
         actionRules.Add(
             new EFMActionRule(

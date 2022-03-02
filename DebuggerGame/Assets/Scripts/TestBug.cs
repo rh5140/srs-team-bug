@@ -12,6 +12,8 @@ public class TestBug : Arthropod
     protected override void Start()
     {
         base.Start();
+        
+        //Rule disabling player upward movement?
         AddActionRule(
             new EFMActionRule(
                 this,
@@ -27,5 +29,6 @@ public class TestBug : Arthropod
                 map: RuleMap
             )
         );
+        
     }
 }
