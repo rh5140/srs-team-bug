@@ -37,6 +37,14 @@ public class Board : MonoBehaviour
 
     public const float TimePerAction = 1.0f;
 
+    //Bounds
+    public int width = 5;
+    public int height = 5;
+    public bool boundsEnabled = true;
+    BoardAction BoundsMap(BoardAction action)
+    {
+        return new NullAction(action.boardObject);
+    }
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -114,6 +122,24 @@ public class Board : MonoBehaviour
         //Bug counting initialization
         numBugs = GameObject.FindGameObjectsWithTag("Bug").Length;
 
+        actionRules.Add(
+            new EFMActionRule(
+                null,
+                this,
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board)
+                        => board != null && boundsEnabled
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
+                        action.boardObject.coordinate.x + movementAction.direction.x > width ||
+                        action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
+                        action.boardObject.coordinate.y + movementAction.direction.y > height),
+                map: BoundsMap
+            )
+        );
     }
 
 
@@ -163,6 +189,25 @@ public class Board : MonoBehaviour
             currentAction = newAction;
         }
         return currentAction;
+    }
+
+    private List<bool> winConditions = new List<bool>();
+
+    public bool gameWon = false;
+
+    // add a bool to winConditions and return its index
+    public int AllocateWinCondition()
+    {
+        winConditions.Add(false);
+        return winConditions.Count - 1;
+    }
+
+    // set the win condition and test for whether all are met
+    // if all are met, then gg
+    public void SetWinCondition(int index, bool value)
+    {
+        winConditions[index] = value;
+        gameWon = !winConditions.Contains(false);
     }
 
 
