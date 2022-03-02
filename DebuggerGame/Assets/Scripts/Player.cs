@@ -81,12 +81,6 @@ public class Player : BoardObject
                 break;
             }
         }
-        
-
-
-
-
-
     }
 
     /*
