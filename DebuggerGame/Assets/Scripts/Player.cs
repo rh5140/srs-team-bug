@@ -76,8 +76,8 @@ public class Player : BoardObject
         {
             if (currArth.coordinate == this.coordinate)
             {
-                currArth.Catch();
                 board.BugCountUpdate();
+                currArth.Catch();
                 break;
             }
         }
