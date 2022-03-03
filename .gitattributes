@@ -1,0 +1,2 @@
+# Make C# scripts use LF
+*.cs	eol=lf
