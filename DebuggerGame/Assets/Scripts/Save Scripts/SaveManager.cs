@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance = null;
-    public SaveSystem saveState;
+    public SaveState saveState;
 
     void Awake()
     {
@@ -18,9 +18,10 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void setSave(SaveSystem save)
+    public void setSave(SaveState save)
     {
-        
+        save.Load();
+        saveState = save;
     }
 
     public void ResetSave()

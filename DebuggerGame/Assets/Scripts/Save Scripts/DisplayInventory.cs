@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayInventory : MonoBehaviour
 {
-    public SaveSystem save;
+    public SaveState save;
     public int X_START;
     public int Y_START;
     public int X_SPACE_BETWEEN_SLOTS;

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Save State", menuName = "Save System/Save State")]
-public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
+public class SaveState : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
 
