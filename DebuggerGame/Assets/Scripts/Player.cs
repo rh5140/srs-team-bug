@@ -74,7 +74,7 @@ public class Player : BoardObject
         Arthropod[] ArthropodList =  (Arthropod[]) GameObject.FindObjectsOfType(typeof(Arthropod));
         foreach (Arthropod currArth in ArthropodList)
         {
-            if (!currArth.isCaught && currArth.coordinate == this.coordinate)
+            if (currArth.coordinate == this.coordinate)
             {
                 board.BugCountUpdate();
                 currArth.Catch();
