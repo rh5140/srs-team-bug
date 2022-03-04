@@ -14,6 +14,7 @@ public class DisplayInventory : MonoBehaviour
     void Start()
     {
         CreateDisplay();
+        //save = SaveManager.instance.save;
     }
 
     // Update is called once per frame

@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 295060731}
   - component: {fileID: 295060730}
   - component: {fileID: 295060729}
-  - component: {fileID: 295060732}
   m_Layer: 5
   m_Name: CollectionScreen
   m_TagString: Untagged
@@ -175,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf71f771248eb974caacb98bef7f3c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  save: {fileID: 0}
+  save: {fileID: 11400000, guid: d23f3513ba43b594998ccc71fd45b816, type: 2}
   X_START: -350
   Y_START: 150
   X_SPACE_BETWEEN_SLOTS: 190
@@ -219,19 +218,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295060727}
   m_CullTransparentMesh: 1
---- !u!114 &295060732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295060727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25ba0a5bb48bbb94ba2ee9d25f0838c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &961056621
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802ea76d1f31e6d478ee62357943f8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveState: {fileID: 11400000, guid: d23f3513ba43b594998ccc71fd45b816, type: 2}
+  save: {fileID: 0}
 --- !u!4 &1787016780
 Transform:
   m_ObjectHideFlags: 0

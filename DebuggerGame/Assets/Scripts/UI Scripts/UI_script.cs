@@ -34,6 +34,7 @@ public class UI_script : MonoBehaviour
 
     public void backToMain()
     {
+        SaveManager.instance.ResetSave();
         SceneManager.LoadScene("main_menu");
     }
 }
