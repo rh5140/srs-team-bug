@@ -1,4 +1,2 @@
 # Make C# scripts use LF
-#*.cs	eol=lf
-* text=auto
-
+*.cs	eol=lf
