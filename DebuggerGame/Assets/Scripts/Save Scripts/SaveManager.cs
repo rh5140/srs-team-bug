@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance = null;
-    public SaveState saveState;
+    public SaveState save = null;
 
     void Awake()
     {
@@ -18,19 +19,18 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void setSave(SaveState save)
+    public void setSave(int slot)
     {
-        save.Load();
-        saveState = save;
+        save = Resources.Load<SaveState>("Save State {slot}");
     }
 
     public void ResetSave()
     {
-        saveState = null;
+        save = null;
     }
 
     public void loadLevel()
     {
-
+        //
     }
 }
