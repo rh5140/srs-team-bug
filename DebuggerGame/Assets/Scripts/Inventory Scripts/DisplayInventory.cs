@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayInventory : MonoBehaviour
 {
-    public InventorySystem inventory;
+    public SaveSystem save;
     public int X_START;
     public int Y_START;
     public int X_SPACE_BETWEEN_SLOTS;
@@ -24,23 +24,23 @@ public class DisplayInventory : MonoBehaviour
 
     public void CreateDisplay()
     {
-        for (int i = 0; i < inventory.Container.Count; i++)
+        for (int i = 0; i < save.Collection.Count; i++)
         {
-            var obj = Instantiate(inventory.Container[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
+            var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-            arthropodsDisplayed.Add(inventory.Container[i], obj);
+            arthropodsDisplayed.Add(save.Collection[i], obj);
         }
     }
 
     public void UpdateDisplay()
     {
-        for (int i = 0; i < inventory.Container.Count; i++)
+        for (int i = 0; i < save.Collection.Count; i++)
         {
-            if (!arthropodsDisplayed.ContainsKey(inventory.Container[i]))
+            if (!arthropodsDisplayed.ContainsKey(save.Collection[i]))
             {
-                var obj = Instantiate(inventory.Container[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
+                var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-                arthropodsDisplayed.Add(inventory.Container[i], obj);
+                arthropodsDisplayed.Add(save.Collection[i], obj);
             }
         }
     }

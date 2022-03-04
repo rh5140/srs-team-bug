@@ -5,12 +5,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
-public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
+[CreateAssetMenu(fileName = "New Save Slot", menuName = "Save System/Save Slot")]
+public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
+
+    public int level;
+
+    //Inventory
     public ArthropodDatabase database;
-    public List<InventorySlot> Container = new List<InventorySlot>();
+    public List<InventorySlot> Collection = new List<InventorySlot>();
 
     private void OnEnable()
     {
@@ -22,15 +26,15 @@ public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
     }
     public void AddArthropod(ArthropodData _arthropodData, int _amount)
     {
-        for (int i = 0; i < Container.Count; i++)
+        for (int i = 0; i < Collection.Count; i++)
         {
-            if (Container[i].arthropodData == _arthropodData)
+            if (Collection[i].arthropodData == _arthropodData)
             {
-                Container[i].addAmount(_amount);
+                Collection[i].addAmount(_amount);
                 return;
             }
         }
-        Container.Add(new InventorySlot(database.GetId[_arthropodData], _arthropodData, _amount));
+        Collection.Add(new InventorySlot(database.GetId[_arthropodData], _arthropodData, _amount));
     }
 
     public void Save()
@@ -59,9 +63,9 @@ public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        for (int i = 0; i < Container.Count; i++)
+        for (int i = 0; i < Collection.Count; i++)
         {
-            Container[i].arthropodData = database.GetArthropod[Container[i].ID];
+            Collection[i].arthropodData = database.GetArthropod[Collection[i].ID];
         }
     }
 }
