@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Save Slot", menuName = "Save System/Save Slot")]
+[CreateAssetMenu(fileName = "New Save State", menuName = "Save System/Save State")]
 public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
