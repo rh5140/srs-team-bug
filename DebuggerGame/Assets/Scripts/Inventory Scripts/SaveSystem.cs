@@ -10,18 +10,24 @@ public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
 
-    public int level;
+    //Level info
+    public int currentLevel;
+    //public levelDatabase levelDatabase;
+    //public List<Level> completedLevels = new List<Level>();
 
-    //Inventory
-    public ArthropodDatabase database;
+    //Map info
+    public Vector2Int mapPosition;
+
+    //Collection info
+    public ArthropodDatabase arthropodDatabase;
     public List<InventorySlot> Collection = new List<InventorySlot>();
 
     private void OnEnable()
     {
 #if UNITY_EDITOR
-        database = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
+        arthropodDatabase = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
 #else
-        database = Resources.Load<ArthropodDatabase>("Arthropod Database");
+        arthropodDatabase = Resources.Load<ArthropodDatabase>("Arthropod Database");
 #endif
     }
     public void AddArthropod(ArthropodData _arthropodData, int _amount)
@@ -34,7 +40,7 @@ public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
                 return;
             }
         }
-        Collection.Add(new InventorySlot(database.GetId[_arthropodData], _arthropodData, _amount));
+        Collection.Add(new InventorySlot(arthropodDatabase.GetId[_arthropodData], _arthropodData, _amount));
     }
 
     public void Save()
@@ -65,7 +71,7 @@ public class SaveSystem : ScriptableObject, ISerializationCallbackReceiver
     {
         for (int i = 0; i < Collection.Count; i++)
         {
-            Collection[i].arthropodData = database.GetArthropod[Collection[i].ID];
+            Collection[i].arthropodData = arthropodDatabase.GetArthropod[Collection[i].ID];
         }
     }
 }
