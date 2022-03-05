@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/level 1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/world_map.unity
     guid: 07986e0c06caff14180d4dedacddf516
+  - enabled: 1
+    path: Assets/Scenes/Showcase/Level 1.unity
+    guid: bb773e96bd51bb141bd8ff1289623d03
+  - enabled: 1
+    path: Assets/Scenes/Showcase/Level 2.unity
+    guid: 96a8657025000ab4c969d73a3a159207
+  - enabled: 1
+    path: Assets/Scenes/Showcase/Level 3.unity
+    guid: 596e0e6a9af3cbc4db46d81b5485c3a9
   m_configObjects: {}

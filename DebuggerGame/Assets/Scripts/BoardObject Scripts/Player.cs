@@ -6,6 +6,21 @@ public class Player : BoardObject
 {
     public InventorySystem collection;
 
+    protected override void OnStartTurn()
+    {
+        base.OnStartTurn();
+
+        Arthropod[] ArthropodList = (Arthropod[]) FindObjectsOfType(typeof(Arthropod));
+        foreach (Arthropod arth in ArthropodList)
+        {
+            if (arth.coordinate == coordinate)
+            {
+                arth.Catch();
+                break;
+            }
+        }
+    }
+
     protected override void Update()
     {
         base.Update();

@@ -93,16 +93,6 @@ abstract public class BoardObject : MonoBehaviour
         board.PostExecuteEvent.AddListener(OnPostExecute);
     }
 
-    protected void OnDestroy()
-    {
-        board.StartTurnEvent.RemoveAllListeners();
-        board.EndTurnEvent.RemoveAllListeners();
-        board.PostEndTurnEvent.RemoveAllListeners();
-        board.PreExecuteEvent.RemoveAllListeners();
-        board.ExecuteEvent.RemoveAllListeners();
-        board.PostExecuteEvent.RemoveAllListeners();
-    }
-
     protected virtual void Update()
     {
         if(board.lastBoardEvent == Board.EventState.Execute)
