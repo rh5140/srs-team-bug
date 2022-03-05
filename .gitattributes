@@ -1,2 +1,2 @@
 # Make C# scripts use LF
-*.cs text diff=csharp
+*.cs text diff=csharp eol=lf
