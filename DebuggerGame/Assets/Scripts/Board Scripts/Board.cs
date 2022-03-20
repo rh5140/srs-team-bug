@@ -123,6 +123,7 @@ public class Board : MonoBehaviour
         numBugs = GameObject.FindObjectsOfType(typeof(Arthropod)).Length;
         Debug.Log("numBugs: " + numBugs);
 
+
         actionRules.Add(
             new EFMActionRule(
                 null,
@@ -135,9 +136,9 @@ public class Board : MonoBehaviour
                     action.boardObject is Player
                     && action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
-                        action.boardObject.coordinate.x + movementAction.direction.x > width ||
+                        action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
-                        action.boardObject.coordinate.y + movementAction.direction.y > height),
+                        action.boardObject.coordinate.y + movementAction.direction.y >= height),
                 map: BoundsMap
             )
         );
