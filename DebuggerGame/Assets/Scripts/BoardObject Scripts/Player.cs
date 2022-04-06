@@ -71,13 +71,12 @@ public class Player : BoardObject
         */
 
         //Coordinate based implementation for bug catching
-        Arthropod[] ArthropodList =  (Arthropod[]) GameObject.FindObjectsOfType(typeof(Arthropod));
-        foreach (Arthropod currArth in ArthropodList)
+        foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
-            if (!currArth.isCaught && currArth.coordinate == this.coordinate)
+            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate)
             {
                 board.BugCountUpdate();
-                currArth.Catch();
+                arthropod.Catch();
                 break;
             }
         }
