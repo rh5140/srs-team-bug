@@ -1,7 +1,7 @@
 public class GameStateManager
 {
     private static GameStateManager _instance;
-    private static GameStateManager Instance
+    public static GameStateManager Instance
     {
         get
         {
@@ -13,7 +13,7 @@ public class GameStateManager
 
     public GameState CurrentGameState {get; private set; }
     public delegate void GameStateChangeHandler(GameState newGameState);
-    public event GameStateChangeHandler onGameStateChanged;
+    public event GameStateChangeHandler OnGameStateChanged;
 
 
     private GameStateManager()
@@ -27,6 +27,6 @@ public class GameStateManager
             return;
         
         CurrentGameState = newGameState;
-        onGameStateChanged? .Invoke(newGameState);
+        OnGameStateChanged? .Invoke(newGameState);
     }
 }
