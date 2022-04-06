@@ -25,6 +25,8 @@ public class Board : MonoBehaviour
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     private int numBugs; //Number of bugs currently left in the stage
 
+    public List<BoardObject> boardObjects;
+
     public void BugCountUpdate()
     {
         numBugs--;
@@ -33,6 +35,9 @@ public class Board : MonoBehaviour
     {
         return numBugs;
     }
+
+
+    public static Board instance { get; private set; } = null;
 
 
     public const float TimePerAction = 1.0f;
@@ -115,14 +120,22 @@ public class Board : MonoBehaviour
 
     private int maxActions = 0;
 
+    private void OnEnable()
+    {
+        // Singleton pattern
+        Debug.AssertFormat(Board.instance == null, "Multiple instances of Board is not supported. Last instance: {0}", Board.instance);
+        Board.instance = this;
+    }
+
     private void Start()
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
 
-        //Bug counting initialization
-        numBugs = GameObject.FindObjectsOfType(typeof(Arthropod)).Length;
-        Debug.Log("numBugs: " + numBugs);
+        boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
 
+        //Bug counting initialization
+        numBugs = CountBoardObjectsOfType<Arthropod>();
+        Debug.Log("numBugs: " + numBugs);
 
         actionRules.Add(
             new EFMActionRule(
@@ -142,6 +155,11 @@ public class Board : MonoBehaviour
                 map: BoundsMap
             )
         );
+    }
+
+    private void OnDisable()
+    {
+        Board.instance = null;
     }
 
 
@@ -211,6 +229,84 @@ public class Board : MonoBehaviour
         winConditions[index] = value;
         gameWon = !winConditions.Contains(false);
     }
+
+
+    #region BoardObjects helper functions
+    // IEnumerable for lazy evaluation
+    public IEnumerable<T> GetBoardObjectsOfType<T>() where T: BoardObject {
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            if (boardObject is T found)
+            {
+                yield return found;
+            }
+        }
+    }
+
+    public T GetBoardObjectOfType<T>() where T : BoardObject
+    {
+        return boardObjects
+            .Find(boardObject => boardObject is T) as T;
+    }
+
+    public int CountBoardObjectsOfType<T>() where T : BoardObject
+    {
+        int count = 0;
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            count += boardObject is T ? 1 : 0;
+        }
+        return count;
+    }
+
+
+    // IEnumerable for lazy evaluation
+    public IEnumerable<BoardObject> GetBoardObjectsAtCoordinate(Vector2Int coordinate)
+    {
+        foreach (BoardObject boardObject in boardObjects)
+        {
+            if (boardObject.coordinate == coordinate)
+            {
+                yield return boardObject;
+            }
+        }
+    }
+
+    
+    public IEnumerable<BoardObject> GetBoardObjectsAtCoordinate(int x, int y)
+    {
+        return GetBoardObjectsAtCoordinate(new Vector2Int(x, y));
+    }
+
+    public BoardObject GetBoardObjectAtCoordinate(Vector2Int coordinate)
+    {
+        return boardObjects
+            .Find(boardObject => boardObject.coordinate == coordinate);
+    }
+
+    public BoardObject GetBoardObjectAtCoordinate(int x, int y)
+    {
+        return GetBoardObjectAtCoordinate(new Vector2Int(x, y));
+    }
+
+
+    public int CountBoardObjectsAtCoordinate(Vector2Int coordinate)
+    {
+        int count = 0;
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            count += boardObject.coordinate == coordinate ? 1 : 0;
+        }
+        return count;
+    }
+
+
+    public int CountBoardObjectsAtCoordinate(int x, int y)
+    {
+        return CountBoardObjectsAtCoordinate(new Vector2Int(x, y));
+    }
+
+    #endregion
 
 
     /// <summary>
