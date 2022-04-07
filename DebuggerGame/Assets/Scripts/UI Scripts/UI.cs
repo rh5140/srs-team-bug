@@ -5,16 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    // Start is called before the first frame update
     public static bool GameIsPaused = false;
-
+    public static bool MapIsOpen = false;
     public GameObject PauseMenuUI;
-    void Start()
-    {
-        
-    }
+    public GameObject WorldMap;
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -23,6 +18,14 @@ public class UI : MonoBehaviour
                 Resume();
             else
                 Pause();
+        }
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            if(MapIsOpen)
+                CloseMap();
+            else
+                OpenMap();
         }
     }
     public void Resume()
@@ -41,7 +44,7 @@ public class UI : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("world_map");
+        SceneManager.LoadScene("level 1");
     }
 
     public void QuitGame()
@@ -54,8 +57,21 @@ public class UI : MonoBehaviour
         SceneManager.LoadScene("collection");
     }
 
-    public void backToMain()
+    public void LoadMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("main_menu");
+    }
+
+    public void OpenMap()
+    {
+        WorldMap.SetActive(true);
+        MapIsOpen = true;
+    }
+
+    public void CloseMap()
+    {
+        WorldMap.SetActive(false);
+        MapIsOpen = false;
     }
 }
