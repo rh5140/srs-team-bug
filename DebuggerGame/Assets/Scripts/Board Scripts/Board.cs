@@ -118,7 +118,6 @@ public class Board : MonoBehaviour
         //
         //Needs to be updated with ability to distinguish between BoardObjects
         //
-        Debug.Log(!collidableCoordinates.Contains(coordinate));
         return !collidableCoordinates.Contains(coordinate);
     }
 
@@ -134,12 +133,10 @@ public class Board : MonoBehaviour
 
         foreach(CollidableObject collidable in collidables) {
             collidableCoordinates.Add(collidable.coordinate);
-            Debug.Log(collidable.coordinate.x + " " + collidable.coordinate.y);
         }
 
         //Bug counting initialization
         numBugs = GameObject.FindObjectsOfType(typeof(Arthropod)).Length;
-        Debug.Log("numBugs: " + numBugs);
 
         actionRules.Add(
             new EFMActionRule(

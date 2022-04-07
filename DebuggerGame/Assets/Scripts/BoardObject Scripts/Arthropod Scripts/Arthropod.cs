@@ -13,7 +13,6 @@ abstract public class Arthropod : BoardObject
     public void Catch()
     {
         isCaught = true;
-        Debug.Log("Bug Caught, Bugs remaining: " + this.board.GetNumBugs());
     }
 
 
