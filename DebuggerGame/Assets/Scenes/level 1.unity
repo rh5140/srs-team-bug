@@ -495,6 +495,8 @@ MonoBehaviour:
   width: 5
   height: 5
   boundsEnabled: 1
+  collidables: []
+  collidableCoordinates: []
   gameWon: 0
 --- !u!4 &769082870
 Transform:
@@ -507,6 +509,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 699376239}
   - {fileID: 1226408674}
   - {fileID: 1614833428}
   m_Father: {fileID: 0}
@@ -890,7 +893,7 @@ Transform:
   m_Children:
   - {fileID: 1932928074}
   m_Father: {fileID: 769082870}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1226408675
 MonoBehaviour:
@@ -935,7 +938,7 @@ Transform:
   m_Children:
   - {fileID: 1161634391}
   m_Father: {fileID: 769082870}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1614833429
 MonoBehaviour:

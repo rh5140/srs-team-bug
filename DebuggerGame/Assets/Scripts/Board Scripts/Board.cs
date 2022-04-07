@@ -25,6 +25,8 @@ public class Board : MonoBehaviour
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     private int numBugs; //Number of bugs currently left in the stage
 
+    public List<BoardObject> boardObjects;
+
     public void BugCountUpdate()
     {
         numBugs--;
@@ -35,16 +37,15 @@ public class Board : MonoBehaviour
     }
 
 
+    public static Board instance { get; private set; } = null;
+
+
     public const float TimePerAction = 1.0f;
 
     //Bounds
     public int width = 5;
     public int height = 5;
     public bool boundsEnabled = true;
-    BoardAction BoundsMap(BoardAction action)
-    {
-        return new NullAction(action.boardObject);
-    }
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -112,17 +113,43 @@ public class Board : MonoBehaviour
 
     public List<IActionRule> actionRules = new List<IActionRule>();
 
+    public List<CollidableObject> collidables;
+    public List<Vector2Int> collidableCoordinates;
 
     private int maxActions = 0;
+
+    //Determines if a BoardObject can enter a coordinate
+    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+        //
+        //Needs to be updated with ability to distinguish between BoardObjects
+        //
+        return !collidableCoordinates.Contains(coordinate);
+    }
+
+    private void OnEnable()
+    {
+        // Singleton pattern
+        Debug.AssertFormat(Board.instance == null, "Multiple instances of Board is not supported. Last instance: {0}", Board.instance);
+        Board.instance = this;
+    }
 
     private void Start()
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
 
-        //Bug counting initialization
-        numBugs = GameObject.FindObjectsOfType(typeof(Arthropod)).Length;
-        Debug.Log("numBugs: " + numBugs);
+        boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
 
+        //Bug counting initialization
+        numBugs = CountBoardObjectsOfType<Arthropod>();
+
+        //Initialize collidables list
+        collidables = new List<CollidableObject>(GetBoardObjectsOfType<CollidableObject>());
+
+        collidableCoordinates = new List<Vector2Int>();
+
+        foreach(CollidableObject collidable in collidables) {
+            collidableCoordinates.Add(collidable.coordinate);
+        }
 
         actionRules.Add(
             new EFMActionRule(
@@ -139,9 +166,34 @@ public class Board : MonoBehaviour
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
                         action.boardObject.coordinate.y + movementAction.direction.y >= height),
-                map: BoundsMap
+                map: (BoardAction action) => {return new NullAction(action.boardObject);}
             )
         );
+
+        actionRules.Add(
+            new EFMActionRule(
+                null,
+                this,
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board)
+                        => board != null && boundsEnabled
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && !CanEnterCoordinate(action.boardObject, 
+                        new Vector2Int(
+                            action.boardObject.coordinate.x + movementAction.direction.x,
+                            action.boardObject.coordinate.y + movementAction.direction.y
+                    )),
+                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+            )
+        );
+    }
+
+    private void OnDisable()
+    {
+        Board.instance = null;
     }
 
 
@@ -211,6 +263,84 @@ public class Board : MonoBehaviour
         winConditions[index] = value;
         gameWon = !winConditions.Contains(false);
     }
+
+
+    #region BoardObjects helper functions
+    // IEnumerable for lazy evaluation
+    public IEnumerable<T> GetBoardObjectsOfType<T>() where T: BoardObject {
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            if (boardObject is T found)
+            {
+                yield return found;
+            }
+        }
+    }
+
+    public T GetBoardObjectOfType<T>() where T : BoardObject
+    {
+        return boardObjects
+            .Find(boardObject => boardObject is T) as T;
+    }
+
+    public int CountBoardObjectsOfType<T>() where T : BoardObject
+    {
+        int count = 0;
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            count += boardObject is T ? 1 : 0;
+        }
+        return count;
+    }
+
+
+    // IEnumerable for lazy evaluation
+    public IEnumerable<BoardObject> GetBoardObjectsAtCoordinate(Vector2Int coordinate)
+    {
+        foreach (BoardObject boardObject in boardObjects)
+        {
+            if (boardObject.coordinate == coordinate)
+            {
+                yield return boardObject;
+            }
+        }
+    }
+
+    
+    public IEnumerable<BoardObject> GetBoardObjectsAtCoordinate(int x, int y)
+    {
+        return GetBoardObjectsAtCoordinate(new Vector2Int(x, y));
+    }
+
+    public BoardObject GetBoardObjectAtCoordinate(Vector2Int coordinate)
+    {
+        return boardObjects
+            .Find(boardObject => boardObject.coordinate == coordinate);
+    }
+
+    public BoardObject GetBoardObjectAtCoordinate(int x, int y)
+    {
+        return GetBoardObjectAtCoordinate(new Vector2Int(x, y));
+    }
+
+
+    public int CountBoardObjectsAtCoordinate(Vector2Int coordinate)
+    {
+        int count = 0;
+        foreach(BoardObject boardObject in boardObjects)
+        {
+            count += boardObject.coordinate == coordinate ? 1 : 0;
+        }
+        return count;
+    }
+
+
+    public int CountBoardObjectsAtCoordinate(int x, int y)
+    {
+        return CountBoardObjectsAtCoordinate(new Vector2Int(x, y));
+    }
+
+    #endregion
 
 
     /// <summary>
