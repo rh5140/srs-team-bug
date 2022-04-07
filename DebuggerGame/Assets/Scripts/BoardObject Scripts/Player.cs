@@ -41,6 +41,8 @@ public class Player : BoardObject
     {
         base.OnStartTurn();
 
+        Debug.Log("Player: " + coordinate);
+
         /*
         Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
         however there is currently no implementation for actions to be executed at the beginning of turn 
