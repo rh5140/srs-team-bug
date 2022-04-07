@@ -114,7 +114,7 @@ public class Board : MonoBehaviour
     private int maxActions = 0;
 
     //Determines if a BoardObject can enter a coordinate
-    public bool canEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
         //
         //Needs to be updated with ability to distinguish between BoardObjects
         //
@@ -171,7 +171,7 @@ public class Board : MonoBehaviour
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
-                    && !canEnterCoordinate(action.boardObject, 
+                    && !CanEnterCoordinate(action.boardObject, 
                         new Vector2Int(
                             action.boardObject.coordinate.x + movementAction.direction.x,
                             action.boardObject.coordinate.y + movementAction.direction.y
