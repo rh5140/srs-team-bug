@@ -34,4 +34,68 @@ public class Player : BoardObject
             }
         }
     }
+
+    protected override void OnStartTurn()
+    {
+        base.OnStartTurn();
+
+        /*
+        Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
+        however there is currently no implementation for actions to be executed at the beginning of turn 
+        (they only currently execute at the execute phase), so this behavior is hardcoded for now in a slapdash manner.
+        i.e bugs may play animations or have certain actions before being cause, which is not accounted for 
+        in this implementation. Deletion of the bug during OnStartTurn might also mess with the logic of other
+        board objects that rely on the existence of the bug(that is getting caught) to function.
+
+        TODO: Action based implementation of the overlap checking.
+        */
+        //actions.Enqueue(DetectBugOverlap()); ?
+
+
+
+        /* Physics based implementation for bug catching 
+        Collider2D[] objectsOverlap = null;
+        objectsOverlap = Physics2D.OverlapBoxAll((Vector2)this.transform.position, new Vector2(0.1f, 0.1f), 0f, int.MinValue, int.MaxValue);
+        foreach (Collider2D newCol in objectsOverlap)
+        {
+            Debug.Log("Overlap");
+            if (newCol.gameObject.GetComponent<Arthropod>() != null) //temporary identification for bug gameobjects (REPLACE THIS) 
+            {
+                newCol.gameObject.GetComponent<Arthropod>().Catch(); 
+                board.BugCountUpdate();
+                break;
+            }
+        }
+        */
+
+        //Coordinate based implementation for bug catching
+        foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
+        {
+            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate)
+            {
+                board.BugCountUpdate();
+                arthropod.Catch();
+                break;
+            }
+        }
+    }
+
+    /*
+    /// <summary>
+    /// DetectBugOverlap detects if player is overlapping a bug, then returns an action that will collect the bug.
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    private BoardAction DetectBugOverlap()
+    {
+        //TODO: Action based implementation
+        return null;
+    }
+    */
+
+
+    private void OnApplicationQuit()
+    {
+        collection?.Container.Clear();
+    }
 }

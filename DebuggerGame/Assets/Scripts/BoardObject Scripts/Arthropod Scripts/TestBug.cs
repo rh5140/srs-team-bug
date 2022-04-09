@@ -12,6 +12,7 @@ public class TestBug : Arthropod
     protected override void Start()
     {
         base.Start();
+
         AddActionRule(
             new EFMActionRule(
                 this,
