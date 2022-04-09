@@ -14,7 +14,7 @@ public class DisplayInventory : MonoBehaviour
     void Start()
     {
         CreateDisplay();
-        //save = SaveManager.instance.save;
+        save = SaveManager.instance.save;
     }
 
     // Update is called once per frame
@@ -25,23 +25,29 @@ public class DisplayInventory : MonoBehaviour
 
     public void CreateDisplay()
     {
-        for (int i = 0; i < save.Collection.Count; i++)
+        if (save != null)
         {
-            var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
-            obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-            arthropodsDisplayed.Add(save.Collection[i], obj);
+            for (int i = 0; i < save.Collection.Count; i++)
+            {
+                var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
+                obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+                arthropodsDisplayed.Add(save.Collection[i], obj);
+            }
         }
     }
 
     public void UpdateDisplay()
     {
-        for (int i = 0; i < save.Collection.Count; i++)
+        if (save != null)
         {
-            if (!arthropodsDisplayed.ContainsKey(save.Collection[i]))
+            for (int i = 0; i < save.Collection.Count; i++)
             {
-                var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
-                obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
-                arthropodsDisplayed.Add(save.Collection[i], obj);
+                if (!arthropodsDisplayed.ContainsKey(save.Collection[i]))
+                {
+                    var obj = Instantiate(save.Collection[i].arthropodData.arthropodIcon, Vector3.zero, Quaternion.identity, transform);
+                    obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+                    arthropodsDisplayed.Add(save.Collection[i], obj);
+                }
             }
         }
     }

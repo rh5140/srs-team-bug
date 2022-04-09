@@ -10,6 +10,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
 
+    [SerializeField]
     //Level info
     public int currentLevel;
     //public levelDatabase levelDatabase;
@@ -21,9 +22,9 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     //Collection info
     public ArthropodDatabase arthropodDatabase;
     public List<InventorySlot> Collection = new List<InventorySlot>();
-
     private void OnEnable()
     {
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
 #if UNITY_EDITOR
         arthropodDatabase = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
 #else
@@ -46,6 +47,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public void Save()
     {
         string saveData = JsonUtility.ToJson(this, true);
+        Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         bf.Serialize(file, saveData);
