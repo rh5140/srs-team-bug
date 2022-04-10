@@ -4,16 +4,16 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -5753276967381650274
-    second: main_char basic walk_0
+    second: PC_walk_cycle_0
   - first:
       213: 2964436458316825006
-    second: main_char basic walk_1
+    second: PC_walk_cycle_1
   - first:
       213: 6352667630548148438
-    second: main_char basic walk_2
+    second: PC_walk_cycle_2
   - first:
       213: -3451423804290765741
-    second: main_char basic walk_3
+    second: PC_walk_cycle_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,7 +103,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main_char basic walk_0
+      name: PC_walk_cycle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,7 +124,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char basic walk_1
+      name: PC_walk_cycle_1
       rect:
         serializedVersion: 2
         x: 32
@@ -145,7 +145,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char basic walk_2
+      name: PC_walk_cycle_2
       rect:
         serializedVersion: 2
         x: 64
@@ -166,7 +166,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char basic walk_3
+      name: PC_walk_cycle_3
       rect:
         serializedVersion: 2
         x: 96
