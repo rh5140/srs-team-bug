@@ -111,7 +111,15 @@ public class Board : MonoBehaviour
     public Event PostExecuteEvent = new Event();
 
 
+    /// <summary>
+    /// Action rules take in an action and output a new one
+    /// </summary>
     public List<IActionRule> actionRules = new List<IActionRule>();
+
+    /// <summary>
+    /// Action filter rules are action rules that only delete/keep actions, not modify
+    /// </summary>
+    public List<IActionRule> actionFilterRules = new List<IActionRule>();
 
     public List<CollidableObject> collidables;
     public List<Vector2Int> collidableCoordinates;
@@ -151,33 +159,30 @@ public class Board : MonoBehaviour
             collidableCoordinates.Add(collidable.coordinate);
         }
 
-        actionRules.Add(
-            new EFMActionRule(
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
                 null,
                 this,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => board != null && boundsEnabled
-                },
+                enableCondition: (BoardObject creator, Board board) =>
+                    board != null
+                    && boundsEnabled,
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
-                        action.boardObject.coordinate.y + movementAction.direction.y >= height),
-                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+                        action.boardObject.coordinate.y + movementAction.direction.y >= height)
             )
         );
 
-        actionRules.Add(
-            new EFMActionRule(
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
                 null,
                 this,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => board != null && boundsEnabled
-                },
+                enableCondition: (BoardObject creator, Board board) =>
+                    board != null
+                    && boundsEnabled,
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
@@ -185,8 +190,7 @@ public class Board : MonoBehaviour
                         new Vector2Int(
                             action.boardObject.coordinate.x + movementAction.direction.x,
                             action.boardObject.coordinate.y + movementAction.direction.y
-                    )),
-                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+                    ))
             )
         );
     }
@@ -233,6 +237,16 @@ public class Board : MonoBehaviour
     {
         var currentAction = boardAction;
         foreach (var rule in actionRules)
+        {
+            var newAction = rule.Execute(currentAction);
+            if (!ReferenceEquals(newAction, currentAction))
+            {
+                newAction.modifiedBy = currentAction.modifiedBy;
+                newAction.modifiedBy.Add(rule);
+            }
+            currentAction = newAction;
+        }
+        foreach (var rule in actionFilterRules)
         {
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
