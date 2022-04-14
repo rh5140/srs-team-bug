@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class CollidableObject : BoardObject
 {
+    protected bool bugsCanPass = true;
 
+    public bool BugsCanPass() {
+        return bugsCanPass;
+    }
 }

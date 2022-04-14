@@ -114,16 +114,15 @@ public class Board : MonoBehaviour
     public List<IActionRule> actionRules = new List<IActionRule>();
 
     public List<CollidableObject> collidables;
-    public List<Vector2Int> collidableCoordinates;
+    public Dictionary<Vector2Int, bool> collidableCoordinates;
 
     private int maxActions = 0;
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        //
-        //Needs to be updated with ability to distinguish between BoardObjects
-        //
-        return !collidableCoordinates.Contains(coordinate);
+        if(!collidableCoordinates.ContainsKey(coordinate)) return true;
+        bool canPass = boardObject is Arthropod && collidableCoordinates[coordinate];
+        return canPass;
     }
 
     private void OnEnable()
@@ -145,10 +144,10 @@ public class Board : MonoBehaviour
         //Initialize collidables list
         collidables = new List<CollidableObject>(GetBoardObjectsOfType<CollidableObject>());
 
-        collidableCoordinates = new List<Vector2Int>();
+        collidableCoordinates = new Dictionary<Vector2Int, bool>();
 
         foreach(CollidableObject collidable in collidables) {
-            collidableCoordinates.Add(collidable.coordinate);
+            collidableCoordinates.Add(collidable.coordinate, collidable.BugsCanPass());
         }
 
         actionRules.Add(
@@ -179,8 +178,7 @@ public class Board : MonoBehaviour
                         => board != null && boundsEnabled
                 },
                 filter: (BoardAction action) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
+                    action is MovementAction movementAction
                     && !CanEnterCoordinate(action.boardObject, 
                         new Vector2Int(
                             action.boardObject.coordinate.x + movementAction.direction.x,
