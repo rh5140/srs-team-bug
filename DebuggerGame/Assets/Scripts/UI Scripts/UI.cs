@@ -7,8 +7,11 @@ public class UI : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public static bool MapIsOpen = false;
+
+    public static bool InventoryIsOpen = false;
     public GameObject PauseMenuUI;
     public GameObject WorldMap;
+    public GameObject Inventory;
 
     void Update()
     {
@@ -26,6 +29,14 @@ public class UI : MonoBehaviour
                 CloseMap();
             else
                 OpenMap();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            if(InventoryIsOpen)
+                CloseInventory();
+            else
+                OpenInventory();
         }
     }
     public void Resume()
@@ -73,5 +84,17 @@ public class UI : MonoBehaviour
     {
         WorldMap.SetActive(false);
         MapIsOpen = false;
+    }
+
+    public void OpenInventory()
+    {
+        Inventory.SetActive(true);
+        InventoryIsOpen = true;
+    }
+
+    public void CloseInventory()
+    {
+        Inventory.SetActive(false);
+        InventoryIsOpen = false;
     }
 }
