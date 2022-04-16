@@ -96,6 +96,5 @@ public class Player : BoardObject
 
     private void OnApplicationQuit()
     {
-        collection?.Container.Clear();
     }
 }
