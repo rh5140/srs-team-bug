@@ -160,8 +160,8 @@ public class Board : MonoBehaviour
                         => board != null && boundsEnabled
                 },
                 filter: (BoardAction action) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
+                    //action.boardObject is Player
+                     action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||

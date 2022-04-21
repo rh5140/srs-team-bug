@@ -29,4 +29,9 @@ public class TestBug : Arthropod
             )
         );
     }
+    protected override void OnEndTurn() {
+        base.OnEndTurn();
+
+        actions.Enqueue(new MovementAction(this, Vector2Int.right));
+    }
 }
