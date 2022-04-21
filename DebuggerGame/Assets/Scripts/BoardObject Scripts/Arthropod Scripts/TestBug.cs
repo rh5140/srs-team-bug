@@ -29,7 +29,6 @@ public class TestBug : Arthropod
             )
         );
     }
-
     protected override void OnEndTurn() {
         base.OnEndTurn();
 

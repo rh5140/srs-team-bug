@@ -122,7 +122,8 @@ public class Board : MonoBehaviour
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
         bool canPass = !collidableCoordinates.ContainsKey(coordinate)
                     || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass();
-        return canPass;
+        bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
+        return canPass && inBounds;
     }
 
     private void OnEnable()
@@ -155,8 +156,8 @@ public class Board : MonoBehaviour
                         => board != null && boundsEnabled
                 },
                 filter: (BoardAction action) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
+                    //action.boardObject is Player
+                     action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
