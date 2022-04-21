@@ -46,6 +46,7 @@ public class Board : MonoBehaviour
     public int width = 5;
     public int height = 5;
     public bool boundsEnabled = true;
+    public bool collidablesEnabled = true;
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -113,17 +114,16 @@ public class Board : MonoBehaviour
 
     public List<IActionRule> actionRules = new List<IActionRule>();
 
-    public List<CollidableObject> collidables;
-    public List<Vector2Int> collidableCoordinates;
+    public Dictionary<Vector2Int, CollidableObject> collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
 
     private int maxActions = 0;
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        //
-        //Needs to be updated with ability to distinguish between BoardObjects
-        //
-        return !collidableCoordinates.Contains(coordinate);
+        bool canPass = !collidableCoordinates.ContainsKey(coordinate)
+                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass();
+        bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
+        return canPass && inBounds;
     }
 
     private void OnEnable()
@@ -143,12 +143,8 @@ public class Board : MonoBehaviour
         numBugs = CountBoardObjectsOfType<Arthropod>();
 
         //Initialize collidables list
-        collidables = new List<CollidableObject>(GetBoardObjectsOfType<CollidableObject>());
-
-        collidableCoordinates = new List<Vector2Int>();
-
-        foreach(CollidableObject collidable in collidables) {
-            collidableCoordinates.Add(collidable.coordinate);
+        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {
+            collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 
         actionRules.Add(
@@ -176,11 +172,10 @@ public class Board : MonoBehaviour
                 this,
                 enableConditions: new List<EFMActionRule.EnableCondition> {
                     (BoardObject creator, Board board)
-                        => board != null && boundsEnabled
+                        => board != null && collidablesEnabled
                 },
                 filter: (BoardAction action) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
+                    action is MovementAction movementAction
                     && !CanEnterCoordinate(action.boardObject, 
                         new Vector2Int(
                             action.boardObject.coordinate.x + movementAction.direction.x,
