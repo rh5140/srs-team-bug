@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: 987ddceb67f9d7a4187b5049ebe3dde7
+guid: 2c8652fe5f9621040af9cbcd087d3011
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6245307983059423691
-    second: yellow_wasp
+      213: -6708990653795526697
+    second: breakable_rock
   - first:
-      213: -6396053138045743586
-    second: black_fly
+      213: -7593956154430336754
+    second: crate
   - first:
-      213: -3521172122499160032
-    second: blue_fly
+      213: 1103452641039721739
+    second: teleport_pad_blue
   - first:
-      213: -1243984323202496530
-    second: red_wasp
-  - first:
-      213: -1008849718569602749
-    second: pink_worm
-  - first:
-      213: 1193045524164413403
-    second: brown_worm
+      213: -3596702748868912979
+    second: teleport_pad_pink
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -109,127 +103,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: yellow_wasp
+      name: breakable_rock
       rect:
         serializedVersion: 2
-        x: 6
-        y: 40
-        width: 22
-        height: 24
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53ee4dc7a753459a0800000000000000
-      internalID: -6245307983059423691
+      spriteID: 7d71a1fcb80e4e2a0800000000000000
+      internalID: -6708990653795526697
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: black_fly
+      name: crate
       rect:
         serializedVersion: 2
-        x: 33
-        y: 45
-        width: 17
-        height: 15
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1ec2460f87ac37a0800000000000000
-      internalID: -6396053138045743586
+      spriteID: e01d94fac19dc9690800000000000000
+      internalID: -7593956154430336754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blue_fly
+      name: teleport_pad_blue
       rect:
         serializedVersion: 2
-        x: 60
-        y: 45
-        width: 17
-        height: 15
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 028ed6d4c98422fc0800000000000000
-      internalID: -3521172122499160032
+      spriteID: b05a3a7a450405f00800000000000000
+      internalID: 1103452641039721739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: red_wasp
+      name: teleport_pad_pink
       rect:
         serializedVersion: 2
-        x: 6
-        y: 8
-        width: 22
-        height: 24
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee74c5559da7cbee0800000000000000
-      internalID: -1243984323202496530
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pink_worm
-      rect:
-        serializedVersion: 2
-        x: 39
-        y: 17
-        width: 13
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 341f7eca688dff1f0800000000000000
-      internalID: -1008849718569602749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: brown_worm
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 17
-        width: 13
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd780bc459c8e8010800000000000000
-      internalID: 1193045524164413403
+      spriteID: da85ff2f7e1f51ec0800000000000000
+      internalID: -3596702748868912979
       vertices: []
       indices: 
       edges: []
