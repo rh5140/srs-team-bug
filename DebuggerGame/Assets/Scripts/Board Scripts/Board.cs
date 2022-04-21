@@ -211,7 +211,7 @@ public class Board : MonoBehaviour
         lastBoardEvent = EventState.Execute;
         ExecuteEvent.Invoke();
 
-        StartCoroutine(EndTurnCounter(TimePerAction * maxActions));
+        StartCoroutine(EndTurnCounter(TimePerAction * (maxActions == 0 ? 0.2f : maxActions)));
     }
 
 

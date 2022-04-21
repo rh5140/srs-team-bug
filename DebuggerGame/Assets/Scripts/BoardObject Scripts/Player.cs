@@ -6,13 +6,35 @@ public class Player : BoardObject
 {
     public InventorySystem collection;
 
+    public Arthropod heldArthropod;
+        
+    protected override void Start()
+    {
+        base.Start();
+        heldArthropod = null;
+    }
+
+    public void setArthropod(Arthropod heldArthropod)
+    {
+        this.heldArthropod = heldArthropod;
+    }
+
+
     protected override void Update()
     {
         base.Update();
         if (board.lastBoardEvent == Board.EventState.StartTurn)
         {
-            // only move if during a turn
+            //release captured arthropod!
+            float release = Input.GetAxisRaw("Release");
+            if (!Mathf.Approximately(release, 0f) && heldArthropod != null)
+            {
+                Debug.Log("R");
+                heldArthropod.Release(this.gameObject);
+            }
 
+            // only move if during a turn
+            
             Vector2 input = new Vector2(
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical")
@@ -73,10 +95,10 @@ public class Player : BoardObject
         //Coordinate based implementation for bug catching
         foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
-            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate)
+            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate && heldArthropod == null)
             {
                 board.BugCountUpdate();
-                arthropod.Catch();
+                arthropod.Catch(this.gameObject);
                 break;
             }
         }
