@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestBug : Arthropod
+public class TestBugHold : Arthropod
 {
     BoardAction RuleMap(BoardAction action)
     {
@@ -19,7 +19,7 @@ public class TestBug : Arthropod
                 board,
                 enableConditions: new List<EFMActionRule.EnableCondition> {
                     (BoardObject creator, Board board)
-                        => creator is Arthropod arthropod && !arthropod.isCaught && arthropod.rulesEnabled
+                        => creator is Arthropod arthropod && arthropod.rulesEnabled
                 },
                 filter: (BoardAction action) =>
                     action.boardObject is Player
@@ -29,9 +29,6 @@ public class TestBug : Arthropod
             )
         );
     }
-    protected override void OnEndTurn() {
-        base.OnEndTurn();
 
-        actions.Enqueue(new MovementAction(this, Vector2Int.right));
-    }
+
 }
