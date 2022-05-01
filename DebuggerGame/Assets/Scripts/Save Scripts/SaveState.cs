@@ -5,37 +5,49 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
-public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
+[CreateAssetMenu(fileName = "New Save State", menuName = "Save System/Save State")]
+public class SaveState : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath;
-    public ArthropodDatabase database;
-    public List<InventorySlot> Container = new List<InventorySlot>();
 
+    [SerializeField]
+    //Level info
+    public int currentLevel;
+    //public levelDatabase levelDatabase;
+    //public List<Level> completedLevels = new List<Level>();
+
+    //Map info
+    public Vector2Int mapPosition;
+
+    //Collection info
+    public ArthropodDatabase arthropodDatabase;
+    public List<InventorySlot> Collection = new List<InventorySlot>();
     private void OnEnable()
     {
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
 #if UNITY_EDITOR
-        database = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
+        arthropodDatabase = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
 #else
-        database = Resources.Load<ArthropodDatabase>("Arthropod Database");
+        arthropodDatabase = Resources.Load<ArthropodDatabase>("Arthropod Database");
 #endif
     }
     public void AddArthropod(ArthropodData _arthropodData, int _amount)
     {
-        for (int i = 0; i < Container.Count; i++)
+        for (int i = 0; i < Collection.Count; i++)
         {
-            if (Container[i].arthropodData == _arthropodData)
+            if (Collection[i].arthropodData == _arthropodData)
             {
-                Container[i].addAmount(_amount);
+                Collection[i].addAmount(_amount);
                 return;
             }
         }
-        Container.Add(new InventorySlot(database.GetId[_arthropodData], _arthropodData, _amount));
+        Collection.Add(new InventorySlot(arthropodDatabase.GetId[_arthropodData], _arthropodData, _amount));
     }
 
     public void Save()
     {
         string saveData = JsonUtility.ToJson(this, true);
+        Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         bf.Serialize(file, saveData);
@@ -59,9 +71,9 @@ public class InventorySystem : ScriptableObject, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        for (int i = 0; i < Container.Count; i++)
+        for (int i = 0; i < Collection.Count; i++)
         {
-            Container[i].arthropodData = database.GetArthropod[Container[i].ID];
+            Collection[i].arthropodData = arthropodDatabase.GetArthropod[Collection[i].ID];
         }
     }
 }

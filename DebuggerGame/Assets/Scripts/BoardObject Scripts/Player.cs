@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : BoardObject
 {
+
     public InventorySystem collection;
 
     public Arthropod heldArthropod;
@@ -18,7 +19,6 @@ public class Player : BoardObject
     {
         this.heldArthropod = heldArthropod;
     }
-
 
     protected override void Update()
     {
@@ -120,6 +120,5 @@ public class Player : BoardObject
 
     private void OnApplicationQuit()
     {
-        collection?.Container.Clear();
     }
 }
