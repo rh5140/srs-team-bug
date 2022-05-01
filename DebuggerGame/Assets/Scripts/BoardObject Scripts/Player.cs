@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Player : BoardObject
 {
-
-    public InventorySystem collection;
-
     public Arthropod heldArthropod;
         
     protected override void Start()
