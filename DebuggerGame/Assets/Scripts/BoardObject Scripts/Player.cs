@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player : BoardObject
 {
 
-    public InventorySystem collection;
+    public SaveState collection;
+    // public InventorySystem collection;
 
     public Arthropod heldArthropod;
         
