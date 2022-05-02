@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI_script : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("world_map");
+        SceneManager.LoadScene("save menu");
     }
 
     public void quit_game()
@@ -40,8 +41,20 @@ public class UI_script : MonoBehaviour
 
     public void LoadSave(int saveNum)
     {
-        SaveManager.instance.LoadSave(saveNum);
-        System.Console.Write(saveNum);
-        SceneManager.LoadScene("collection");
+        if (GameObject.Find("save" + saveNum + "Button").GetComponentInChildren<Text>().text == "New Save")
+        {
+            SaveManager.instance.NewSave(saveNum);
+        }
+        else
+        {
+            SaveManager.instance.LoadSave(saveNum);
+            Debug.Log(saveNum);
+            SceneManager.LoadScene("world_map");
+        }
+    }
+
+    public void DeleteSave(int saveNum)
+    {
+        SaveManager.instance.ClearSave(saveNum);
     }
 }

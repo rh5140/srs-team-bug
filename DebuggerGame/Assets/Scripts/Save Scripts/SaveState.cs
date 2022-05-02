@@ -11,6 +11,8 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public string savePath;
 
     [SerializeField]
+    public bool saveCreated;
+
     //Level info
     public int currentLevel;
     //public levelDatabase levelDatabase;
