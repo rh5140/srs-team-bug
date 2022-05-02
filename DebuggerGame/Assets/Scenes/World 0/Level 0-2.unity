@@ -640,10 +640,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 161858297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f40d18061c6d44c90f34ec5d9629d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  myTurn: 0
 --- !u!4 &175898686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286820799582127423, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
@@ -1412,10 +1413,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 387272558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f40d18061c6d44c90f34ec5d9629d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  myTurn: 0
 --- !u!1001 &402305278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1730,10 +1732,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 520664383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f40d18061c6d44c90f34ec5d9629d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  myTurn: 0
 --- !u!1001 &527872047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2507,10 +2510,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 790156888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f40d18061c6d44c90f34ec5d9629d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  myTurn: 0
 --- !u!1001 &817115779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8286,7 +8290,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086945739}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 144e170b4de119b4194f6b6a24173400, type: 3}
   m_Name: 

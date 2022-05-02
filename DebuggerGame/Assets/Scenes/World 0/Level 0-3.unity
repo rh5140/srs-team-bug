@@ -3502,10 +3502,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1113044952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f40d18061c6d44c90f34ec5d9629d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  myTurn: 0
 --- !u!1001 &1124187317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3845,7 +3846,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463214810}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 144e170b4de119b4194f6b6a24173400, type: 3}
   m_Name: 
