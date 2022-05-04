@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollidableObject : BoardObject
 {
-    virtual protected bool bugsCanPass => true;
+    public bool bugsCanPass = false;
 
     public bool BugsCanPass() {
         return bugsCanPass;
