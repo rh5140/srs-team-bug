@@ -50,9 +50,6 @@ public class Player : BoardObject
                 heldArthropod.Swallow(this.gameObject);
             }
 
-            
-
-
             // only move if during a turn
 
             Vector2 input = new Vector2(

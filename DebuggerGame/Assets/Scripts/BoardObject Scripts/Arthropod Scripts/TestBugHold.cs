@@ -19,7 +19,7 @@ public class TestBugHold : Arthropod
                 board,
                 enableConditions: new List<EFMActionRule.EnableCondition> {
                     (BoardObject creator, Board board)
-                        => creator is Arthropod arthropod && arthropod.rulesEnabled
+                        => creator is Arthropod arthropod && arthropod.rulesEnabled && arthropod.gameObject.activeSelf
                 },
                 filter: (BoardAction action) =>
                     action.boardObject is Player
