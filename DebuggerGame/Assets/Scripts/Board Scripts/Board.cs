@@ -27,7 +27,11 @@ public class Board : MonoBehaviour
 
     public List<BoardObject> boardObjects;
 
-    public void BugCountUpdate()
+    public void BugCountIncrement()
+    {
+        numBugs++;
+    }
+    public void BugCountDecrement()
     {
         numBugs--;
     }
@@ -257,6 +261,10 @@ public class Board : MonoBehaviour
     {
         winConditions[index] = value;
         gameWon = !winConditions.Contains(false);
+        if (gameWon)
+        {
+            Debug.Log("You won woo.");
+        }
     }
 
 
