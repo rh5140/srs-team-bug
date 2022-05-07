@@ -17,10 +17,8 @@ public class TestBugHold : Arthropod
             new EFMActionRule(
                 this,
                 board,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => creator is Arthropod arthropod && arthropod.rulesEnabled
-                },
+                enableCondition: (BoardObject creator, Board board)
+                        => creator is Arthropod arthropod && arthropod.rulesEnabled,
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
