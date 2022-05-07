@@ -118,7 +118,7 @@ public class Board : MonoBehaviour
 
     public List<IActionRule> actionRules = new List<IActionRule>();
 
-    public Dictionary<Vector2Int, CollidableObject> collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
+    public Dictionary<Vector2Int, CollidableObject> collidableCoordinates;
 
     private int maxActions = 0;
 
@@ -141,13 +141,14 @@ public class Board : MonoBehaviour
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
 
+        collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
 
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
 
         //Initialize collidables list
-        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {
+        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
             collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 

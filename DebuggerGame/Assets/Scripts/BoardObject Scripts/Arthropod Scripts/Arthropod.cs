@@ -23,7 +23,6 @@ abstract public class Arthropod : BoardObject
         rulesEnabled = false;
         transform.SetParent(player.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = false;
-        Debug.Log(this.gameObject.activeSelf);
         player.GetComponent<Player>().setArthropod(this.GetComponent<Arthropod>());
         board.BugCountDecrement();
     }
@@ -59,6 +58,7 @@ abstract public class Arthropod : BoardObject
     {
         base.OnStartTurn();
         this.coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+
         //Debug.Log(this.coordinate);
     }
 }

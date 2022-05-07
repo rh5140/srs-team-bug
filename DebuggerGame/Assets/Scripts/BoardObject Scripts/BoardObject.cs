@@ -72,11 +72,16 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
+    private void Awake()
     {
         // TODO: Sanitize position to be on the grid?
         // TODO: If there is an offset from the grid, implement for coordinate
         coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+    protected virtual void Start()
+    {
+        
+        
 
         board = Board.instance;
 

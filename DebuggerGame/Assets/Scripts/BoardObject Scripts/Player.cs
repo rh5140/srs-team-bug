@@ -35,7 +35,7 @@ public class Player : BoardObject
 
         if (board.lastBoardEvent == Board.EventState.StartTurn)
         {
-            Debug.Log("Running");
+            //Debug.Log("Running");
 
             //release captured arthropod!
             float release = Input.GetAxisRaw("Release");
