@@ -23,6 +23,7 @@ abstract public class Arthropod : BoardObject
         rulesEnabled = false;
         transform.SetParent(player.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = false;
+        Debug.Log(this.gameObject.activeSelf);
         player.GetComponent<Player>().setArthropod(this.GetComponent<Arthropod>());
         board.BugCountDecrement();
     }
@@ -43,11 +44,10 @@ abstract public class Arthropod : BoardObject
         board.SetWinCondition(winConIndex, true);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
+        RemoveListeners();
         this.gameObject.SetActive(false);
         Debug.Log("Swallowed");
     }
-
-
 
     protected void AddActionRule(IActionRule rule)
     {

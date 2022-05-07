@@ -104,6 +104,17 @@ abstract public class BoardObject : MonoBehaviour
         board.PostExecuteEvent.RemoveAllListeners();
     }
 
+    //removes listeners for the functions of this boardobject
+    public void RemoveListeners()
+    {
+        board.StartTurnEvent.RemoveListener(OnStartTurn);
+        board.EndTurnEvent.RemoveListener(OnEndTurn);
+        board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
+        board.PreExecuteEvent.RemoveListener(OnPostExecute);
+        board.ExecuteEvent.RemoveListener(OnExecute);
+        board.PostExecuteEvent.RemoveListener(OnPostExecute);
+    }
+
     protected virtual void Update()
     {
         if(board.lastBoardEvent == Board.EventState.Execute)
