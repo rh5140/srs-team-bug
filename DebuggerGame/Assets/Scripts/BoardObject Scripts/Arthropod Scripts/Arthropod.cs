@@ -6,7 +6,7 @@ abstract public class Arthropod : BoardObject
 {
     public bool isCaught { get; private set; } = false;
     public bool rulesEnabled = true;
-
+    
 
     public List<IActionRule> rules { get; protected set; } = new List<IActionRule>();
 

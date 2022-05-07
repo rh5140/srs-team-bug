@@ -229,11 +229,23 @@ public class Board : MonoBehaviour
         maxActions = nActions > maxActions ? nActions : maxActions;
     }
 
+    public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
+        return boardObject.coordinate.x <= rangedBug.coordinate.x + rangedBug.range &&
+           boardObject.coordinate.x >= rangedBug.coordinate.x - rangedBug.range &&
+           boardObject.coordinate.y <= rangedBug.coordinate.y + rangedBug.range &&
+           boardObject.coordinate.y >= rangedBug.coordinate.y - rangedBug.range;
+    }
+
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
     {
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
+            if (rule.creator is RangedBug) {
+                RangedBug creator = (RangedBug)rule.creator;
+                if (!isInRange(boardObject, creator))
+                    continue;
+            }
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {
