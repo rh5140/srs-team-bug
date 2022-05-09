@@ -28,5 +28,11 @@ public class TestBugHold : Arthropod
         );
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        Debug.Log("Active Updating");
+    }
+
 
 }
