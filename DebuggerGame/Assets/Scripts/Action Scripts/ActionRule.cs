@@ -11,45 +11,54 @@ public interface IActionRule
     public BoardAction Execute(BoardAction action);
 }
 
-public class EFMActionRule : IActionRule
+public abstract class EFActionRule : IActionRule
 {
-    public BoardObject creator { get; private set; }
-    public Board board { get; private set; }
-
-    public List<EnableCondition> enableConditions;
-    private Filter filter;
-    private Map map;
-
     public delegate bool EnableCondition(BoardObject creator, Board board);
     public delegate bool Filter(BoardAction action);
-    public delegate BoardAction Map(BoardAction action);
 
-    public EFMActionRule(
+    public BoardObject creator { get; protected set; }
+    public Board board { get; protected set; }
+
+    protected EnableCondition enableCondition;
+    protected Filter filter;
+
+    public EFActionRule(
         BoardObject creator,
-        Board board, 
-        List<EnableCondition> enableConditions,
-        Filter filter,
-        Map map)
+        Board board,
+        EnableCondition enableCondition,
+        Filter filter)
     {
         this.creator = creator;
         this.board = board;
 
-        this.enableConditions = enableConditions;
+        this.enableCondition = enableCondition;
         this.filter = filter;
+    }
+
+    public abstract BoardAction Execute(BoardAction action);
+}
+
+public class EFMActionRule : EFActionRule
+{
+    public delegate BoardAction Map(BoardAction action);
+
+    private Map map;
+
+    public EFMActionRule(
+        BoardObject creator,
+        Board board, 
+        EnableCondition enableCondition,
+        Filter filter,
+        Map map) : base(creator, board, enableCondition, filter)
+    {
         this.map = map;
     }
 
-    public BoardAction Execute(BoardAction action)
+    public override BoardAction Execute(BoardAction action)
     {
-        if(enableConditions != null)
+        if(!enableCondition?.Invoke(creator, board) ?? false)
         {
-            foreach (EnableCondition enableCondition in enableConditions)
-            {
-                if(enableCondition(creator, board) == false)
-                {
-                    return action;
-                }
-            }
+            return action;
         }
 
         // filter?.Invoke ?? true means invoke if filter is nonnull, otherwise true
@@ -59,4 +68,21 @@ public class EFMActionRule : IActionRule
         }
         return action;
     }
+}
+
+
+public class EFActionDeleterRule : EFMActionRule
+{
+    public EFActionDeleterRule(
+        BoardObject creator,
+        Board board,
+        EnableCondition enableCondition,
+        Filter filter) : base(
+            creator,
+            board,
+            enableCondition,
+            filter,
+            (BoardAction action) => new NullAction(action.boardObject)
+        )
+    { }
 }
