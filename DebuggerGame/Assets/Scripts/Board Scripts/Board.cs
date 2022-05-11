@@ -184,6 +184,29 @@ public class Board : MonoBehaviour
                 map: (BoardAction action) => {return new NullAction(action.boardObject);}
             )
         );
+
+        actionRules.Add(
+            new EFMActionRule(
+                null,
+                this,
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board)
+                        => board != null && boundsEnabled
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    ) is PushableObject
+                    && !(((PushableObject)GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    )).Push(movementAction.direction)),
+                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+            )
+        );
     }
 
     private void OnDisable()
