@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Board : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Board : MonoBehaviour
         PreExecute,
         Execute,
         PostExecute,
+        EndLevel,
     }
 
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
@@ -115,6 +117,11 @@ public class Board : MonoBehaviour
     /// </summary>
     public Event PostExecuteEvent = new Event();
 
+    /// <summary>
+    /// Event raised  after the wincondition is satisfied 
+    /// and before the return to the map screen
+    /// </summary>
+    public Event EndLevelEvent = new Event();
 
     /// <summary>
     /// Action rules take in an action and output a new one
@@ -291,8 +298,22 @@ public class Board : MonoBehaviour
         gameWon = !winConditions.Contains(false);
         if (gameWon)
         {
-            Debug.Log("You won woo.");
+            EndLevel();
         }
+    }
+
+    private string mapSceneName = "world_map";
+
+    private void EndLevel()
+    {
+        lastBoardEvent = EventState.EndLevel;
+        EndLevelEvent.Invoke();
+        TransitionToMap();
+    }
+
+    private void TransitionToMap()
+    {
+        SceneManager.LoadScene(mapSceneName);
     }
 
 
