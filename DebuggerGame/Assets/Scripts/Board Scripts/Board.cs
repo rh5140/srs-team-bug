@@ -140,8 +140,10 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        bool canPass = !collidableCoordinates.ContainsKey(coordinate)
-                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass();
+        bool canPass = (!collidableCoordinates.ContainsKey(coordinate)
+                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
+                    && (!(GetBoardObjectAtCoordinate(coordinate) is PushableObject)
+                    || boardObject is Player);
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
         return canPass && inBounds;
     }
@@ -199,6 +201,29 @@ public class Board : MonoBehaviour
                             action.boardObject.coordinate.x + movementAction.direction.x,
                             action.boardObject.coordinate.y + movementAction.direction.y
                     ))
+            )
+        );
+
+        actionRules.Add(
+            new EFMActionRule(
+                null,
+                this,
+                enableConditions: new List<EFMActionRule.EnableCondition> {
+                    (BoardObject creator, Board board)
+                        => board != null && boundsEnabled
+                },
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    ) is PushableObject
+                    && !(((PushableObject)GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    )).Push(movementAction.direction)),
+                map: (BoardAction action) => {return new NullAction(action.boardObject);}
             )
         );
     }
