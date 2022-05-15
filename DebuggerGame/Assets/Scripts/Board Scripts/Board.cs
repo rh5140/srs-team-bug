@@ -120,8 +120,10 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        bool canPass = !collidableCoordinates.ContainsKey(coordinate)
-                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass();
+        bool canPass = (!collidableCoordinates.ContainsKey(coordinate)
+                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
+                    && (!(GetBoardObjectAtCoordinate(coordinate) is PushableObject)
+                    || boardObject is Player);
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
         return canPass && inBounds;
     }
