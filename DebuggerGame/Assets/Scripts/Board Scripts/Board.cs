@@ -204,14 +204,12 @@ public class Board : MonoBehaviour
             )
         );
 
-        actionRules.Add(
-            new EFMActionRule(
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
                 null,
                 this,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => board != null && boundsEnabled
-                },
+                enableCondition: (BoardObject creator, Board board)
+                        => board != null && boundsEnabled,
                 filter: (BoardAction action) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
@@ -222,8 +220,7 @@ public class Board : MonoBehaviour
                     && !(((PushableObject)GetBoardObjectAtCoordinate(
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
-                    )).Push(movementAction.direction)),
-                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+                    )).Push(movementAction.direction))
             )
         );
     }
