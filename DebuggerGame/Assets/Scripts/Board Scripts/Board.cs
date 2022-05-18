@@ -24,6 +24,10 @@ public class Board : MonoBehaviour
         EndLevel,
     }
 
+    //Name of level and world
+    public string levelName;
+    public List<string> unlockLevels = new List<string>();
+
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     private int numBugs; //Number of bugs currently left in the stage
 
@@ -159,7 +163,7 @@ public class Board : MonoBehaviour
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
-
+       
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
 
@@ -300,6 +304,11 @@ public class Board : MonoBehaviour
         {
             EndLevel();
         }
+    }
+
+    public void InstantWin()
+    {
+        EndLevel();
     }
 
     private string mapSceneName = "world_map";

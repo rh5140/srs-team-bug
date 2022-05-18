@@ -2945,6 +2945,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelName: 0002
+  unlockLevels:
+  - 0003
   boardObjects: []
   width: 21
   height: 16

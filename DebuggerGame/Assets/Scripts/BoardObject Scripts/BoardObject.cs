@@ -96,6 +96,7 @@ abstract public class BoardObject : MonoBehaviour
         board.PreExecuteEvent.AddListener(OnPreExecute);
         board.ExecuteEvent.AddListener(OnExecute);
         board.PostExecuteEvent.AddListener(OnPostExecute);
+        board.EndLevelEvent.AddListener(OnEndLevel);
     }
 
 
@@ -107,6 +108,7 @@ abstract public class BoardObject : MonoBehaviour
         board.PreExecuteEvent.RemoveAllListeners();
         board.ExecuteEvent.RemoveAllListeners();
         board.PostExecuteEvent.RemoveAllListeners();
+        board.EndLevelEvent.RemoveAllListeners();
     }
 
     //removes listeners for the functions of this boardobject
@@ -118,6 +120,7 @@ abstract public class BoardObject : MonoBehaviour
         board.PreExecuteEvent.RemoveListener(OnPostExecute);
         board.ExecuteEvent.RemoveListener(OnExecute);
         board.PostExecuteEvent.RemoveListener(OnPostExecute);
+        board.EndLevelEvent.RemoveListener(OnEndLevel);
     }
 
     protected virtual void Update()
@@ -223,4 +226,11 @@ abstract public class BoardObject : MonoBehaviour
         }
         executingActionOffset = null;
     }
+
+    /// <summary>
+    /// Method to be called when the level finishes
+    /// </summary>
+    /// <see cref="Board.ExecuteEvent"/>
+    protected virtual void OnEndLevel()
+    { }
 }
