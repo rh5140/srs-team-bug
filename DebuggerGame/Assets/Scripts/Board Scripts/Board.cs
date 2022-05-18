@@ -24,8 +24,10 @@ public class Board : MonoBehaviour
         EndLevel,
     }
 
-    //Name of level and world
+    //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
+    //Example levelName: 0000 (world 0 level 0)
     public string levelName;
+    //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
@@ -312,8 +314,10 @@ public class Board : MonoBehaviour
         EndLevel();
     }
 
+    //Name of the world map scene
     private string mapSceneName = "world_map";
 
+    //Method to call upon level ending
     private void EndLevel()
     {
         lastBoardEvent = EventState.EndLevel;
@@ -321,6 +325,7 @@ public class Board : MonoBehaviour
         TransitionToMap();
     }
 
+    //Change scene to world map scene
     private void TransitionToMap()
     {
         SceneManager.LoadScene(mapSceneName);

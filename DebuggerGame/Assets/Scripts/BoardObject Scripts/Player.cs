@@ -127,6 +127,8 @@ public class Player : BoardObject
         }
     }
 
+    //To be called when the level ends
+    //Adds all of the unlockLevels in board to the unlockedLevels in collection
     protected override void OnEndLevel()
     {
         base.OnEndLevel();
