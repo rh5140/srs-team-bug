@@ -306,6 +306,7 @@ public class Board : MonoBehaviour
         }
     }
 
+    //Call this method to instantly win
     public void InstantWin()
     {
         EndLevel();

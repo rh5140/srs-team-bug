@@ -80,9 +80,6 @@ abstract public class BoardObject : MonoBehaviour
     }
     protected virtual void Start()
     {
-        
-        
-
         board = Board.instance;
 
         // Add handlers

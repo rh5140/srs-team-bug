@@ -36,6 +36,7 @@ public class Player : BoardObject
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        //Instawin upon hitting G key (TEMP)
         if (Input.GetKeyDown(KeyCode.G))
         {
             Board.instance.InstantWin();
