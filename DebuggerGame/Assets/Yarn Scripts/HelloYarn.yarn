@@ -1,11 +1,15 @@
 ﻿title: Start
 ---
-Test: Wow!
-Test: My first ever Yarn script in Unity!
+<<SetSprite Sprite Player>>
+You: Hello!
+<<SetSprite Sprite Other>>
+Fly King: Bzzzzt
+Fly King: Bzzzt
 
 -> Gosh!
 -> Incredible!
 -> I'm amazed!
 
-Test: Anyway, time to get writing!
+<<SetSprite Sprite Player>>
+You: Anyway, time to get writing!
 ===
