@@ -36,8 +36,9 @@ public class Player : BoardObject
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        //Instawin upon hitting G key (TEMP)
-        if (Input.GetKeyDown(KeyCode.G))
+        //Instawin upon hitting correct key (TEMP)
+        float win = Input.GetAxisRaw("Win");
+        if (!Mathf.Approximately(win, 0f))
         {
             Board.instance.InstantWin();
         }
