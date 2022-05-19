@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
     public static Board instance { get; private set; } = null;
 
 
-    public const float TimePerAction = 1.0f;
+    public const float TimePerAction = 0.3f;
 
     //Bounds
     public int width = 5;
