@@ -19,7 +19,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("world_map");
+        SceneManager.LoadScene("World Map");
     }
 
     public void quit_game()
@@ -29,19 +29,19 @@ public class UI_script : MonoBehaviour
 
     public void openCollection()
     {
-        SceneManager.LoadScene("collection");
+        SceneManager.LoadScene("Collection");
     }
 
     public void backToMain()
     {
         //SaveManager.instance.ResetSave();
-        SceneManager.LoadScene("save menu");
+        SceneManager.LoadScene("Save Menu");
     }
 
     public void LoadSave(int saveNum)
     {
         SaveManager.instance.LoadSave(saveNum);
         System.Console.Write(saveNum);
-        SceneManager.LoadScene("collection");
+        SceneManager.LoadScene("Collection");
     }
 }

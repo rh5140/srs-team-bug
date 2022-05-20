@@ -71,7 +71,13 @@ public class UI : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("main_menu");
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void LoadMap()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("World Map");
     }
 
     public void OpenMap()
