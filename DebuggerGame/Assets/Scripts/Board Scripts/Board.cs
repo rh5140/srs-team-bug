@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Board : MonoBehaviour
 {
@@ -20,14 +21,25 @@ public class Board : MonoBehaviour
         PreExecute,
         Execute,
         PostExecute,
+        EndLevel,
     }
+
+    //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
+    //Example levelName: 0000 (world 0 level 0)
+    public string levelName;
+    //The levelNames of the levels that are unlocked upon finishing this level
+    public List<string> unlockLevels = new List<string>();
 
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     private int numBugs; //Number of bugs currently left in the stage
 
     public List<BoardObject> boardObjects;
 
-    public void BugCountUpdate()
+    public void BugCountIncrement()
+    {
+        numBugs++;
+    }
+    public void BugCountDecrement()
     {
         numBugs--;
     }
@@ -40,7 +52,7 @@ public class Board : MonoBehaviour
     public static Board instance { get; private set; } = null;
 
 
-    public const float TimePerAction = 1.0f;
+    public const float TimePerAction = 0.3f;
 
     //Bounds
     public int width = 5;
@@ -111,17 +123,33 @@ public class Board : MonoBehaviour
     /// </summary>
     public Event PostExecuteEvent = new Event();
 
+    /// <summary>
+    /// Event raised  after the wincondition is satisfied 
+    /// and before the return to the map screen
+    /// </summary>
+    public Event EndLevelEvent = new Event();
 
+    /// <summary>
+    /// Action rules take in an action and output a new one
+    /// </summary>
     public List<IActionRule> actionRules = new List<IActionRule>();
 
-    public Dictionary<Vector2Int, CollidableObject> collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
+    /// <summary>
+    /// Action filter rules are action rules that only delete/keep actions, not modify
+    /// </summary>
+    public List<IActionRule> actionFilterRules = new List<IActionRule>();
+
+
+    public Dictionary<Vector2Int, CollidableObject> collidableCoordinates;
 
     private int maxActions = 0;
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        bool canPass = !collidableCoordinates.ContainsKey(coordinate)
-                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass();
+        bool canPass = (!collidableCoordinates.ContainsKey(coordinate)
+                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
+                    && (!(GetBoardObjectAtCoordinate(coordinate) is PushableObject)
+                    || boardObject is Player);
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
         return canPass && inBounds;
     }
@@ -137,51 +165,68 @@ public class Board : MonoBehaviour
     {
         StartTurnEvent.AddListener(this.OnStartTurn);
 
+        collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
-
+       
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
 
         //Initialize collidables list
-        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {
+        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
             collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 
-        actionRules.Add(
-            new EFMActionRule(
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
                 null,
                 this,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => board != null && boundsEnabled
-                },
+                enableCondition: (BoardObject creator, Board board) =>
+                    board != null
+                    && boundsEnabled,
                 filter: (BoardAction action) =>
                     //action.boardObject is Player
                      action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
-                        action.boardObject.coordinate.y + movementAction.direction.y >= height),
-                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+                        action.boardObject.coordinate.y + movementAction.direction.y >= height)
             )
         );
 
-        actionRules.Add(
-            new EFMActionRule(
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
                 null,
                 this,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => board != null && collidablesEnabled
-                },
+                enableCondition: (BoardObject creator, Board board) =>
+                    board != null
+                    && boundsEnabled,
                 filter: (BoardAction action) =>
                     action is MovementAction movementAction
                     && !CanEnterCoordinate(action.boardObject, 
                         new Vector2Int(
                             action.boardObject.coordinate.x + movementAction.direction.x,
                             action.boardObject.coordinate.y + movementAction.direction.y
-                    )),
-                map: (BoardAction action) => {return new NullAction(action.boardObject);}
+                    ))
+            )
+        );
+
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
+                null,
+                this,
+                enableCondition: (BoardObject creator, Board board)
+                        => board != null && boundsEnabled,
+                filter: (BoardAction action) =>
+                    action.boardObject is Player
+                    && action is MovementAction movementAction
+                    && GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    ) is PushableObject
+                    && !(((PushableObject)GetBoardObjectAtCoordinate(
+                        action.boardObject.coordinate.x + movementAction.direction.x,
+                        action.boardObject.coordinate.y + movementAction.direction.y
+                    )).Push(movementAction.direction))
             )
         );
     }
@@ -224,10 +269,32 @@ public class Board : MonoBehaviour
         maxActions = nActions > maxActions ? nActions : maxActions;
     }
 
+    public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
+        return boardObject.coordinate.x <= rangedBug.coordinate.x + rangedBug.range &&
+           boardObject.coordinate.x >= rangedBug.coordinate.x - rangedBug.range &&
+           boardObject.coordinate.y <= rangedBug.coordinate.y + rangedBug.range &&
+           boardObject.coordinate.y >= rangedBug.coordinate.y - rangedBug.range;
+    }
+
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
     {
         var currentAction = boardAction;
         foreach (var rule in actionRules)
+        {
+            if (rule.creator is RangedBug) {
+                RangedBug creator = (RangedBug)rule.creator;
+                if (!isInRange(boardObject, creator))
+                    continue;
+            }
+            var newAction = rule.Execute(currentAction);
+            if (!ReferenceEquals(newAction, currentAction))
+            {
+                newAction.modifiedBy = currentAction.modifiedBy;
+                newAction.modifiedBy.Add(rule);
+            }
+            currentAction = newAction;
+        }
+        foreach (var rule in actionFilterRules)
         {
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
@@ -257,6 +324,33 @@ public class Board : MonoBehaviour
     {
         winConditions[index] = value;
         gameWon = !winConditions.Contains(false);
+        if (gameWon)
+        {
+            EndLevel();
+        }
+    }
+
+    //Call this method to instantly win
+    public void InstantWin()
+    {
+        EndLevel();
+    }
+
+    //Name of the world map scene
+    private string mapSceneName = "world_map";
+
+    //Method to call upon level ending
+    private void EndLevel()
+    {
+        lastBoardEvent = EventState.EndLevel;
+        EndLevelEvent.Invoke();
+        TransitionToMap();
+    }
+
+    //Change scene to world map scene
+    private void TransitionToMap()
+    {
+        SceneManager.LoadScene(mapSceneName);
     }
 
 

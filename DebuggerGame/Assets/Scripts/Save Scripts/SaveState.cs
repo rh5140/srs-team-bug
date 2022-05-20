@@ -14,9 +14,11 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public bool saveCreated;
 
     //Level info
-    public int currentLevel;
+    public string currentLevel;
+    public HashSet<string> unlockedLevels = new HashSet<string>();
+
     //public levelDatabase levelDatabase;
-    //public List<Level> completedLevels = new List<Level>();
+
 
     //Map info
     public Vector2Int mapPosition;
@@ -26,6 +28,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public List<InventorySlot> Collection = new List<InventorySlot>();
     private void OnEnable()
     {
+        unlockedLevels.Add("0000");
         hideFlags = HideFlags.DontUnloadUnusedAsset;
 #if UNITY_EDITOR
         arthropodDatabase = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));
@@ -63,7 +66,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
             JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-            file.Close();
+            file.Close();  
         }
     }
 

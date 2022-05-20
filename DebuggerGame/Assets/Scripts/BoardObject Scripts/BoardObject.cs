@@ -72,12 +72,14 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
+    private void Awake()
     {
         // TODO: Sanitize position to be on the grid?
         // TODO: If there is an offset from the grid, implement for coordinate
         coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
+    }
+    protected virtual void Start()
+    {
         board = Board.instance;
 
         // Add handlers
@@ -91,6 +93,7 @@ abstract public class BoardObject : MonoBehaviour
         board.PreExecuteEvent.AddListener(OnPreExecute);
         board.ExecuteEvent.AddListener(OnExecute);
         board.PostExecuteEvent.AddListener(OnPostExecute);
+        board.EndLevelEvent.AddListener(OnEndLevel);
     }
 
 
@@ -102,6 +105,19 @@ abstract public class BoardObject : MonoBehaviour
         board.PreExecuteEvent.RemoveAllListeners();
         board.ExecuteEvent.RemoveAllListeners();
         board.PostExecuteEvent.RemoveAllListeners();
+        board.EndLevelEvent.RemoveAllListeners();
+    }
+
+    //removes listeners for the functions of this boardobject
+    public void RemoveListeners()
+    {
+        board.StartTurnEvent.RemoveListener(OnStartTurn);
+        board.EndTurnEvent.RemoveListener(OnEndTurn);
+        board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
+        board.PreExecuteEvent.RemoveListener(OnPostExecute);
+        board.ExecuteEvent.RemoveListener(OnExecute);
+        board.PostExecuteEvent.RemoveListener(OnPostExecute);
+        board.EndLevelEvent.RemoveListener(OnEndLevel);
     }
 
     protected virtual void Update()
@@ -207,4 +223,11 @@ abstract public class BoardObject : MonoBehaviour
         }
         executingActionOffset = null;
     }
+
+    /// <summary>
+    /// Method to be called when the level finishes
+    /// </summary>
+    /// <see cref="Board.ExecuteEvent"/>
+    protected virtual void OnEndLevel()
+    { }
 }
