@@ -14,8 +14,11 @@ public class Player : BoardObject
     protected override void Start()
     {
         base.Start();
+        collection.currentLevel = Board.instance.levelName;
         heldArthropod = null;
     }
+
+    
 
     public void setArthropod(Arthropod heldArthropod)
     {
@@ -31,6 +34,13 @@ public class Player : BoardObject
         if (!Mathf.Approximately(restart, 0f))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        //Instawin upon hitting correct key (TEMP)
+        float win = Input.GetAxisRaw("Win");
+        if (!Mathf.Approximately(win, 0f))
+        {
+            Board.instance.InstantWin();
         }
 
         if (board.lastBoardEvent == Board.EventState.StartTurn)
@@ -92,8 +102,6 @@ public class Player : BoardObject
         */
         //actions.Enqueue(DetectBugOverlap()); ?
 
-
-
         /* Physics based implementation for bug catching 
         Collider2D[] objectsOverlap = null;
         objectsOverlap = Physics2D.OverlapBoxAll((Vector2)this.transform.position, new Vector2(0.1f, 0.1f), 0f, int.MinValue, int.MaxValue);
@@ -120,19 +128,18 @@ public class Player : BoardObject
         }
     }
 
-    /*
-    /// <summary>
-    /// DetectBugOverlap detects if player is overlapping a bug, then returns an action that will collect the bug.
-    /// </summary>
-    /// <returns></returns>
-    /// 
-    private BoardAction DetectBugOverlap()
+    //To be called when the level ends
+    //Adds all of the unlockLevels in board to the unlockedLevels in collection
+    protected override void OnEndLevel()
     {
-        //TODO: Action based implementation
-        return null;
+        base.OnEndLevel();
+        collection.currentLevel = null;
+        foreach (string levelName in Board.instance.unlockLevels)
+        {
+            collection.unlockedLevels.Add(levelName);
+        }
+        
     }
-    */
-
 
     private void OnApplicationQuit()
     {
