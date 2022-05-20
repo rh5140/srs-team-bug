@@ -11,8 +11,6 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public string savePath;
 
     [SerializeField]
-    public bool saveCreated;
-
     //Level info
     public string currentLevel;
     public HashSet<string> unlockedLevels = new HashSet<string>();
