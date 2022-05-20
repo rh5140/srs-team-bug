@@ -13,7 +13,9 @@ public class MovingBug : Arthropod
     }
     protected override void OnStartTurn()
     {
+        //Felix: Note that movement continues even after player catches the bug, few different ways to disable this.
         base.OnStartTurn();
+        
         Player player = Board.instance.GetBoardObjectOfType<Player>();
         Vector2Int expectedMove = Vector2Int.zero;
 
