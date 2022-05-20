@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : BoardObject
 {
-
-    public SaveState collection;
-    // public InventorySystem collection;
-
     public Arthropod heldArthropod;
         
     protected override void Start()
