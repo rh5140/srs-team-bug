@@ -4,6 +4,12 @@ using UnityEngine;
 
 abstract public class Arthropod : BoardObject
 {
+    protected static bool DefaultArthropodEnableCondition(BoardObject creator, Board board)
+    {
+        return creator is Arthropod arthropod && arthropod.rulesEnabled;
+    }
+
+
     public bool isCaught { get; private set; } = false;
     public bool rulesEnabled = true;
 
