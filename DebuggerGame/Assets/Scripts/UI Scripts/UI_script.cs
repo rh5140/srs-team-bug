@@ -36,7 +36,7 @@ public class UI_script : MonoBehaviour
     public void backToMain()
     {
         //SaveManager.instance.ResetSave();
-        SceneManager.LoadScene("save menu");
+        SceneManager.LoadScene("main_menu");
     }
 
     public void LoadSave(int saveNum)
