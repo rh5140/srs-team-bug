@@ -1,16 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : BoardObject
 {
-    public InventorySystem collection;
+
+    public SaveState collection;
+    // public InventorySystem collection;
+
+    public Arthropod heldArthropod;
+        
+    protected override void Start()
+    {
+        base.Start();
+        heldArthropod = null;
+    }
+
+    public void setArthropod(Arthropod heldArthropod)
+    {
+        this.heldArthropod = heldArthropod;
+    }
 
     protected override void Update()
     {
         base.Update();
+
+        //Check for restart key (TEMP)
+        float restart = Input.GetAxisRaw("Restart");
+        if (!Mathf.Approximately(restart, 0f))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         if (board.lastBoardEvent == Board.EventState.StartTurn)
         {
+            //Debug.Log("Running");
+
+            //release captured arthropod!
+            float release = Input.GetAxisRaw("Release");
+            if (!Mathf.Approximately(release, 0f) && heldArthropod != null)
+            {
+                heldArthropod.Release(this.gameObject);
+            }
+
+            float swallow = Input.GetAxisRaw("Swallow");
+            if (!Mathf.Approximately(swallow, 0f) && heldArthropod != null)
+            {
+                heldArthropod.Swallow(this.gameObject);
+            }
+
             // only move if during a turn
 
             Vector2 input = new Vector2(
@@ -40,7 +79,7 @@ public class Player : BoardObject
     protected override void OnStartTurn()
     {
         base.OnStartTurn();
-
+        //Debug.Log("New Turn");
         /*
         Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
         however there is currently no implementation for actions to be executed at the beginning of turn 
@@ -73,10 +112,9 @@ public class Player : BoardObject
         //Coordinate based implementation for bug catching
         foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
-            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate)
+            if (!arthropod.isCaught && arthropod.coordinate == this.coordinate && heldArthropod == null)
             {
-                board.BugCountUpdate();
-                arthropod.Catch();
+                arthropod.Catch(this.gameObject);
                 break;
             }
         }
@@ -98,6 +136,5 @@ public class Player : BoardObject
 
     private void OnApplicationQuit()
     {
-        collection?.Container.Clear();
     }
 }
