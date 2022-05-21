@@ -19,7 +19,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("World Map");
+        SceneManager.LoadScene("world_map");
     }
 
     public void quit_game()
@@ -42,6 +42,6 @@ public class UI_script : MonoBehaviour
     {
         SaveManager.instance.LoadSave(saveNum);
         System.Console.Write(saveNum);
-        SceneManager.LoadScene("Collection");
+        SceneManager.LoadScene("world_map");
     }
 }
