@@ -36,7 +36,7 @@ public class CameraManager : MonoBehaviour
 
         // Center camera
         Camera.main.gameObject.transform.position = new Vector3(
-            (board.width)/ 2f + offset.x, (board.height) / 2f + offset.y,
+            (board.width-1)/ 2f + offset.x, (board.height-1) / 2f + offset.y,
             Camera.main.gameObject.transform.position.z
         );
         
