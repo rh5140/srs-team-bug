@@ -64,7 +64,7 @@ public class SaveManager : MonoBehaviour
         save.Load();
         currentLevel = save.currentLevel;
         mapPosition = save.mapPosition;
-        unlockedLevels = save.unlockedLevels;
+        //unlockedLevels = save.unlockedLevels;
     }
 
     public void ClearSave(int saveNum)
