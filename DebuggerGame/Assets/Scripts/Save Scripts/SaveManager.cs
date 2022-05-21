@@ -68,8 +68,9 @@ public class SaveManager : MonoBehaviour
         this.saveNum = saveNum;
         save.Load();
         currentLevel = save.currentLevel;
-        mapPosition = save.mapPosition;
+        // mapPosition = save.mapPosition;
         unlockedLevels = save.unlockedLevels;
+        Collection = save.Collection;
     }
 
     public void ClearSave(int saveNum)
@@ -129,18 +130,4 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void LoadSave(int saveNum)
-    {
-        if (saveNum == 1)
-            save = save1;
-        else if (saveNum == 2)
-            save = save2;
-        else if (saveNum == 3)
-            save = save3;
-        this.saveNum = saveNum;
-        save.Load();
-        currentLevel = save.currentLevel;
-        mapPosition = save.mapPosition;
-        Collection = save.Collection;
-    }
 }
