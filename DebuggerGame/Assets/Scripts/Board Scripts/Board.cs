@@ -24,6 +24,12 @@ public class Board : MonoBehaviour
         EndLevel,
     }
 
+    //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
+    //Example levelName: 0000 (world 0 level 0)
+    public string levelName;
+    //The levelNames of the levels that are unlocked upon finishing this level
+    public List<string> unlockLevels = new List<string>();
+
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     private int numBugs; //Number of bugs currently left in the stage
 
@@ -161,7 +167,7 @@ public class Board : MonoBehaviour
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
-
+       
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
 
@@ -324,8 +330,16 @@ public class Board : MonoBehaviour
         }
     }
 
+    //Call this method to instantly win
+    public void InstantWin()
+    {
+        EndLevel();
+    }
+
+    //Name of the world map scene
     private string mapSceneName = "world_map";
 
+    //Method to call upon level ending
     private void EndLevel()
     {
         lastBoardEvent = EventState.EndLevel;
@@ -333,6 +347,7 @@ public class Board : MonoBehaviour
         TransitionToMap();
     }
 
+    //Change scene to world map scene
     private void TransitionToMap()
     {
         SceneManager.LoadScene(mapSceneName);
