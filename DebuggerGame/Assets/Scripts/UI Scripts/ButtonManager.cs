@@ -12,13 +12,20 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("fk..");
 
         Color newColor;
-        TextMesh[] textMeshes = GetComponentsInChildren<TextMesh>();
-        foreach (TextMesh textMesh in textMeshes)
+
+
+        //TMPro.TextMeshProUGUI[] textMeshes = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        foreach (Transform cTransform in transform)
         {
-            Debug.Log("Color Setting!");
-            newColor = textMesh.color;
-            newColor.a = newColor.a / 2;
-            textMesh.color = newColor;
+            TMPro.TextMeshProUGUI text = cTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            string lName = cTransform.GetComponent<ButtonOnClick>().levelName;
+            if (!collection.unlockedLevels.Contains(lName))
+            {
+                newColor = text.color;
+                newColor.a = newColor.a / 2;
+                text.color = newColor;
+            }
+            
         }
     }
 
