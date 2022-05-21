@@ -20,7 +20,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("save menu");
+        SceneManager.LoadScene("Save Menu");
     }
 
     public void quit_game()
@@ -36,7 +36,12 @@ public class UI_script : MonoBehaviour
     public void backToMain()
     {
         //SaveManager.instance.ResetSave();
-        SceneManager.LoadScene("main_menu");
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void backToSave()
+    {
+        SceneManager.LoadScene("Save Menu");
     }
 
     public void LoadSave(int saveNum)

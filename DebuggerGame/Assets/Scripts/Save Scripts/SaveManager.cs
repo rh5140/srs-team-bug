@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
@@ -37,10 +38,24 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
+        UpdateSaveMenuUI();
         //save = (SaveState)Resources.Load<SaveState>("Assets / Resources / Save State.asset");
         //currentLevel = save.currentLevel;
         //mapPosition = save.mapPosition;
         //Collection = save.Collection;
+    }
+
+    public void NewSave(int saveNum)
+    {
+        if (saveNum == 1)
+            save = save1;
+        else if (saveNum == 2)
+            save = save2;
+        else if (saveNum == 3)
+            save = save3;
+
+        save.saveCreated = true;
+        UpdateSaveMenuUI();
     }
 
     public void ResetSave()
@@ -88,12 +103,50 @@ public class SaveManager : MonoBehaviour
         mapPosition = Vector2Int.zero;
         save.Collection.Clear();
         save.Save();
+        UpdateSaveMenuUI();
 
     }
 
     public void LoadLevel()
     {
         //
+    }
+
+    public void UpdateSaveMenuUI()
+    {
+        if (save1.saveCreated)
+        {
+            GameObject.Find("save1Button").GetComponentInChildren<Text>().text = "Save Slot 1";
+            GameObject.Find("deleteSave1").GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            GameObject.Find("save1Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("deleteSave1").GetComponent<Image>().enabled = false;
+
+        }
+
+        if (save2.saveCreated)
+        {
+            GameObject.Find("save2Button").GetComponentInChildren<Text>().text = "Save Slot 2";
+            GameObject.Find("deleteSave2").GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            GameObject.Find("save2Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("deleteSave2").GetComponent<Image>().enabled = false;
+        }
+
+        if (save3.saveCreated)
+        {
+            GameObject.Find("save3Button").GetComponentInChildren<Text>().text = "Save Slot 3";
+            GameObject.Find("deleteSave3").GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            GameObject.Find("save3Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("deleteSave3").GetComponent<Image>().enabled = false;
+        }
     }
 
     private void Update()

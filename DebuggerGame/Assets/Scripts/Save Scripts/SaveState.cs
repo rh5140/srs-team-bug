@@ -16,7 +16,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public HashSet<string> unlockedLevels = new HashSet<string>();
 
     //public levelDatabase levelDatabase;
-
+    public bool saveCreated;
 
     //Map info
     public Vector2Int mapPosition;
