@@ -17,6 +17,7 @@ public class SaveManager : MonoBehaviour
     public string currentLevel;
     //public levelDatabase levelDatabase;
     //public List<Level> completedLevels = new List<Level>();
+    public HashSet<string> unlockedLevels = new HashSet<string>();
 
     //Map info
     public Vector2Int mapPosition;
@@ -64,7 +65,7 @@ public class SaveManager : MonoBehaviour
         save.Load();
         currentLevel = save.currentLevel;
         mapPosition = save.mapPosition;
-        //unlockedLevels = save.unlockedLevels;
+        unlockedLevels = save.unlockedLevels;
     }
 
     public void ClearSave(int saveNum)
