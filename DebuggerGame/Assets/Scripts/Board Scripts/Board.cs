@@ -148,7 +148,7 @@ public class Board : MonoBehaviour
 
     public Dictionary<Vector2Int, CollidableObject> collidableCoordinates;
 
-    private List<int> actionsLeft = new List<int>();
+    private Dictionary<BoardObject, int> actionsLeftDict = new Dictionary<BoardObject, int>();
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
@@ -189,15 +189,13 @@ public class Board : MonoBehaviour
                 enableCondition: (BoardObject creator, Board board, int? offset) =>
                     board != null
                     && boundsEnabled,
-                filter: (BoardAction action, int? offset) => {
+                filter: (BoardAction action, int? offset) =>
                     //action.boardObject is Player
-                    Debug.Log(action.boardObject.coordinate);
-                    return action is MovementAction movementAction
+                    action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
-                        action.boardObject.coordinate.y + movementAction.direction.y >= height);
-                    }
+                        action.boardObject.coordinate.y + movementAction.direction.y >= height)
             )
         );
 
@@ -268,19 +266,24 @@ public class Board : MonoBehaviour
     }
 
 
-    public int AllocateActionCount()
+    public int AllocateActionsLeft(BoardObject boardObject)
     {
-        actionsLeft.Add(0);
-        return actionsLeft.Count - 1;
+        actionsLeftDict.Add(boardObject, 0);
+        return actionsLeftDict.Count - 1;
+    }
+
+    public void DeallocateActionsLeft(BoardObject boardObject)
+    {
+        actionsLeftDict.Remove(boardObject);
     }
 
     /// <summary>
     /// Sets the max actions for the next turn. This will linearly increase how long the endphase will be.
     /// </summary>
     /// <param name="nActions">Max number of actions taken at end of turn</param>
-    public void SetActionsLeft(int index, int nActions)
+    public void SetActionsLeft(BoardObject boardObject, int nActions)
     {
-        actionsLeft[index] = nActions;
+        actionsLeftDict[boardObject] = nActions;
     }
 
     public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
@@ -466,7 +469,7 @@ public class Board : MonoBehaviour
     /// <returns>generator for coroutine</returns>
     private IEnumerator EndTurnCounter()
     {
-        while(!actionsLeft.TrueForAll(x => x == 0))
+        while(!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
         {
             yield return new WaitForSeconds(TimePerAction);
         }
@@ -483,6 +486,6 @@ public class Board : MonoBehaviour
     /// </summary>
     private void OnStartTurn()
     {
-        actionsLeft.Clear();
+        actionsLeftDict.Clear();
     }
 }

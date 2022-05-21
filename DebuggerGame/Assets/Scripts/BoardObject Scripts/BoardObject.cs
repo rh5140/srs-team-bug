@@ -84,7 +84,7 @@ abstract public class BoardObject : MonoBehaviour
             if(actions.Count == 1)
             {
                 executingActionOffset = actionOffset;
-                board.SetActionsLeft(actionsLeftIndex.Value, 1);
+                board.SetActionsLeft(this, 1);
             }
         }
     }
@@ -132,7 +132,7 @@ abstract public class BoardObject : MonoBehaviour
         board.StartTurnEvent.RemoveListener(OnStartTurn);
         board.EndTurnEvent.RemoveListener(OnEndTurn);
         board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
-        board.PreExecuteEvent.RemoveListener(OnPostExecute);
+        board.PreExecuteEvent.RemoveListener(OnPreExecute);
         board.ExecuteEvent.RemoveListener(OnExecute);
         board.PostExecuteEvent.RemoveListener(OnPostExecute);
         board.EndLevelEvent.RemoveListener(OnEndLevel);
@@ -152,6 +152,7 @@ abstract public class BoardObject : MonoBehaviour
                 {
                     // state dependent filter disallowed action
                     executingAction = null;
+                    board.SetActionsLeft(this, actions.Count);
                 }
                 else
                 {
@@ -164,7 +165,7 @@ abstract public class BoardObject : MonoBehaviour
                     {
                         executingAction.ExecuteFinish();
                         executingAction = null;
-                        board.SetActionsLeft(actionsLeftIndex.Value, actions.Count);
+                        board.SetActionsLeft(this, actions.Count);
                     }
                 }
                 
@@ -182,7 +183,7 @@ abstract public class BoardObject : MonoBehaviour
                 // If it has been at least 1.0 actions since when the action started, the action finished
                 executingAction?.ExecuteFinish();
                 executingAction = null;
-                board.SetActionsLeft(actionsLeftIndex.Value, actions.Count);
+                board.SetActionsLeft(this, actions.Count);
             }
         }
     }
@@ -226,8 +227,8 @@ abstract public class BoardObject : MonoBehaviour
             // If the action uses a turn, then add 1 to max actions
             actionsLeft += action.usesTime ? 1 : 0;
         }
-        actionsLeftIndex = board.AllocateActionCount();
-        board.SetActionsLeft(actionsLeftIndex.Value, actionsLeft);
+        actionsLeftIndex = board.AllocateActionsLeft(this);
+        board.SetActionsLeft(this, actionsLeft);
         // See BoardObject.Update for continuation of the logic
     }
 

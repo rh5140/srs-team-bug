@@ -47,6 +47,7 @@ abstract public class Arthropod : BoardObject
     {
         player.GetComponent<Player>().setArthropod(null);
         board.SetWinCondition(winConIndex, true);
+        board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
         RemoveListeners();
