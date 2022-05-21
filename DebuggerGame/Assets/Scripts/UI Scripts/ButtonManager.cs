@@ -9,7 +9,24 @@ public class ButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("fk..");
 
+        Color newColor;
+
+
+        //TMPro.TextMeshProUGUI[] textMeshes = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        foreach (Transform cTransform in transform)
+        {
+            TMPro.TextMeshProUGUI text = cTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            string lName = cTransform.GetComponent<ButtonOnClick>().levelName;
+            if (!collection.unlockedLevels.Contains(lName))
+            {
+                newColor = text.color;
+                newColor.a = newColor.a / 3;
+                text.color = newColor;
+            }
+            
+        }
     }
 
     public void ButtonMoveScene(string levelName)
