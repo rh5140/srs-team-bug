@@ -35,6 +35,8 @@ child: I like my home... Does it ever get lonely for you when you're travelling?
 	child: wow...
 	child: Do you think I could be a bug hunter like you one day?
 	child: Although... I think I'd still miss home...
+child:...
+You:wait for me here...I'll be back...
 
 
 ===
@@ -48,5 +50,43 @@ child: Why do you think the bugs took over my home?
 -> It's just what bugs do. That's why we have to stop them.
 child: Do you think they're looking for their own homes?
 child: Like you are?
+
+===
+
+title: 3
+---
+An old hunter. He looks tired and grizzled...
+-> Talk to him
+Old Hunter: Hey, blue. Looks like you’re new around here, eh?
+Old Hunter: I’ve been in this bug-catching business since you were just a lil’ seedling. 
+Old Hunter: That’s right, even before The Breach, there were bugs that needed catchin.
+-> The Breach? What's that?
+	Old Hunter: Didn't you graduate from the academy youngin'? You shoulda' learnt that stuff...
+	Old Hunter: The way the Academy sends you kids out without the basics worries me... it really does...
+	-> So what is the Breach?
+	Old Hunter: Patience youngin'... I can tell you need a first person account...
+	Old Hunter: That's right... I was there, a young hunter, maybe a little older than you, when it all happened.
+	Old Hunter: Things changed fast when so many of the bugs escaped. 
+	Old Hunter: There just weren’t enough of us around for this stuff anymore.
+	Old Hunter: That’s where the academy came in. Training youngins like you...
+-> ...
+	Old Hunter: That's right... I was there, a young hunter, maybe a little older than you, when it all happened.
+	Old Hunter: Things changed fast when so many of the bugs escaped. 
+	Old Hunter: There just weren’t enough of us around for this stuff anymore.
+	Old Hunter: That’s where the academy came in. Training youngins like you...
+Old Hunter: 'Course... things aren't much better now are they?
+Old Hunter: You're young, unprepared and undertrained...
+Old Hunter: But maybe you can prove this old Hunter wrong.
+
+
+===
+
+title: 4
+---
+
+Old Hunter: I saw what you did. Helped that kid out huh?
+Old Hunter: We hunters...
+Old Hunter: We don't know a lotta people. But people... they know us.
+Old Hunter: Good job kid.
 
 ===
