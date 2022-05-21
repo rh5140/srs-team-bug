@@ -78,7 +78,7 @@ public class UI : MonoBehaviour
     public void LoadMap()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("World Map");
+        SceneManager.LoadScene("world_map");
     }
 
     public void OpenMap()
