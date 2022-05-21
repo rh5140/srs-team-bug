@@ -9,7 +9,17 @@ public class ButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("fk..");
 
+        Color newColor;
+        TextMesh[] textMeshes = GetComponentsInChildren<TextMesh>();
+        foreach (TextMesh textMesh in textMeshes)
+        {
+            Debug.Log("Color Setting!");
+            newColor = textMesh.color;
+            newColor.a = newColor.a / 2;
+            textMesh.color = newColor;
+        }
     }
 
     public void ButtonMoveScene(string levelName)
