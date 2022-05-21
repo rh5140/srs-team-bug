@@ -37,7 +37,7 @@ public class MovingBug : Arthropod
             if (Board.instance.CanEnterCoordinate(this, this.coordinate + Vector2Int.down)) { canMove[2] = true; }
             if (Board.instance.CanEnterCoordinate(this, this.coordinate + Vector2Int.right)) { canMove[3] = true; }
 
-            Debug.Log(playerDist);
+            // Debug.Log(playerDist);
 
             // check for the player in the four surrounding tiles
             if (playerDist.x == 0 && playerDist.y == 1) { canMove[0] = false; }
