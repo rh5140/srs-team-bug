@@ -22,7 +22,7 @@ public class ButtonManager : MonoBehaviour
             if (!collection.unlockedLevels.Contains(lName))
             {
                 newColor = text.color;
-                newColor.a = newColor.a / 2;
+                newColor.a = newColor.a / 3;
                 text.color = newColor;
             }
             
