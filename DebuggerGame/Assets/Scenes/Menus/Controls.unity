@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 134064613}
   - component: {fileID: 134064612}
   m_Layer: 5
-  m_Name: Credits Column 2
+  m_Name: Controls Column 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: -250}
+  m_AnchoredPosition: {x: 500, y: -290}
   m_SizeDelta: {x: 1000, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134064612
@@ -232,11 +232,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'WASD or arrow keys
 
+    TAB
+
     E
 
     ESC
 
     R
+
+    C
 
     T'
   m_isRightToLeft: 0
@@ -595,7 +599,7 @@ GameObject:
   - component: {fileID: 848547186}
   - component: {fileID: 848547185}
   m_Layer: 5
-  m_Name: Credits Column 1
+  m_Name: Controls Column 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,8 +621,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -250}
-  m_SizeDelta: {x: 400, y: 700}
+  m_AnchoredPosition: {x: -400, y: -290}
+  m_SizeDelta: {x: 600, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848547185
 MonoBehaviour:
@@ -640,13 +644,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Movement
+  m_text: 'Move
 
-    Swallow Bug
+    View Held Bug
+
+    Swallow Held Bug
 
     Pause Level
 
-    Restart Level
+    Restart
+    Level
+
+    Check Controls
 
     Instawin'
   m_isRightToLeft: 0
@@ -1367,7 +1376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -550}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2070399522

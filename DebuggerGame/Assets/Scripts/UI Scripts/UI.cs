@@ -23,7 +23,8 @@ public class UI : MonoBehaviour
                 Pause();
         }
 
-        if(Input.GetKeyDown(KeyCode.M))
+        // CONTROLS, NOT WORLD MAP ANYMORE
+        if(Input.GetKeyDown(KeyCode.C))
         {
             if(MapIsOpen)
                 CloseMap();

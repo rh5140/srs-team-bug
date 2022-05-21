@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/Main Menu.unity
     guid: 1695b63f3d974554c8fa7d42980b5e29
   - enabled: 0
-    path: 
+    path: Assets/Scenes/world_map.unity
     guid: 07986e0c06caff14180d4dedacddf516
   - enabled: 0
     path: 
@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/Credits.unity
     guid: b96f9d9cbeee52c44ad5e789ce765a50
+  - enabled: 1
+    path: Assets/Scenes/Menus/Controls.unity
+    guid: 3ac8a3497e1ec0f4b95f280bd78e9cfa
   m_configObjects: {}
