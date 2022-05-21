@@ -34,11 +34,25 @@ public class SaveManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Scene is Loaded");
+        Debug.Log(save1);
+        Debug.Log(save2);
+        Debug.Log(save3);
+        if (scene.name == "Save Menu")
+        {
+            UpdateSaveMenuUI();
+        }
+        
     }
 
     private void Start()
     {
-        UpdateSaveMenuUI();
+        
         //save = (SaveState)Resources.Load<SaveState>("Assets / Resources / Save State.asset");
         //currentLevel = save.currentLevel;
         //mapPosition = save.mapPosition;
