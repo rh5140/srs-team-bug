@@ -139,10 +139,16 @@ public class Board : MonoBehaviour
     /// </summary>
     public List<IActionRule> actionFilterRules = new List<IActionRule>();
 
+    /// <summary>
+    /// Action filter rules are action rules that only delete/keep actions, not modify
+    /// State dependent means it is dependent on a state of the BoardObject
+    /// </summary>
+    public List<IStateActionRule> stateDependentActionFilterRules = new List<IStateActionRule>();
+
 
     public Dictionary<Vector2Int, CollidableObject> collidableCoordinates;
 
-    private int maxActions = 0;
+    private List<int> actionsLeft = new List<int>();
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
@@ -176,31 +182,33 @@ public class Board : MonoBehaviour
             collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 
-        actionFilterRules.Add(
-            new EFActionDeleterRule(
+        stateDependentActionFilterRules.Add(
+            new EFStateActionDeleterRule(
                 null,
                 this,
-                enableCondition: (BoardObject creator, Board board) =>
+                enableCondition: (BoardObject creator, Board board, int? offset) =>
                     board != null
                     && boundsEnabled,
-                filter: (BoardAction action) =>
+                filter: (BoardAction action, int? offset) => {
                     //action.boardObject is Player
-                     action is MovementAction movementAction
+                    Debug.Log(action.boardObject.coordinate);
+                    return action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
-                        action.boardObject.coordinate.y + movementAction.direction.y >= height)
+                        action.boardObject.coordinate.y + movementAction.direction.y >= height);
+                    }
             )
         );
 
-        actionFilterRules.Add(
-            new EFActionDeleterRule(
+        stateDependentActionFilterRules.Add(
+            new EFStateActionDeleterRule(
                 null,
                 this,
-                enableCondition: (BoardObject creator, Board board) =>
+                enableCondition: (BoardObject creator, Board board, int? offset) =>
                     board != null
                     && boundsEnabled,
-                filter: (BoardAction action) =>
+                filter: (BoardAction action, int? offset) =>
                     action is MovementAction movementAction
                     && !CanEnterCoordinate(action.boardObject, 
                         new Vector2Int(
@@ -210,13 +218,13 @@ public class Board : MonoBehaviour
             )
         );
 
-        actionFilterRules.Add(
-            new EFActionDeleterRule(
+        stateDependentActionFilterRules.Add(
+            new EFStateActionDeleterRule(
                 null,
                 this,
-                enableCondition: (BoardObject creator, Board board)
+                enableCondition: (BoardObject creator, Board board, int? offset)
                         => board != null && boundsEnabled,
-                filter: (BoardAction action) =>
+                filter: (BoardAction action, int? offset) =>
                     action.boardObject is Player
                     && action is MovementAction movementAction
                     && GetBoardObjectAtCoordinate(
@@ -226,7 +234,7 @@ public class Board : MonoBehaviour
                     && !(((PushableObject)GetBoardObjectAtCoordinate(
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
-                    )).Push(movementAction.direction))
+                    )).Push(movementAction.direction, offset))
             )
         );
     }
@@ -256,17 +264,23 @@ public class Board : MonoBehaviour
         lastBoardEvent = EventState.Execute;
         ExecuteEvent.Invoke();
 
-        StartCoroutine(EndTurnCounter(TimePerAction * (maxActions == 0 ? 0.2f : maxActions)));
+        StartCoroutine(EndTurnCounter());
     }
 
+
+    public int AllocateActionCount()
+    {
+        actionsLeft.Add(0);
+        return actionsLeft.Count - 1;
+    }
 
     /// <summary>
     /// Sets the max actions for the next turn. This will linearly increase how long the endphase will be.
     /// </summary>
     /// <param name="nActions">Max number of actions taken at end of turn</param>
-    public void SetMaxActions(int nActions)
+    public void SetActionsLeft(int index, int nActions)
     {
-        maxActions = nActions > maxActions ? nActions : maxActions;
+        actionsLeft[index] = nActions;
     }
 
     public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
@@ -305,6 +319,19 @@ public class Board : MonoBehaviour
             currentAction = newAction;
         }
         return currentAction;
+    }
+
+    public bool FilterStateDependentAction(BoardObject boardObject, BoardAction action, int? actionOffset)
+    {
+        foreach (var rule in stateDependentActionFilterRules)
+        {
+            var newAction = rule.Execute(action, actionOffset);
+            if (newAction is NullAction)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private List<bool> winConditions = new List<bool>();
@@ -437,9 +464,12 @@ public class Board : MonoBehaviour
     /// </summary>
     /// <param name="duration">Duration of endphase</param>
     /// <returns>generator for coroutine</returns>
-    private IEnumerator EndTurnCounter(float duration)
+    private IEnumerator EndTurnCounter()
     {
-        yield return new WaitForSeconds(duration);
+        while(!actionsLeft.TrueForAll(x => x == 0))
+        {
+            yield return new WaitForSeconds(TimePerAction);
+        }
         lastBoardEvent = EventState.PostExecute;
         PostExecuteEvent.Invoke();
 
@@ -453,6 +483,6 @@ public class Board : MonoBehaviour
     /// </summary>
     private void OnStartTurn()
     {
-        maxActions = 0;
+        actionsLeft.Clear();
     }
 }

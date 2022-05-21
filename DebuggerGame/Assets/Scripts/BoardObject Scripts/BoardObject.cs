@@ -16,7 +16,10 @@ abstract public class BoardObject : MonoBehaviour
 
 
     
-    protected Queue<BoardAction> actions = new Queue<BoardAction>();
+    public Queue<BoardAction> actions = new Queue<BoardAction>();
+
+    protected int? actionsLeftIndex = null;
+
     /// <summary>
     /// When in execution phase, the action that is currently being executed
     /// </summary>
@@ -71,6 +74,21 @@ abstract public class BoardObject : MonoBehaviour
             }
         }
     }
+
+
+    public void AddActionMidExecution(BoardAction action, int? actionOffset)
+    {
+        actions.Enqueue(action);
+        if(board.lastBoardEvent == Board.EventState.Execute)
+        {
+            if(actions.Count == 1)
+            {
+                executingActionOffset = actionOffset;
+                board.SetActionsLeft(actionsLeftIndex.Value, 1);
+            }
+        }
+    }
+
 
     private void Awake()
     {
@@ -130,16 +148,26 @@ abstract public class BoardObject : MonoBehaviour
                 // If the previous action finished/we have not started executing, get new action if available
                 // and increase the index by 1 (or set to 0 if not previously set)
                 executingAction = actions.Dequeue();
-                executingAction.ExecuteStart();
-                if (executingAction.usesTime)
+                if (!board.FilterStateDependentAction(this, executingAction, executingActionOffset))
                 {
-                    executingActionOffset = executingActionOffset + 1 ?? 0; // either increment if nonnull or set to 0
+                    // state dependent filter disallowed action
+                    executingAction = null;
                 }
                 else
                 {
-                    executingAction.ExecuteFinish();
-                    executingAction = null;
+                    executingAction.ExecuteStart();
+                    if (executingAction.usesTime)
+                    {
+                        executingActionOffset = executingActionOffset + 1 ?? 0; // either increment if nonnull or set to 0
+                    }
+                    else
+                    {
+                        executingAction.ExecuteFinish();
+                        executingAction = null;
+                        board.SetActionsLeft(actionsLeftIndex.Value, actions.Count);
+                    }
                 }
+                
             }
 
 
@@ -154,6 +182,7 @@ abstract public class BoardObject : MonoBehaviour
                 // If it has been at least 1.0 actions since when the action started, the action finished
                 executingAction?.ExecuteFinish();
                 executingAction = null;
+                board.SetActionsLeft(actionsLeftIndex.Value, actions.Count);
             }
         }
     }
@@ -189,15 +218,16 @@ abstract public class BoardObject : MonoBehaviour
     /// <see cref="Board.PreExecuteEvent"/>
     virtual protected void OnPreExecute()
     {
-        int maxActions = 0;
+        int actionsLeft = 0;
         for (int i = 0; i < actions.Count; i++)
         {
             BoardAction action = board.ApplyRules(this, actions.Dequeue());
             actions.Enqueue(action);
             // If the action uses a turn, then add 1 to max actions
-            maxActions += action.usesTime ? 1 : 0;
+            actionsLeft += action.usesTime ? 1 : 0;
         }
-        board.SetMaxActions(maxActions);
+        actionsLeftIndex = board.AllocateActionCount();
+        board.SetActionsLeft(actionsLeftIndex.Value, actionsLeft);
         // See BoardObject.Update for continuation of the logic
     }
 
@@ -222,6 +252,7 @@ abstract public class BoardObject : MonoBehaviour
             executingAction = null;
         }
         executingActionOffset = null;
+        actionsLeftIndex = null;
     }
 
     /// <summary>

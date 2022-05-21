@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PushableObject : BoardObject
 {
-    public bool Push(Vector2Int direction) {
+    public bool Push(Vector2Int direction, int? actionOffset) {
         Vector2Int newCoordinate = this.coordinate + direction;
         BoardObject objectAtNewCoordinate = Board.instance.GetBoardObjectAtCoordinate(this.coordinate + direction);
 
@@ -15,14 +15,14 @@ public class PushableObject : BoardObject
         }
         else if(objectAtNewCoordinate is PushableObject) {
             PushableObject pushableAtNewCoordinate = (PushableObject)objectAtNewCoordinate;
-            if(pushableAtNewCoordinate.Push(direction)) {
-                actions.Enqueue(new MovementAction(this, direction));
+            if(pushableAtNewCoordinate.Push(direction, actionOffset)) {
+                AddActionMidExecution(new MovementAction(this, direction), actionOffset);
                 return true;
             }
             return false;
         }
         else if(objectAtNewCoordinate == null) {
-            actions.Enqueue(new MovementAction(this, direction));
+            AddActionMidExecution(new MovementAction(this, direction), actionOffset);
             return true;
         }
         return false;
