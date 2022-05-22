@@ -23,7 +23,8 @@ public class UI : MonoBehaviour
                 Pause();
         }
 
-        if(Input.GetKeyDown(KeyCode.M))
+        // CONTROLS, NOT WORLD MAP ANYMORE
+        if(Input.GetKeyDown(KeyCode.C))
         {
             if(MapIsOpen)
                 CloseMap();
@@ -77,7 +78,7 @@ public class UI : MonoBehaviour
     public void LoadMap()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("World Map");
+        SceneManager.LoadScene("world_map");
     }
 
     public void OpenMap()
