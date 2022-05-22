@@ -7,9 +7,9 @@ public class ActionlessBoardObject : BoardObject
     protected override void Update()
     { }
 
-    protected override void OnPreExecute()
+    protected override void OnPrePlayerExecute()
     { }
 
-    protected override void OnPostExecute()
+    protected override void OnPostPlayerExecute()
     { }
 }

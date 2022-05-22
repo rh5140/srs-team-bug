@@ -18,9 +18,15 @@ public class Board : MonoBehaviour
         StartTurn,
         EndTurn,
         PostEndTurn,
-        PreExecute,
-        Execute,
-        PostExecute,
+        
+        PrePlayerExecute,
+        PlayerExecute,
+        PostPlayerExecute,
+
+        PreArthropodExecute,
+        ArthropodExecute,
+        PostArthropodExecute,
+
         EndLevel,
     }
 
@@ -65,12 +71,12 @@ public class Board : MonoBehaviour
 
 
     public EventState lastBoardEvent { get; private set; }
-    public float? endTurnTime { get; private set; } = null;
+    public float? startExecuteTime { get; private set; } = null;
     public float? timeSinceEndTurn
     {
         get
         {
-            return endTurnTime == null ? null : Time.time - endTurnTime;
+            return startExecuteTime == null ? null : Time.time - startExecuteTime;
         }
     }
 
@@ -106,7 +112,7 @@ public class Board : MonoBehaviour
     /// Event raised immediately before PostEndTurnEvent. 
     /// In this time, BoardObjects should perform rule checks on actions.
     /// </summary>
-    public Event PreExecuteEvent = new Event();
+    public Event PrePlayerExecuteEvent = new Event();
 
 
     /// <summary>
@@ -114,14 +120,18 @@ public class Board : MonoBehaviour
     /// In this time, BoardObjects should execute their actions. 
     /// The phase lasts maxActions * TimePerAction seconds.
     /// </summary>
-    public Event ExecuteEvent = new Event();
+    public Event PlayerExecuteEvent = new Event();
 
     /// <summary>
     /// Event raised immediately after the execution phase (before StartTurnEvent). 
     /// In this time, BoardObjects should execute their actions. 
     /// The phase lasts maxActions * TimePerAction seconds.
     /// </summary>
-    public Event PostExecuteEvent = new Event();
+    public Event PostPlayerExecuteEvent = new Event();
+
+    public Event PreArthropodExecuteEvent = new Event();
+    public Event ArthropodExecuteEvent = new Event();
+    public Event PostArthropodExecuteEvent = new Event();
 
     /// <summary>
     /// Event raised  after the wincondition is satisfied 
@@ -171,6 +181,7 @@ public class Board : MonoBehaviour
 
     private void Start()
     {
+        PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
         StartTurnEvent.AddListener(this.OnStartTurn);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
@@ -251,13 +262,13 @@ public class Board : MonoBehaviour
         lastBoardEvent = EventState.PostEndTurn;
         PostEndTurnEvent.Invoke();
 
-        endTurnTime = Time.time;
+        startExecuteTime = Time.time;
 
-        lastBoardEvent = EventState.PreExecute;
-        PreExecuteEvent.Invoke();
+        lastBoardEvent = EventState.PrePlayerExecute;
+        PrePlayerExecuteEvent.Invoke();
 
-        lastBoardEvent = EventState.Execute;
-        ExecuteEvent.Invoke();
+        lastBoardEvent = EventState.PlayerExecute;
+        PlayerExecuteEvent.Invoke();
 
         StartCoroutine(EndTurnCounter());
     }
@@ -466,16 +477,49 @@ public class Board : MonoBehaviour
     /// <returns>generator for coroutine</returns>
     private IEnumerator EndTurnCounter()
     {
-        while(!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+        if(lastBoardEvent == EventState.PlayerExecute)
         {
-            yield return new WaitForSeconds(TimePerAction);
-        }
-        lastBoardEvent = EventState.PostExecute;
-        PostExecuteEvent.Invoke();
+            if(new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+            while (!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+            {
+                yield return new WaitForSeconds(TimePerAction);
+            }
+            lastBoardEvent = EventState.PostPlayerExecute;
+            PostPlayerExecuteEvent.Invoke();
 
-        lastBoardEvent = EventState.StartTurn;
-        StartTurnEvent.Invoke();
-        endTurnTime = null;
+            startExecuteTime = Time.time;
+
+            lastBoardEvent = EventState.PreArthropodExecute;
+            PreArthropodExecuteEvent.Invoke();
+
+            lastBoardEvent = EventState.ArthropodExecute;
+            ArthropodExecuteEvent.Invoke();
+
+            StartCoroutine(EndTurnCounter());
+        }
+        else if(lastBoardEvent == EventState.ArthropodExecute)
+        {
+            if (new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+            while (!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+            {
+                yield return new WaitForSeconds(TimePerAction);
+            }
+
+            lastBoardEvent = EventState.PostArthropodExecute;
+            PostPlayerExecuteEvent.Invoke();
+
+            lastBoardEvent = EventState.StartTurn;
+            StartTurnEvent.Invoke();
+
+            startExecuteTime = null;
+        }
+        
     }
 
     /// <summary>
@@ -484,5 +528,27 @@ public class Board : MonoBehaviour
     private void OnStartTurn()
     {
         actionsLeftDict.Clear();
+    }
+
+    private void OnPostPlayerExecute()
+    {
+        actionsLeftDict.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        StartTurnEvent.RemoveAllListeners();
+        EndTurnEvent.RemoveAllListeners();
+        PostEndTurnEvent.RemoveAllListeners();
+
+        PrePlayerExecuteEvent.RemoveAllListeners();
+        PlayerExecuteEvent.RemoveAllListeners();
+        PostPlayerExecuteEvent.RemoveAllListeners();
+
+        PreArthropodExecuteEvent.RemoveAllListeners();
+        ArthropodExecuteEvent.RemoveAllListeners();
+        PostArthropodExecuteEvent.RemoveAllListeners();
+
+        EndLevelEvent.RemoveAllListeners();
     }
 }

@@ -79,7 +79,7 @@ abstract public class BoardObject : MonoBehaviour
     public void AddActionMidExecution(BoardAction action, int? actionOffset)
     {
         actions.Enqueue(action);
-        if(board.lastBoardEvent == Board.EventState.Execute)
+        if(board.lastBoardEvent == Board.EventState.PlayerExecute)
         {
             if(actions.Count == 1)
             {
@@ -136,22 +136,22 @@ abstract public class BoardObject : MonoBehaviour
         board.StartTurnEvent.AddListener(OnStartTurn);
         board.EndTurnEvent.AddListener(OnEndTurn);
         board.PostEndTurnEvent.AddListener(OnPostEndTurn);
-        board.PreExecuteEvent.AddListener(OnPreExecute);
-        board.ExecuteEvent.AddListener(OnExecute);
-        board.PostExecuteEvent.AddListener(OnPostExecute);
+
+        board.PrePlayerExecuteEvent.AddListener(OnPrePlayerExecute);
+        board.PlayerExecuteEvent.AddListener(OnPlayerExecute);
+        board.PostPlayerExecuteEvent.AddListener(OnPostPlayerExecute);
+
+        board.PreArthropodExecuteEvent.AddListener(OnPreArthropodExecute);
+        board.ArthropodExecuteEvent.AddListener(OnArthropodExecute);
+        board.PostArthropodExecuteEvent.AddListener(OnPostArthropodExecute);
+
         board.EndLevelEvent.AddListener(OnEndLevel);
     }
 
 
     protected void OnDestroy()
     {
-        board.StartTurnEvent.RemoveAllListeners();
-        board.EndTurnEvent.RemoveAllListeners();
-        board.PostEndTurnEvent.RemoveAllListeners();
-        board.PreExecuteEvent.RemoveAllListeners();
-        board.ExecuteEvent.RemoveAllListeners();
-        board.PostExecuteEvent.RemoveAllListeners();
-        board.EndLevelEvent.RemoveAllListeners();
+        RemoveListeners();
     }
 
     //removes listeners for the functions of this boardobject
@@ -160,15 +160,21 @@ abstract public class BoardObject : MonoBehaviour
         board.StartTurnEvent.RemoveListener(OnStartTurn);
         board.EndTurnEvent.RemoveListener(OnEndTurn);
         board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
-        board.PreExecuteEvent.RemoveListener(OnPreExecute);
-        board.ExecuteEvent.RemoveListener(OnExecute);
-        board.PostExecuteEvent.RemoveListener(OnPostExecute);
+
+        board.PrePlayerExecuteEvent.RemoveListener(OnPrePlayerExecute);
+        board.PlayerExecuteEvent.RemoveListener(OnPlayerExecute);
+        board.PostPlayerExecuteEvent.RemoveListener(OnPostPlayerExecute);
+
+        board.PreArthropodExecuteEvent.RemoveListener(OnPreArthropodExecute);
+        board.ArthropodExecuteEvent.RemoveListener(OnArthropodExecute);
+        board.PostArthropodExecuteEvent.RemoveListener(OnPostArthropodExecute);
+
         board.EndLevelEvent.RemoveListener(OnEndLevel);
     }
 
     protected virtual void Update()
     {
-        if(board.lastBoardEvent == Board.EventState.Execute)
+        if(board.lastBoardEvent == Board.EventState.PlayerExecute || board.lastBoardEvent == Board.EventState.ArthropodExecute)
         {
             // Execute all the actions in the queue 
             while (executingAction == null && actions.Count > 0)
@@ -245,7 +251,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PreExecuteEvent
     /// </summary>
     /// <see cref="Board.PreExecuteEvent"/>
-    virtual protected void OnPreExecute()
+    virtual protected void OnPrePlayerExecute()
     {
         int actionsLeft = 0;
         for (int i = 0; i < actions.Count; i++)
@@ -264,7 +270,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.ExecuteEvent
     /// </summary>
     /// <see cref="Board.ExecuteEvent"/>
-    protected virtual void OnExecute()
+    protected virtual void OnPlayerExecute()
     { }
 
 
@@ -272,7 +278,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PostExecuteEvent
     /// </summary>
     /// <see cref="Board.PostExecuteEvent"/>
-    protected virtual void OnPostExecute()
+    protected virtual void OnPostPlayerExecute()
     {
         if (executingAction != null)
         {
@@ -283,6 +289,39 @@ abstract public class BoardObject : MonoBehaviour
         executingActionOffset = null;
         actionsLeftIndex = null;
     }
+ 
+    virtual protected void OnPreArthropodExecute()
+    {
+
+        int actionsLeft = 0;
+        for (int i = 0; i < actions.Count; i++)
+        {
+            BoardAction action = board.ApplyRules(this, actions.Dequeue());
+            actions.Enqueue(action);
+            // If the action uses a turn, then add 1 to max actions
+            actionsLeft += action.usesTime ? 1 : 0;
+        }
+        actionsLeftIndex = board.AllocateActionsLeft(this);
+        board.SetActionsLeft(this, actionsLeft);
+        // See BoardObject.Update for continuation of the logic
+    }
+
+    protected virtual void OnArthropodExecute()
+    { }
+
+
+    protected virtual void OnPostArthropodExecute()
+    {
+        if (executingAction != null)
+        {
+            executingAction?.ExecuteUpdate(executingActionProgress.Value);
+            executingAction?.ExecuteFinish();
+            executingAction = null;
+        }
+        executingActionOffset = null;
+        actionsLeftIndex = null;
+    }
+
 
     /// <summary>
     /// Method to be called when the level finishes

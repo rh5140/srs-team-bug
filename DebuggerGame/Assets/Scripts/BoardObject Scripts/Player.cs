@@ -117,6 +117,18 @@ public class Player : BoardObject
         }
         */
 
+        CatchArthropods();
+    }
+
+    protected override void OnPostPlayerExecute()
+    {
+        base.OnPostPlayerExecute();
+
+        CatchArthropods();
+    }
+
+    protected void CatchArthropods()
+    {
         //Coordinate based implementation for bug catching
         foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
