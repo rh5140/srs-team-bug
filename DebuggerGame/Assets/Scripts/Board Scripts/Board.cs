@@ -152,12 +152,14 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
-        bool canPass = (!collidableCoordinates.ContainsKey(coordinate)
-                    || boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
-                    && (!(GetBoardObjectAtCoordinate(coordinate) is PushableObject)
-                    || boardObject is Player);
+        bool collidableAtCoord = (
+                collidableCoordinates.ContainsKey(coordinate)
+                && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
+            )
+            || (boardObject is Arthropod && GetBoardObjectAtCoordinate(coordinate) is PushableObject);
+
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
-        return canPass && inBounds;
+        return !collidableAtCoord && inBounds;// !collidableAtCoord;
     }
 
     private void OnEnable()
@@ -190,29 +192,11 @@ public class Board : MonoBehaviour
                     board != null
                     && boundsEnabled,
                 filter: (BoardAction action, int? offset) =>
-                    //action.boardObject is Player
                     action is MovementAction movementAction
                     && (action.boardObject.coordinate.x + movementAction.direction.x < 0 ||
                         action.boardObject.coordinate.x + movementAction.direction.x >= width ||
                         action.boardObject.coordinate.y + movementAction.direction.y < 0 ||
                         action.boardObject.coordinate.y + movementAction.direction.y >= height)
-            )
-        );
-
-        stateDependentActionFilterRules.Add(
-            new EFStateActionDeleterRule(
-                null,
-                this,
-                enableCondition: (BoardObject creator, Board board, int? offset) =>
-                    board != null
-                    && boundsEnabled,
-                filter: (BoardAction action, int? offset) =>
-                    action is MovementAction movementAction
-                    && !CanEnterCoordinate(action.boardObject, 
-                        new Vector2Int(
-                            action.boardObject.coordinate.x + movementAction.direction.x,
-                            action.boardObject.coordinate.y + movementAction.direction.y
-                    ))
             )
         );
 
@@ -228,11 +212,24 @@ public class Board : MonoBehaviour
                     && GetBoardObjectAtCoordinate(
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
-                    ) is PushableObject
-                    && !(((PushableObject)GetBoardObjectAtCoordinate(
-                        action.boardObject.coordinate.x + movementAction.direction.x,
-                        action.boardObject.coordinate.y + movementAction.direction.y
-                    )).Push(movementAction.direction, offset))
+                    ) is PushableObject pushableObject
+                    && !(pushableObject.Push(movementAction.direction, offset))
+            )
+        );
+
+        stateDependentActionFilterRules.Add(
+            new EFStateActionDeleterRule(
+                null,
+                this,
+                enableCondition: (BoardObject creator, Board board, int? offset) =>
+                    board != null
+                    && boundsEnabled,
+                filter: (BoardAction action, int? offset) =>
+                    action is MovementAction movementAction
+                    && !CanEnterCoordinate(
+                        action.boardObject, 
+                        action.boardObject.coordinate + movementAction.direction
+                    )
             )
         );
     }

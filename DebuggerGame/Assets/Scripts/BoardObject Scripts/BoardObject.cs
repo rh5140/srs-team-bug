@@ -89,6 +89,34 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
+    public BoardAction PeekNextBoardAction()
+    {
+        if(executingAction != null)
+        {
+            return executingAction;
+        }
+        else if(actions.Count > 0)
+        {
+            return actions.Peek();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Vector2Int PeekNextWeakCoordinate()
+    {
+        if(!(PeekNextBoardAction() is MovementAction movementAction))
+        {
+            return coordinate;
+        }
+        else
+        {
+            return coordinate + movementAction.direction;
+        }
+    }
+
 
     private void Awake()
     {
