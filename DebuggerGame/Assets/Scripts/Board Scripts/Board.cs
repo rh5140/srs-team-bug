@@ -202,6 +202,17 @@ public class Board : MonoBehaviour
             collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 
+        actionFilterRules.Add(
+            new EFActionDeleterRule(
+                null,
+                this,
+                null,
+                filter: (BoardAction action) =>
+                    action is MovementAction movementAction
+                    && movementAction.direction.sqrMagnitude == 0
+            )
+        );
+
         stateDependentActionFilterRules.Add(
             new EFStateActionDeleterRule(
                 null,
