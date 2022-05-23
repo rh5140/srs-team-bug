@@ -38,6 +38,16 @@ public class UI_script : MonoBehaviour
         SceneManager.LoadScene("Save Menu");
     }
 
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void LoadControls()
+    {
+        SceneManager.LoadScene("Controls");
+    }
+
     public void LoadSave(int saveNum)
     {
         SaveManager.instance.LoadSave(saveNum);
