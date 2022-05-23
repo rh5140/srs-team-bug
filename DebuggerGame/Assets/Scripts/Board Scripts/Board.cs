@@ -15,13 +15,16 @@ public class Board : MonoBehaviour
 
     public enum EventState
     {
-        StartTurn,
-        EndTurn,
-        PostEndTurn,
+        StartPlayerTurn,
+        EndPlayerTurn,
+        PostPlayerEndTurn,
         
         PrePlayerExecute,
         PlayerExecute,
         PostPlayerExecute,
+
+        StartArthropodTurn,
+        EndArthropodTurn,
 
         PreArthropodExecute,
         ArthropodExecute,
@@ -59,6 +62,7 @@ public class Board : MonoBehaviour
 
 
     public const float TimePerAction = 0.3f;
+    public const float EmptyExecutionTime = 0.1f;
 
     //Bounds
     public int width = 5;
@@ -93,19 +97,19 @@ public class Board : MonoBehaviour
     /// maxActions actions (ie. actionsSinceEndTurn > maxActions). 
     /// Used for logic at the start of the turn (eg. collisions)
     /// </summary>
-    public Event StartTurnEvent = new Event();
+    public Event StartPlayerTurnEvent = new Event();
 
     /// <summary>
     /// Event raised after Board.EndTurn() was called. 
     /// Used for setting up actions.
     /// </summary>
     /// <see cref="EndTurn"/>
-    public Event EndTurnEvent = new Event();
+    public Event EndPlayerTurnEvent = new Event();
 
     /// <summary>
     /// Event raised immediately after EndTurnEvent
     /// </summary>
-    public Event PostEndTurnEvent = new Event();
+    public Event PostPlayerEndTurnEvent = new Event();
 
 
     /// <summary>
@@ -128,6 +132,9 @@ public class Board : MonoBehaviour
     /// The phase lasts maxActions * TimePerAction seconds.
     /// </summary>
     public Event PostPlayerExecuteEvent = new Event();
+
+    public Event StartArthropodTurnEvent = new Event();
+    public Event EndArthropodTurnEvent = new Event();
 
     public Event PreArthropodExecuteEvent = new Event();
     public Event ArthropodExecuteEvent = new Event();
@@ -182,7 +189,7 @@ public class Board : MonoBehaviour
     private void Start()
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
-        StartTurnEvent.AddListener(this.OnStartTurn);
+        StartPlayerTurnEvent.AddListener(this.OnStartTurn);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
@@ -256,11 +263,11 @@ public class Board : MonoBehaviour
     /// </summary>
     public void EndTurn()
     {
-        lastBoardEvent = EventState.EndTurn;
-        EndTurnEvent.Invoke();
+        lastBoardEvent = EventState.EndPlayerTurn;
+        EndPlayerTurnEvent.Invoke();
 
-        lastBoardEvent = EventState.PostEndTurn;
-        PostEndTurnEvent.Invoke();
+        lastBoardEvent = EventState.PostPlayerEndTurn;
+        PostPlayerEndTurnEvent.Invoke();
 
         startExecuteTime = Time.time;
 
@@ -274,10 +281,9 @@ public class Board : MonoBehaviour
     }
 
 
-    public int AllocateActionsLeft(BoardObject boardObject)
+    public void AllocateActionsLeft(BoardObject boardObject)
     {
         actionsLeftDict.Add(boardObject, 0);
-        return actionsLeftDict.Count - 1;
     }
 
     public void DeallocateActionsLeft(BoardObject boardObject)
@@ -477,18 +483,28 @@ public class Board : MonoBehaviour
     /// <returns>generator for coroutine</returns>
     private IEnumerator EndTurnCounter()
     {
-        if(lastBoardEvent == EventState.PlayerExecute)
+        if (new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
         {
-            if(new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
-            {
-                yield return new WaitForSeconds(0.3f);
-            }
-            while (!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
-            {
-                yield return new WaitForSeconds(TimePerAction);
-            }
+            yield return new WaitForSeconds(EmptyExecutionTime);
+        }
+        while (!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
+        {
+            yield return new WaitForSeconds(TimePerAction);
+        }
+
+        if (lastBoardEvent == EventState.PlayerExecute)
+        {
+            // Go to arthropod execute
             lastBoardEvent = EventState.PostPlayerExecute;
             PostPlayerExecuteEvent.Invoke();
+
+            startExecuteTime = null;
+
+            lastBoardEvent = EventState.StartArthropodTurn;
+            StartArthropodTurnEvent.Invoke();
+
+            lastBoardEvent = EventState.EndArthropodTurn;
+            EndArthropodTurnEvent.Invoke();
 
             startExecuteTime = Time.time;
 
@@ -502,20 +518,11 @@ public class Board : MonoBehaviour
         }
         else if(lastBoardEvent == EventState.ArthropodExecute)
         {
-            if (new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
-            {
-                yield return new WaitForSeconds(0.3f);
-            }
-            while (!new List<int>(actionsLeftDict.Values).TrueForAll(x => x == 0))
-            {
-                yield return new WaitForSeconds(TimePerAction);
-            }
-
             lastBoardEvent = EventState.PostArthropodExecute;
             PostPlayerExecuteEvent.Invoke();
 
-            lastBoardEvent = EventState.StartTurn;
-            StartTurnEvent.Invoke();
+            lastBoardEvent = EventState.StartPlayerTurn;
+            StartPlayerTurnEvent.Invoke();
 
             startExecuteTime = null;
         }
@@ -537,13 +544,16 @@ public class Board : MonoBehaviour
 
     private void OnDestroy()
     {
-        StartTurnEvent.RemoveAllListeners();
-        EndTurnEvent.RemoveAllListeners();
-        PostEndTurnEvent.RemoveAllListeners();
+        StartPlayerTurnEvent.RemoveAllListeners();
+        EndPlayerTurnEvent.RemoveAllListeners();
+        PostPlayerEndTurnEvent.RemoveAllListeners();
 
         PrePlayerExecuteEvent.RemoveAllListeners();
         PlayerExecuteEvent.RemoveAllListeners();
         PostPlayerExecuteEvent.RemoveAllListeners();
+
+        StartArthropodTurnEvent.RemoveAllListeners();
+        EndArthropodTurnEvent.RemoveAllListeners();
 
         PreArthropodExecuteEvent.RemoveAllListeners();
         ArthropodExecuteEvent.RemoveAllListeners();
