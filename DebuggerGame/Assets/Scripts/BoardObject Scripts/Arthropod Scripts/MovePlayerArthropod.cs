@@ -7,9 +7,9 @@ public class MovePlayerArthropod : Arthropod
     [SerializeField]
     protected List<Vector2Int> movements = new List<Vector2Int>();
 
-    override protected void OnEndTurn()
+    override protected void OnEndPlayerTurn()
     {
-        base.OnEndTurn();
+        base.OnEndPlayerTurn();
 
         if (rulesEnabled)
         {

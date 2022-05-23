@@ -12,4 +12,10 @@ public class ActionlessBoardObject : BoardObject
 
     protected override void OnPostPlayerExecute()
     { }
+
+    protected override void OnPreArthropodExecute()
+    { }
+
+    protected override void OnPostArthropodExecute()
+    { }
 }
