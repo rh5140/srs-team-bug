@@ -43,7 +43,7 @@ public class Player : BoardObject
             Board.instance.InstantWin();
         }
 
-        if (board.lastBoardEvent == Board.EventState.StartTurn)
+        if (board.lastBoardEvent == Board.EventState.StartPlayerTurn)
         {
             //Debug.Log("Running");
 
@@ -86,9 +86,9 @@ public class Player : BoardObject
         }
     }
 
-    protected override void OnStartTurn()
+    protected override void OnStartPlayerTurn()
     {
-        base.OnStartTurn();
+        base.OnStartPlayerTurn();
         //Debug.Log("New Turn");
         /*
         Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,

@@ -18,8 +18,6 @@ abstract public class BoardObject : MonoBehaviour
     
     public Queue<BoardAction> actions = new Queue<BoardAction>();
 
-    protected int? actionsLeftIndex = null;
-
     /// <summary>
     /// When in execution phase, the action that is currently being executed
     /// </summary>
@@ -133,13 +131,16 @@ abstract public class BoardObject : MonoBehaviour
         // so that empty handlers won't bloat the event, but
         // there shouldb't be a significant performance gain so it's
         // not necessary
-        board.StartTurnEvent.AddListener(OnStartTurn);
-        board.EndTurnEvent.AddListener(OnEndTurn);
-        board.PostEndTurnEvent.AddListener(OnPostEndTurn);
+        board.StartPlayerTurnEvent.AddListener(OnStartPlayerTurn);
+        board.EndPlayerTurnEvent.AddListener(OnEndPlayerTurn);
+        board.PostPlayerEndTurnEvent.AddListener(OnPostPlayerEndTurn);
 
         board.PrePlayerExecuteEvent.AddListener(OnPrePlayerExecute);
         board.PlayerExecuteEvent.AddListener(OnPlayerExecute);
         board.PostPlayerExecuteEvent.AddListener(OnPostPlayerExecute);
+
+        board.StartArthropodTurnEvent.AddListener(OnStartArthropodTurn);
+        board.EndArthropodTurnEvent.AddListener(OnEndArthropodTurn);
 
         board.PreArthropodExecuteEvent.AddListener(OnPreArthropodExecute);
         board.ArthropodExecuteEvent.AddListener(OnArthropodExecute);
@@ -157,13 +158,16 @@ abstract public class BoardObject : MonoBehaviour
     //removes listeners for the functions of this boardobject
     public void RemoveListeners()
     {
-        board.StartTurnEvent.RemoveListener(OnStartTurn);
-        board.EndTurnEvent.RemoveListener(OnEndTurn);
-        board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
+        board.StartPlayerTurnEvent.RemoveListener(OnStartPlayerTurn);
+        board.EndPlayerTurnEvent.RemoveListener(OnEndPlayerTurn);
+        board.PostPlayerEndTurnEvent.RemoveListener(OnPostPlayerEndTurn);
 
         board.PrePlayerExecuteEvent.RemoveListener(OnPrePlayerExecute);
         board.PlayerExecuteEvent.RemoveListener(OnPlayerExecute);
         board.PostPlayerExecuteEvent.RemoveListener(OnPostPlayerExecute);
+
+        board.StartArthropodTurnEvent.RemoveListener(OnStartArthropodTurn);
+        board.EndArthropodTurnEvent.RemoveListener(OnEndArthropodTurn);
 
         board.PreArthropodExecuteEvent.RemoveListener(OnPreArthropodExecute);
         board.ArthropodExecuteEvent.RemoveListener(OnArthropodExecute);
@@ -226,24 +230,24 @@ abstract public class BoardObject : MonoBehaviour
     /// <summary>
     /// Handler for Board.StartTurnEvent
     /// </summary>
-    /// <see cref="Board.StartTurnEvent"/>
-    protected virtual void OnStartTurn()
+    /// <see cref="Board.StartPlayerTurnEvent"/>
+    protected virtual void OnStartPlayerTurn()
     { }
 
 
     /// <summary>
     /// Handler for Board.EndTurnEvent
     /// </summary>
-    /// <see cref="Board.EndTurnEvent"/>
-    protected virtual void OnEndTurn()
+    /// <see cref="Board.EndPlayerTurnEvent"/>
+    protected virtual void OnEndPlayerTurn()
     { }
 
 
     /// <summary>
     /// Handler for Board.PostEndTurnEvent
     /// </summary>
-    /// <see cref="Board.PostEndTurnEvent"/>
-    protected virtual void OnPostEndTurn()
+    /// <see cref="Board.PostPlayerEndTurnEvent"/>
+    protected virtual void OnPostPlayerEndTurn()
     { }
 
 
@@ -261,7 +265,6 @@ abstract public class BoardObject : MonoBehaviour
             // If the action uses a turn, then add 1 to max actions
             actionsLeft += action.usesTime ? 1 : 0;
         }
-        actionsLeftIndex = board.AllocateActionsLeft(this);
         board.SetActionsLeft(this, actionsLeft);
         // See BoardObject.Update for continuation of the logic
     }
@@ -287,12 +290,21 @@ abstract public class BoardObject : MonoBehaviour
             executingAction = null;
         }
         executingActionOffset = null;
-        actionsLeftIndex = null;
     }
- 
-    virtual protected void OnPreArthropodExecute()
+
+    protected virtual void OnStartArthropodTurn()
     {
 
+    }
+
+    protected virtual void OnEndArthropodTurn()
+    {
+
+    }
+
+
+    protected virtual void OnPreArthropodExecute()
+    {
         int actionsLeft = 0;
         for (int i = 0; i < actions.Count; i++)
         {
@@ -301,7 +313,6 @@ abstract public class BoardObject : MonoBehaviour
             // If the action uses a turn, then add 1 to max actions
             actionsLeft += action.usesTime ? 1 : 0;
         }
-        actionsLeftIndex = board.AllocateActionsLeft(this);
         board.SetActionsLeft(this, actionsLeft);
         // See BoardObject.Update for continuation of the logic
     }
@@ -319,7 +330,6 @@ abstract public class BoardObject : MonoBehaviour
             executingAction = null;
         }
         executingActionOffset = null;
-        actionsLeftIndex = null;
     }
 
 
