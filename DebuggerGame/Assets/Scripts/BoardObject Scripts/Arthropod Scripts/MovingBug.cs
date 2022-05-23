@@ -10,7 +10,11 @@ public class MovingBug : Arthropod
     {
         base.OnEndArthropodTurn();
 
-        if (myTurn)
+        if (isCaught)
+        {
+            myTurn = true;
+        }
+        else if (myTurn)
         {
             Player player = Board.instance.GetBoardObjectOfType<Player>();
 
