@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sizePadding: 1
+  offset: {x: 0, y: 0}
 --- !u!114 &522124116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelName: 
+  unlockLevels: []
   boardObjects: []
   width: 12
   height: 7
@@ -2296,9 +2299,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 6352667630548148438, guid: 448ba88b5b4ae6a47b8f4f745c5066c8, type: 3}
+  m_Sprite: {fileID: 4716075501375934195, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1.5}
@@ -2520,6 +2523,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8313242953970999947, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
+      propertyPath: otherSprite
+      value: 
+      objectReference: {fileID: -2108645610363664566, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
+    - target: {fileID: 8313242953970999947, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: -4541150122889840728, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
 --- !u!1 &2000192479
@@ -2624,7 +2635,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 6352667630548148438, guid: 448ba88b5b4ae6a47b8f4f745c5066c8, type: 3}
+  m_Sprite: {fileID: -281494447116774098, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

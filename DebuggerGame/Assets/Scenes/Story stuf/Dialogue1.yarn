@@ -1,5 +1,6 @@
 ﻿title: 1
 ---
+<<SetSprite Sprite Other>>
 *there's a child sitting by the river...*
 child: h-hello...
 -> What are you doing out here?
@@ -16,24 +17,32 @@ child: no home? where do you live then?
 ->We... don't live in one place. We're travellers. We roam the plane catching bugs.
 child: I like my home... Does it ever get lonely for you when you're travelling?
 ->Sometimes... but it's part of the job.
+	<<SetSprite Sprite Player>>
 	You: I used to have a home... But it's long gone now...
 	You: Not to bugs or glitches, but something just as bad I guess...
 	You: Then there was the academy... but I've left that behind too...
 	child: I think I'd get lonely if I left my home... I'd miss my momma...
 	->The plane is my home. We travel. We catch bugs. We help people.
+		<<SetSprite Sprite Player>>
 		You: It's what bug catchers do.
 		You: So it's what I must do.
 		You: It's the only choice I have.
 		You: But every so often, every odd night, I miss the stars and the grass and the old weeping willow I used to call home. 
 	->The academy was my home. But I had to leave so I could finally face the world. And help kids like you.
+		<<SetSprite Sprite Other>>
 		child: do you miss your home then?
 		-> I think home means something different now. The plane is my home now.
+			<<SetSprite Sprite Player>>
 			You: It's not so bad... I get to meet kids like you!
+			<<SetSprite Sprite Other>>
 			child:...heh...
+			<<SetSprite Sprite Player>>
 			You: But every so often, every odd night, I miss the stars and the grass and the old weeping willow I used to call home. 
 		-> I'm... not sure. I'm not even sure what home really means anymore...
+			<<SetSprite Sprite Player>>
 			You: But I do know that every so often I miss the stars and the grass and the old weeping willow I used to call home.
 ->Not really. I like to keep moving. It's freeing. I don't get stuck anywhere. And I get to see so much of the world
+	<<SetSprite Sprite Other>>
 	child: Like what?
 	-> Like winding, gushing rivers, even longer than this one.
 	-> Like beautiful mountains that stretch out into the space beyond the digital plane
@@ -42,6 +51,7 @@ child: I like my home... Does it ever get lonely for you when you're travelling?
 	child: Do you think I could be a bug hunter like you one day?
 	child: Although... I think I'd still miss home...
 child:...
+<<SetSprite Sprite Player>>
 You: wait for me here...I'll be back...
 
 
@@ -49,6 +59,7 @@ You: wait for me here...I'll be back...
 
 title: 2
 ---
+<<SetSprite Sprite Other>>
 the child is waiting for you...
 -> They're gone. The bugs are gone. You can go back home now.
 child: Why do you think the bugs took over my home?
@@ -61,6 +72,7 @@ child: Like you are?
 
 title: 3
 ---
+<<SetSprite Sprite Other>>
 An old hunter. He looks tired and grizzled...
 -> Talk to him
 Old Hunter: Hey, blue. Looks like you’re new around here, eh?
@@ -92,7 +104,7 @@ Old Hunter: Good luck...
 
 title: 4
 ---
-
+<<SetSprite Sprite Other>>
 Old Hunter: I saw what you did. Helped that kid out huh?
 Old Hunter: We hunters...
 Old Hunter: We don't get to know a lotta people. Hard to do that when you keep moving, changing.
