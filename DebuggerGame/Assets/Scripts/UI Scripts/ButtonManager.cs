@@ -18,6 +18,7 @@ public class ButtonManager : MonoBehaviour
             string combineString = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2,2);
             Debug.Log("loading level" + combineString);
             SceneManager.LoadScene(combineString);
+            SaveManager.instance.currentLevel = levelName;
         }
         else
         {
