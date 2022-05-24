@@ -4,28 +4,28 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -4541150122889840728
-    second: SRSBug_Char2_0
+    second: PC_Walk_0
   - first:
       213: 2199371936726400077
-    second: SRSBug_Char2_1
+    second: PC_Walk_1
   - first:
       213: 2055064228532607338
-    second: SRSBug_Char2_2
+    second: PC_Walk_2
   - first:
       213: -281494447116774098
-    second: SRSBug_Char2_3
+    second: PC_Walk_3
   - first:
       213: 4703150303685018419
-    second: SRSBug_Char2_4
+    second: PC_Walk_Down
   - first:
       213: -6392788443134300271
-    second: SRSBug_Char2_5
+    second: PC_Walk_Up
   - first:
       213: -2108645610363664566
-    second: SRSBug_Char2_6
+    second: Elder_Flytrap_0
   - first:
       213: 4716075501375934195
-    second: SRSBug_Char2_7
+    second: Elder_Flytrap_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,15 +115,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SRSBug_Char2_0
+      name: PC_Walk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 36
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -136,15 +136,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_1
+      name: PC_Walk_1
       rect:
         serializedVersion: 2
         x: 36
         y: 36
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -157,15 +157,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_2
+      name: PC_Walk_2
       rect:
         serializedVersion: 2
         x: 72
         y: 36
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -178,15 +178,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_3
+      name: PC_Walk_3
       rect:
         serializedVersion: 2
         x: 108
         y: 36
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -199,15 +199,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_4
+      name: PC_Walk_Down
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,15 +220,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_5
+      name: PC_Walk_Up
       rect:
         serializedVersion: 2
         x: 36
         y: 0
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -241,15 +241,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_6
+      name: Elder_Flytrap_0
       rect:
         serializedVersion: 2
         x: 72
         y: 0
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -262,15 +262,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRSBug_Char2_7
+      name: Elder_Flytrap_1
       rect:
         serializedVersion: 2
         x: 108
         y: 0
         width: 36
         height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
