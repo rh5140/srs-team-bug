@@ -11,14 +11,14 @@ public class BobbingAnimation : MonoBehaviour
 
     void Start()
     {
-        this.originalY = this.transform.position.y;
+        this.originalY = this.transform.localPosition.y;
     }
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x,
+        transform.localPosition = new Vector3(transform.localPosition.x,
             originalY + ((float)Mathf.Sin(Time.time * speed) * floatStrength),
-            transform.position.z);
+            transform.localPosition.z);
     }
 
 }
