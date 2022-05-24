@@ -13,6 +13,12 @@ public class MovingBug : Arthropod
         if (isCaught)
         {
             myTurn = true;
+
+            // OUTDATED WAY TO FOLLOW THE PLAYER WHEN CAUGHT
+            // Follow the player if the bug is caught in the player's mouth
+            // TODO - Clear the queue of movement actions if the bug is released. Otherwise the bug will try to move to the player one more time.
+            //if (isCaught)
+            //    actions.Enqueue(new MovementAction(this, playerDist));
         }
         else if (myTurn)
         {
@@ -22,11 +28,6 @@ public class MovingBug : Arthropod
 
             // relative position of the player with respect to the bug
             Vector2Int playerDist = new Vector2Int(player.coordinate.x - this.coordinate.x, player.coordinate.y - this.coordinate.y);
-
-            // Follow the player if the bug is caught in the player's mouth
-            // TODO - Clear the queue of movement actions if the bug is released. Otherwise the bug will try to move to the player one more time.
-            if (isCaught)
-                actions.Enqueue(new MovementAction(this, playerDist));
 
             // check for collidables in the four surrounding tiles
             if (Board.instance.CanEnterCoordinate(this, this.coordinate + Vector2Int.up)) { canMove[0] = true; }
@@ -60,7 +61,9 @@ public class MovingBug : Arthropod
                     actualMove = tryToMove(new int[] { 0, 3, 1, 2 }, canMove);
                 else if (-playerDist.x < playerDist.y) // player is to the upper-left. Try moving down, then right, then left
                     actualMove = tryToMove(new int[] { 2, 3, 1, 0 }, canMove);
-                else // player is directly to the left
+                else if (playerDist.y > 0) // player is slightly above horizontal axis to the left
+                    actualMove = tryToMove(new int[] { 3, 2, 0, 1 }, canMove);
+                else // player is directly to the left or slightly below horizontal axis
                     actualMove = tryToMove(new int[] { 3, 0, 2, 1 }, canMove);
             }
 
@@ -71,7 +74,9 @@ public class MovingBug : Arthropod
                     actualMove = tryToMove(new int[] { 0, 1, 3, 2 }, canMove);
                 else if (playerDist.x <= playerDist.y) // player is to the upper-right. Try moving down, then left, then right
                     actualMove = tryToMove(new int[] { 2, 1, 3, 0 }, canMove);
-                else // player is directly to the right
+                else if (playerDist.y < 0) // player is slightly below horizontal axis to the right
+                    actualMove = tryToMove(new int[] { 1, 0, 2, 3 }, canMove);
+                else // player is directly to the right or slightly above horizontal axis
                     actualMove = tryToMove(new int[] { 1, 2, 0, 3 }, canMove);
             }
 
