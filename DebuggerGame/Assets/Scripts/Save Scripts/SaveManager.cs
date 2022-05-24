@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SaveManager : MonoBehaviour
 {
@@ -130,35 +131,35 @@ public class SaveManager : MonoBehaviour
     {
         if (save1.saveCreated)
         {
-            GameObject.Find("save1Button").GetComponentInChildren<Text>().text = "Save Slot 1";
+            GameObject.Find("save1Button").GetComponentInChildren<TextMeshProUGUI>().text = "Save Slot 1";
             GameObject.Find("deleteSave1").GetComponent<Image>().enabled = true;
         }
         else
         {
-            GameObject.Find("save1Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("save1Button").GetComponentInChildren<TextMeshProUGUI>().text = "New Save";
             GameObject.Find("deleteSave1").GetComponent<Image>().enabled = false;
 
         }
 
         if (save2.saveCreated)
         {
-            GameObject.Find("save2Button").GetComponentInChildren<Text>().text = "Save Slot 2";
+            GameObject.Find("save2Button").GetComponentInChildren<TextMeshProUGUI>().text = "Save Slot 2";
             GameObject.Find("deleteSave2").GetComponent<Image>().enabled = true;
         }
         else
         {
-            GameObject.Find("save2Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("save2Button").GetComponentInChildren<TextMeshProUGUI>().text = "New Save";
             GameObject.Find("deleteSave2").GetComponent<Image>().enabled = false;
         }
 
         if (save3.saveCreated)
         {
-            GameObject.Find("save3Button").GetComponentInChildren<Text>().text = "Save Slot 3";
+            GameObject.Find("save3Button").GetComponentInChildren<TextMeshProUGUI>().text = "Save Slot 3";
             GameObject.Find("deleteSave3").GetComponent<Image>().enabled = true;
         }
         else
         {
-            GameObject.Find("save3Button").GetComponentInChildren<Text>().text = "New Save";
+            GameObject.Find("save3Button").GetComponentInChildren<TextMeshProUGUI>().text = "New Save";
             GameObject.Find("deleteSave3").GetComponent<Image>().enabled = false;
         }
     }

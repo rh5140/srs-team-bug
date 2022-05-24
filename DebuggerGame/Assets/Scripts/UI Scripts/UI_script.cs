@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_script : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class UI_script : MonoBehaviour
 
     public void LoadSave(int saveNum)
     {
-        if (GameObject.Find("save" + saveNum + "Button").GetComponentInChildren<Text>().text == "New Save")
+        if (GameObject.Find("save" + saveNum + "Button").GetComponentInChildren<TextMeshProUGUI>().text == "New Save")
         {
             SaveManager.instance.NewSave(saveNum);
         }
