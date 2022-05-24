@@ -29,19 +29,29 @@ public class UI_script : MonoBehaviour
 
     public void openCollection()
     {
-        SceneManager.LoadScene("collection");
+        SceneManager.LoadScene("Collection");
     }
 
     public void backToMain()
     {
         //SaveManager.instance.ResetSave();
-        SceneManager.LoadScene("save menu");
+        SceneManager.LoadScene("Save Menu");
+    }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void LoadControls()
+    {
+        SceneManager.LoadScene("Controls");
     }
 
     public void LoadSave(int saveNum)
     {
         SaveManager.instance.LoadSave(saveNum);
         System.Console.Write(saveNum);
-        SceneManager.LoadScene("collection");
+        SceneManager.LoadScene("world_map");
     }
 }

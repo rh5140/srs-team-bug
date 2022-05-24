@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5590260996569118230}
   - component: {fileID: 7158670587260552314}
+  - component: {fileID: 8042289999688735957}
   m_Layer: 0
   m_Name: PushableObject
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7593956154430336754, guid: 2c8652fe5f9621040af9cbcd087d3011, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5323581ac81d4d459d5bedcf7ac5d32, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,3 +83,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8042289999688735957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7706220467210542484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e74b03d432a4025b8d3217d1a5cc30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollidableObject : BoardObject
+public class CollidableObject : ActionlessBoardObject
 {
     public bool bugsCanPass = false;
 

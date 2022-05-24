@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
     public int saveNum = 0;
     
     //Level info
-    public int currentLevel;
+    public string currentLevel;
     //public levelDatabase levelDatabase;
     //public List<Level> completedLevels = new List<Level>();
 
@@ -52,7 +52,8 @@ public class SaveManager : MonoBehaviour
             save3 = save;
 
         saveNum = 0;
-        save.currentLevel = 0;
+        save.currentLevel = null;
+        save.unlockedLevels = new HashSet<string>();
         mapPosition = Vector2Int.zero;
         save.Collection.Clear();
         save.Save();
@@ -92,7 +93,8 @@ public class SaveManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                save.currentLevel++;
+                //save.currentLevel++;
+                Debug.Log("Unexpected behavior: Check the code and ask Felix Peng");
             }
         }
     }

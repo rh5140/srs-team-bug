@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class TestBug : Arthropod
 {
-    BoardAction RuleMap(BoardAction action)
-    {
-        return new NullAction(action.boardObject);
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -17,21 +12,20 @@ public class TestBug : Arthropod
             new EFMActionRule(
                 this,
                 board,
-                enableConditions: new List<EFMActionRule.EnableCondition> {
-                    (BoardObject creator, Board board)
-                        => creator is Arthropod arthropod && !arthropod.isCaught && arthropod.rulesEnabled
-                },
+                enableCondition: (BoardObject creator, Board board) =>
+                    creator is Arthropod arthropod
+                    && !arthropod.isCaught
+                    && arthropod.rulesEnabled,
                 filter: (BoardAction action) =>
                     action.boardObject is Player
-                    && action is MovementAction movementAction
-                    && movementAction.direction.y > 0,
-                map: RuleMap
+                    && action is MovementAction movementAction,
+                map: action => new NullAction(action.boardObject)
             )
         );
     }
-    protected override void OnEndTurn() {
-        base.OnEndTurn();
+    protected override void OnEndPlayerTurn() {
+        base.OnEndPlayerTurn();
 
-        actions.Enqueue(new MovementAction(this, Vector2Int.right));
+        //actions.Enqueue(new MovementAction(this, Vector2Int.right));
     }
 }

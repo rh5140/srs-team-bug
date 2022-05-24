@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : BoardObject
 {
@@ -9,12 +10,21 @@ public class Player : BoardObject
     // public InventorySystem collection;
 
     public Arthropod heldArthropod;
+
+    public bool facingRight = true;
+    public Animator animator;
         
     protected override void Start()
     {
         base.Start();
+        collection.currentLevel = Board.instance.levelName;
         heldArthropod = null;
+        animator.SetBool("facingDown", false);
+        animator.SetBool("facingUp", false);
+        animator.SetBool("horizontal", true);
     }
+
+    
 
     public void setArthropod(Arthropod heldArthropod)
     {
@@ -24,22 +34,74 @@ public class Player : BoardObject
     protected override void Update()
     {
         base.Update();
-        if (board.lastBoardEvent == Board.EventState.StartTurn)
+
+        //Check for restart key (TEMP)
+        float restart = Input.GetAxisRaw("Restart");
+        if (!Mathf.Approximately(restart, 0f))
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        //Instawin upon hitting correct key (TEMP)
+        float win = Input.GetAxisRaw("Win");
+        if (!Mathf.Approximately(win, 0f))
+        {
+            Board.instance.InstantWin();
+        }
+
+        if (board.lastBoardEvent == Board.EventState.StartPlayerTurn)
+        {
+            //Debug.Log("Running");
+
             //release captured arthropod!
             float release = Input.GetAxisRaw("Release");
             if (!Mathf.Approximately(release, 0f) && heldArthropod != null)
             {
-                Debug.Log("R");
                 heldArthropod.Release(this.gameObject);
             }
 
+            float swallow = Input.GetAxisRaw("Swallow");
+            if (!Mathf.Approximately(swallow, 0f) && heldArthropod != null)
+            {
+                heldArthropod.Swallow(this.gameObject);
+            }
+
             // only move if during a turn
-            
+
             Vector2 input = new Vector2(
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical")
             );
+
+            // Flipping animation
+            if (input.x > 0)
+            {
+                if (!facingRight)
+                    Flip();
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.x < 0)
+            {
+                if (facingRight)
+                    Flip();
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y < 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingDown", true);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y > 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingUp", true);
+                animator.SetBool("facingDown", false);
+            }
 
             // check if input is nonzero
             // if it is, move in whatever direction in with component velocity 1
@@ -57,13 +119,14 @@ public class Player : BoardObject
                 actions.Enqueue(new MovementAction(this, direction));
                 board.EndTurn();
             }
+
         }
     }
 
-    protected override void OnStartTurn()
+    protected override void OnStartPlayerTurn()
     {
-        base.OnStartTurn();
-
+        base.OnStartPlayerTurn();
+        //Debug.Log("New Turn");
         /*
         Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
         however there is currently no implementation for actions to be executed at the beginning of turn 
@@ -75,8 +138,6 @@ public class Player : BoardObject
         TODO: Action based implementation of the overlap checking.
         */
         //actions.Enqueue(DetectBugOverlap()); ?
-
-
 
         /* Physics based implementation for bug catching 
         Collider2D[] objectsOverlap = null;
@@ -93,33 +154,50 @@ public class Player : BoardObject
         }
         */
 
+        CatchArthropods();
+    }
+
+    protected override void OnPostPlayerExecute()
+    {
+        base.OnPostPlayerExecute();
+
+        CatchArthropods();
+    }
+
+    protected void CatchArthropods()
+    {
         //Coordinate based implementation for bug catching
         foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
             if (!arthropod.isCaught && arthropod.coordinate == this.coordinate && heldArthropod == null)
             {
-                board.BugCountUpdate();
                 arthropod.Catch(this.gameObject);
                 break;
             }
         }
     }
 
-    /*
-    /// <summary>
-    /// DetectBugOverlap detects if player is overlapping a bug, then returns an action that will collect the bug.
-    /// </summary>
-    /// <returns></returns>
-    /// 
-    private BoardAction DetectBugOverlap()
+    //To be called when the level ends
+    //Adds all of the unlockLevels in board to the unlockedLevels in collection
+    protected override void OnEndLevel()
     {
-        //TODO: Action based implementation
-        return null;
+        base.OnEndLevel();
+        collection.currentLevel = null;
+        foreach (string levelName in Board.instance.unlockLevels)
+        {
+            collection.unlockedLevels.Add(levelName);
+        }
+        
     }
-    */
 
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+    }
 
     private void OnApplicationQuit()
     {
     }
+    
 }
