@@ -40,10 +40,10 @@ public class SaveManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Scene is Loaded");
-        Debug.Log(save1);
-        Debug.Log(save2);
-        Debug.Log(save3);
+        //Debug.Log("Scene is Loaded");
+        //Debug.Log(save1);
+        //Debug.Log(save2);
+        //Debug.Log(save3);
         if (scene.name == "Save Menu")
         {
             UpdateSaveMenuUI();
@@ -70,20 +70,9 @@ public class SaveManager : MonoBehaviour
             save = save3;
 
         save.saveCreated = true;
-        UpdateSaveMenuUI();
-    }
-
-    public void ResetSave()
-    {
-        if (saveNum == 1)
-            save1 = save;
-        else if (saveNum == 2)
-            save2 = save;
-        else if (saveNum == 3)
-            save = save3;
-        save.currentLevel = null;
-        save.unlockedLevels = new HashSet<string>();
-        save.saveCreated = true;
+        save.currentLevel = "0000";
+        currentLevel = "0000";
+        Save();
         UpdateSaveMenuUI();
     }
 
@@ -103,6 +92,14 @@ public class SaveManager : MonoBehaviour
         Collection = save.Collection;
     }
 
+    public void Save()
+    {
+        save.currentLevel = currentLevel;
+        save.unlockedLevels = unlockedLevels;
+        save.Collection = Collection;
+        save.Save();
+    }
+
     public void ClearSave(int saveNum)
     {
         if (saveNum == 1)
@@ -120,11 +117,6 @@ public class SaveManager : MonoBehaviour
         save.Save();
         UpdateSaveMenuUI();
 
-    }
-
-    public void LoadLevel()
-    {
-        //
     }
 
     public void UpdateSaveMenuUI()
@@ -166,36 +158,6 @@ public class SaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (save != null)
-        {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                save.Save();
-                Debug.Log("save");
-            }
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                save.Load();
-                Debug.Log("load");
-            }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                save.AddArthropod(save.arthropodDatabase.GetArthropod[0], 1);
-                Debug.Log("ant");
-            }
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                save.AddArthropod(save.arthropodDatabase.GetArthropod[1], 1);
-                Debug.Log("spider");
-            }
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                //save.currentLevel++;
-                Debug.Log("Unexpected behavior: Check the code and ask Felix Peng");
-            }
-        }
     }
 
 }

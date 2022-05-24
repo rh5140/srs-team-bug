@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40df6a392b2f628429edb2fdede62655, type: 3}
   m_Name: Save 3
   m_EditorClassIdentifier: 
-  savePath: /state.Save3
+  savePath: /state.save3
   currentLevel: 0
+  test: 
+  saveCreated: 1
   mapPosition: {x: 0, y: 0}
   arthropodDatabase: {fileID: 11400000, guid: c7800d2771b93ed469aebe301938bff2, type: 2}
   Collection: []

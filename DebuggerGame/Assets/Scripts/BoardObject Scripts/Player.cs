@@ -5,16 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Player : BoardObject
 {
-
-    public SaveState collection;
-    // public InventorySystem collection;
-
     public Arthropod heldArthropod;
         
     protected override void Start()
     {
         base.Start();
-        collection.currentLevel = Board.instance.levelName;
+        SaveManager.instance.currentLevel = Board.instance.levelName;
         heldArthropod = null;
     }
 
@@ -129,14 +125,14 @@ public class Player : BoardObject
     }
 
     //To be called when the level ends
-    //Adds all of the unlockLevels in board to the unlockedLevels in collection
+    //Adds all of the unlockLevels in board to the unlockedLevels in SaveManager
     protected override void OnEndLevel()
     {
         base.OnEndLevel();
-        collection.currentLevel = null;
+        SaveManager.instance.currentLevel = null;
         foreach (string levelName in Board.instance.unlockLevels)
         {
-            collection.unlockedLevels.Add(levelName);
+            SaveManager.instance.unlockedLevels.Add(levelName);
         }
         
     }

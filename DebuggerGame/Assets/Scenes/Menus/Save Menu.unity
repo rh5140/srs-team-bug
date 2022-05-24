@@ -2133,11 +2133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   save: {fileID: 0}
-  save1: {fileID: 11400000, guid: d23f3513ba43b594998ccc71fd45b816, type: 2}
+  save1: {fileID: 11400000, guid: 3f2902e8ef1b9354cbc8206727a9c25f, type: 2}
   save2: {fileID: 11400000, guid: afa2b5a76bcfdef41bd3d3f8d62a1607, type: 2}
   save3: {fileID: 11400000, guid: 79fe84385c1df564896442aa5b295354, type: 2}
   saveNum: 0
-  currentLevel: 0
+  currentLevel: 
   mapPosition: {x: 0, y: 0}
   arthropodDatabase: {fileID: 11400000, guid: c7800d2771b93ed469aebe301938bff2, type: 2}
   Collection: []

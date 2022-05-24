@@ -42,6 +42,7 @@ public class UI_script : MonoBehaviour
 
     public void backToSave()
     {
+        SaveManager.instance.Save();
         SceneManager.LoadScene("Save Menu");
     }
 
