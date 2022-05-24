@@ -9,6 +9,7 @@ public class DialogueBoxUI : MonoBehaviour
 {
     public Sprite playerSprite;
     public Sprite otherSprite;
+    public Sprite noSprite;
 
     [YarnCommand("SetSprite")]
     void SetSprite(string name)
@@ -23,7 +24,7 @@ public class DialogueBoxUI : MonoBehaviour
         }
         else
         {
-            GetComponent<Image>().sprite = playerSprite;
+            GetComponent<Image>().sprite = noSprite;
         }
     }
 
