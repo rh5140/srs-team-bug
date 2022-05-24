@@ -10,12 +10,18 @@ public class Player : BoardObject
     // public InventorySystem collection;
 
     public Arthropod heldArthropod;
+
+    public bool facingRight = true;
+    public Animator animator;
         
     protected override void Start()
     {
         base.Start();
         collection.currentLevel = Board.instance.levelName;
         heldArthropod = null;
+        animator.SetBool("facingDown", false);
+        animator.SetBool("facingUp", false);
+        animator.SetBool("horizontal", true);
     }
 
     
@@ -67,6 +73,36 @@ public class Player : BoardObject
                 Input.GetAxisRaw("Vertical")
             );
 
+            // Flipping animation
+            if (input.x > 0)
+            {
+                if (!facingRight)
+                    Flip();
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.x < 0)
+            {
+                if (facingRight)
+                    Flip();
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y < 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingDown", true);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y > 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingUp", true);
+                animator.SetBool("facingDown", false);
+            }
+
             // check if input is nonzero
             // if it is, move in whatever direction in with component velocity 1
             Vector2Int direction = new Vector2Int(
@@ -83,6 +119,7 @@ public class Player : BoardObject
                 actions.Enqueue(new MovementAction(this, direction));
                 board.EndTurn();
             }
+
         }
     }
 
@@ -153,7 +190,14 @@ public class Player : BoardObject
         
     }
 
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+    }
+
     private void OnApplicationQuit()
     {
     }
+    
 }
