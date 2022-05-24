@@ -72,6 +72,8 @@ public class SaveManager : MonoBehaviour
         save.saveCreated = true;
         save.currentLevel = "0000";
         currentLevel = "0000";
+        save.unlockedLevels.Add("0000");
+        unlockedLevels.Add("0000");
         Save();
         UpdateSaveMenuUI();
     }
@@ -94,9 +96,6 @@ public class SaveManager : MonoBehaviour
 
     public void Save()
     {
-        save.currentLevel = currentLevel;
-        save.unlockedLevels = unlockedLevels;
-        save.Collection = Collection;
         save.Save();
     }
 
@@ -158,6 +157,13 @@ public class SaveManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            foreach (var value in unlockedLevels)
+            {
+                Debug.Log(value);
+            }
+        }
     }
 
 }

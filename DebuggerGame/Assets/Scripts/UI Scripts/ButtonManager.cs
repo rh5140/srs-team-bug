@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public SaveState collection;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +13,7 @@ public class ButtonManager : MonoBehaviour
 
     public void ButtonMoveScene(string levelName)
     {
-        if (collection.unlockedLevels.Contains(levelName))
+        if (SaveManager.instance.unlockedLevels.Contains(levelName))
         {
             string combineString = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2,2);
             Debug.Log("loading level" + combineString);
