@@ -58,6 +58,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         bf.Serialize(file, saveData);
         file.Close();
+        unlockedLevelsSerializable.Clear();
     }
 
     public void Load()
