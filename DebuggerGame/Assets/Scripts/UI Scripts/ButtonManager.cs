@@ -18,7 +18,7 @@ public class ButtonManager : MonoBehaviour
         {
             TMPro.TextMeshProUGUI text = cTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             string lName = cTransform.GetComponent<ButtonOnClick>().levelName;
-            if (!collection.unlockedLevels.Contains(lName))
+            if (!SaveManager.instance.unlockedLevels.Contains(lName))
             {
                 newColor = text.color;
                 newColor.a = newColor.a / 3;
