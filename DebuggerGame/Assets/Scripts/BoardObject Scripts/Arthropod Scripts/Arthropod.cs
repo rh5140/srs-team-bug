@@ -47,6 +47,7 @@ abstract public class Arthropod : BoardObject
     {
         player.GetComponent<Player>().setArthropod(null);
         board.SetWinCondition(winConIndex, true);
+        board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
         RemoveListeners();
@@ -60,9 +61,9 @@ abstract public class Arthropod : BoardObject
         board.actionRules.Add(rule);
     }
 
-    protected override void OnStartTurn()
+    protected override void OnStartPlayerTurn()
     {
-        base.OnStartTurn();
+        base.OnStartPlayerTurn();
         this.coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
         //Debug.Log(this.coordinate);

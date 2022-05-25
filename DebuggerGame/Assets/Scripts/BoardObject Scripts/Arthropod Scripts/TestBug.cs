@@ -23,8 +23,8 @@ public class TestBug : Arthropod
             )
         );
     }
-    protected override void OnEndTurn() {
-        base.OnEndTurn();
+    protected override void OnEndPlayerTurn() {
+        base.OnEndPlayerTurn();
 
         //actions.Enqueue(new MovementAction(this, Vector2Int.right));
     }
