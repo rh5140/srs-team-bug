@@ -133,6 +133,7 @@ public class Player : BoardObject
         foreach (string levelName in Board.instance.unlockLevels)
         {
             SaveManager.instance.unlockedLevels.Add(levelName);
+            SaveManager.instance.Save();
         }
         
     }
