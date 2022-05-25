@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class UI_script : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class UI_script : MonoBehaviour
 
     public void play_game()
     {
-        SceneManager.LoadScene("world_map");
+        SceneManager.LoadScene("Save Menu");
     }
 
     public void quit_game()
@@ -35,6 +37,12 @@ public class UI_script : MonoBehaviour
     public void backToMain()
     {
         //SaveManager.instance.ResetSave();
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void backToSave()
+    {
+        SaveManager.instance.Save();
         SceneManager.LoadScene("Save Menu");
     }
 
@@ -50,8 +58,20 @@ public class UI_script : MonoBehaviour
 
     public void LoadSave(int saveNum)
     {
-        SaveManager.instance.LoadSave(saveNum);
-        System.Console.Write(saveNum);
-        SceneManager.LoadScene("world_map");
+        if (GameObject.Find("save" + saveNum + "Button").GetComponentInChildren<TextMeshProUGUI>().text == "New Save")
+        {
+            SaveManager.instance.NewSave(saveNum);
+        }
+        else
+        {
+            SaveManager.instance.LoadSave(saveNum);
+            Debug.Log(saveNum);
+            SceneManager.LoadScene("world_map");
+        }
+    }
+
+    public void DeleteSave(int saveNum)
+    {
+        SaveManager.instance.ClearSave(saveNum);
     }
 }

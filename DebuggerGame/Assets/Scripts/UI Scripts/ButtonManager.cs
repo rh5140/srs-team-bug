@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public SaveState collection;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +18,7 @@ public class ButtonManager : MonoBehaviour
         {
             TMPro.TextMeshProUGUI text = cTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             string lName = cTransform.GetComponent<ButtonOnClick>().levelName;
-            if (!collection.unlockedLevels.Contains(lName))
+            if (!SaveManager.instance.unlockedLevels.Contains(lName))
             {
                 newColor = text.color;
                 newColor.a = newColor.a / 3;
@@ -31,11 +30,12 @@ public class ButtonManager : MonoBehaviour
 
     public void ButtonMoveScene(string levelName)
     {
-        if (collection.unlockedLevels.Contains(levelName))
+        if (SaveManager.instance.unlockedLevels.Contains(levelName))
         {
             string combineString = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2,2);
             Debug.Log("loading level" + combineString);
             SceneManager.LoadScene(combineString);
+            SaveManager.instance.currentLevel = levelName;
         }
         else
         {
