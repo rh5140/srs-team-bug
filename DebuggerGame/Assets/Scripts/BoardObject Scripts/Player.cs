@@ -9,6 +9,7 @@ public class Player : BoardObject
 
     public bool facingRight = true;
     public Animator animator;
+    private SpriteRenderer spriteRenderer;
         
     protected override void Start()
     {
@@ -18,6 +19,7 @@ public class Player : BoardObject
         animator.SetBool("facingDown", false);
         animator.SetBool("facingUp", false);
         animator.SetBool("horizontal", true);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     
@@ -72,16 +74,14 @@ public class Player : BoardObject
             // Flipping animation
             if (input.x > 0)
             {
-                if (!facingRight)
-                    Flip();
+                spriteRenderer.flipX = !facingRight ? true : false;
                 animator.SetBool("horizontal", true);
                 animator.SetBool("facingDown", false);
                 animator.SetBool("facingUp", false);
             }
             else if (input.x < 0)
             {
-                if (facingRight)
-                    Flip();
+                spriteRenderer.flipX = facingRight ? true : false;
                 animator.SetBool("horizontal", true);
                 animator.SetBool("facingDown", false);
                 animator.SetBool("facingUp", false);
@@ -185,16 +185,6 @@ public class Player : BoardObject
             SaveManager.instance.Save();
         }
         
-    }
-
-    private void Flip()
-    {
-        facingRight = !facingRight;
-        transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
-    }
-
-    private void OnApplicationQuit()
-    {
     }
     
 }
