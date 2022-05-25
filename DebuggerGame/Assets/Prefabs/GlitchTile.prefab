@@ -32,9 +32,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+      propertyPath: m_DrawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 29fcbb82aeae31a469739f3b9350cd83, type: 2}
     - target: {fileID: 6286820799582127420, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_Name
       value: GlitchTile
@@ -89,3 +97,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+--- !u!1 &4247089782376877797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6286820799582127420, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+  m_PrefabInstance: {fileID: 7912815280548645849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8219368005758225056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247089782376877797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd2968804aa5d45478ad57ef5cd0833c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
