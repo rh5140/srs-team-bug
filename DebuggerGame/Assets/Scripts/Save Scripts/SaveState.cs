@@ -4,6 +4,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
+
 
 [CreateAssetMenu(fileName = "New Save State", menuName = "Save System/Save State")]
 public class SaveState : ScriptableObject, ISerializationCallbackReceiver
@@ -14,6 +16,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     //Level info
     public string currentLevel;
     public HashSet<string> unlockedLevels = new HashSet<string>();
+    public List<string> unlockedLevelsSerializable = new List<string>();
 
     //public levelDatabase levelDatabase;
     public bool saveCreated;
@@ -48,6 +51,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
 
     public void Save()
     {
+        unlockedLevelsSerializable = unlockedLevels.ToList();
         string saveData = JsonUtility.ToJson(this, true);
         Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
@@ -76,6 +80,11 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         for (int i = 0; i < Collection.Count; i++)
         {
             Collection[i].arthropodData = arthropodDatabase.GetArthropod[Collection[i].ID];
+        }
+
+        foreach (string level in unlockedLevelsSerializable)
+        {
+            unlockedLevels.Add(level);
         }
     }
 }
