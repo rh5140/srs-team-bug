@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 520012602}
   - component: {fileID: 520012601}
+  - component: {fileID: 520012603}
   m_Layer: 0
   m_Name: PC
   m_TagString: Untagged
@@ -332,6 +333,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &520012603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520012600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f677f7791b894cf469e31fd7f6f0dcc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &703311246
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,8 +808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
-  unlockLevels: []
+  levelName: 00D2
+  unlockLevels:
+  - 0004
   boardObjects: []
   width: 12
   height: 7

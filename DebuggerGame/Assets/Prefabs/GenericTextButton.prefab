@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 7074097418105098239}
   - component: {fileID: 7074097418105098234}
   m_Layer: 5
-  m_Name: GenericButton
+  m_Name: GenericTextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

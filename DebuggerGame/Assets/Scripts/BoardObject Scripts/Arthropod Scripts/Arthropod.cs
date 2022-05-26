@@ -26,7 +26,7 @@ abstract public class Arthropod : BoardObject
     public virtual void Catch(GameObject player)
     {
         isCaught = true;
-        rulesEnabled = false;
+        //rulesEnabled = false;
         transform.SetParent(player.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         player.GetComponent<Player>().setArthropod(this.GetComponent<Arthropod>());
@@ -36,7 +36,7 @@ abstract public class Arthropod : BoardObject
     public virtual void Release(GameObject player)
     {
         isCaught = false;
-        rulesEnabled = true;
+        //rulesEnabled = true;
         transform.SetParent(board.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = true;
         player.GetComponent<Player>().setArthropod(null);
