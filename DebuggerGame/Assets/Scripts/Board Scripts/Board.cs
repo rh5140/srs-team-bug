@@ -174,9 +174,11 @@ public class Board : MonoBehaviour
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
             || (boardObject is Arthropod && GetBoardObjectAtCoordinate(coordinate) is PushableObject);
+        
+        bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
-        return !collidableAtCoord && inBounds;// !collidableAtCoord;
+        return (!collidableAtCoord || pushableOnGlitch) && inBounds;// !collidableAtCoord;
     }
 
     private void OnEnable()
