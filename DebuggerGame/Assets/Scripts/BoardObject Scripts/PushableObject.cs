@@ -21,7 +21,9 @@ public class PushableObject : BoardObject
             }
             return false;
         }
-        else if(objectAtNewCoordinate == null) {
+        else if(objectAtNewCoordinate == null ||
+            objectAtNewCoordinate is CollidableObject &&
+            ((CollidableObject)objectAtNewCoordinate).pushablesCanPass) {
             AddActionMidExecution(new MovementAction(this, direction), actionOffset);
             return true;
         }
