@@ -666,7 +666,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910641056}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: LoadMap
+        m_MethodName: LoadSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

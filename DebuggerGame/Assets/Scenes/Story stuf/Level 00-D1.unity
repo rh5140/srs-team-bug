@@ -179,6 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 539127054}
   - component: {fileID: 539127053}
+  - component: {fileID: 539127055}
   m_Layer: 0
   m_Name: PC
   m_TagString: Untagged
@@ -244,13 +245,25 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539127052}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539127055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539127052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f677f7791b894cf469e31fd7f6f0dcc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &615937614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,8 +1361,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
-  unlockLevels: []
+  levelName: 00D1
+  unlockLevels:
+  - 0003
   boardObjects: []
   width: 12
   height: 7

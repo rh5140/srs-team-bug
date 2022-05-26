@@ -29,6 +29,8 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public List<InventorySlot> Collection = new List<InventorySlot>();
     private void OnEnable()
     {
+        //unlock first level
+        unlockedLevels.Add("0000");
         hideFlags = HideFlags.DontUnloadUnusedAsset;
 #if UNITY_EDITOR
         arthropodDatabase = (ArthropodDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Arthropod Database.asset", typeof(ArthropodDatabase));

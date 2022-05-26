@@ -5121,7 +5121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019abcf1f65670468e093479e6044c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collection: {fileID: 11400000, guid: 4a00f76f703a91048a3bb07867ef3c11, type: 2}
   heldArthropod: {fileID: 0}
   facingRight: 1
   animator: {fileID: 1511573147}
@@ -6288,7 +6287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: 0003
   unlockLevels:
-  - 0004
+  - 00D2
   boardObjects: []
   width: 16
   height: 11
