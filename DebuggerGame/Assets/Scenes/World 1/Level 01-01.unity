@@ -3223,6 +3223,7 @@ MonoBehaviour:
   heldArthropod: {fileID: 0}
   facingRight: 1
   animator: {fileID: 446138875}
+  swallowSFX: {fileID: 0}
 --- !u!95 &446138875
 Animator:
   serializedVersion: 3
@@ -4366,12 +4367,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: 0101
-  unlockLevels: []
+  unlockLevels:
+  - 01D0
   boardObjects: []
   width: 14
   height: 10
   boundsEnabled: 1
   collidablesEnabled: 1
+  ready: 0
   gameWon: 0
 --- !u!4 &1117165264
 Transform:

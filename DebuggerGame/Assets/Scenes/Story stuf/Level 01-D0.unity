@@ -727,13 +727,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 00D3
+  levelName: 01D0
   unlockLevels: []
   boardObjects: []
   width: 12
   height: 7
   boundsEnabled: 1
   collidablesEnabled: 1
+  ready: 0
   gameWon: 0
 --- !u!4 &981731424
 Transform:

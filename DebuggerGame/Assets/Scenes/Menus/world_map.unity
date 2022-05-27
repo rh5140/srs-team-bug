@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 124282025401089574, guid: 008e96f5973d18b46b34edba74942b76, type: 3}
       propertyPath: levelName
-      value: 01-D0
+      value: 01D0
       objectReference: {fileID: 0}
     - target: {fileID: 3202861674594825668, guid: 008e96f5973d18b46b34edba74942b76, type: 3}
       propertyPath: m_Sprite
@@ -2214,8 +2214,9 @@ RectTransform:
   - {fileID: 1805496909}
   - {fileID: 1985430843}
   - {fileID: 136165924}
-  - {fileID: 802021890}
+  - {fileID: 577182872}
   - {fileID: 714559313}
+  - {fileID: 802021890}
   m_Father: {fileID: 223610634}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
