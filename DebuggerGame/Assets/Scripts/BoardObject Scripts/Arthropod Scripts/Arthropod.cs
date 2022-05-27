@@ -46,10 +46,12 @@ abstract public class Arthropod : BoardObject
     public virtual void Swallow(GameObject player)
     {
         player.GetComponent<Player>().setArthropod(null);
+        rulesEnabled = false;
         board.SetWinCondition(winConIndex, true);
         board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
+        rulesEnabled = false;
         RemoveListeners();
         this.gameObject.SetActive(false);
         Debug.Log("Swallowed");
