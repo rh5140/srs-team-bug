@@ -14,7 +14,8 @@ public class Player : BoardObject
     protected override void Start()
     {
         base.Start();
-        SaveManager.instance.currentLevel = Board.instance.levelName;
+        if (SaveManager.instance != null) // Useful for testing individual levels withou having to start from the Save Menu
+            SaveManager.instance.currentLevel = Board.instance.levelName;
         heldArthropod = null;
         animator.SetBool("facingDown", false);
         animator.SetBool("facingUp", false);
