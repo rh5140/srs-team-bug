@@ -1559,7 +1559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019abcf1f65670468e093479e6044c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collection: {fileID: 11400000, guid: 4a00f76f703a91048a3bb07867ef3c11, type: 2}
   heldArthropod: {fileID: 0}
   facingRight: 1
   animator: {fileID: 340421339}
@@ -3406,7 +3405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: 0002
   unlockLevels:
-  - 0003
+  - 00D1
   boardObjects: []
   width: 21
   height: 16
@@ -5573,7 +5572,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.09411766, b: 0.09411766, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

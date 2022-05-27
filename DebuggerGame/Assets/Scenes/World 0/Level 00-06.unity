@@ -4062,7 +4062,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5297,10 +5297,10 @@ Tilemap:
     m_Data: {fileID: 1904254487855419552, guid: d54cd72ebeb413e4fbb8f2f22b709bc8, type: 3}
   - m_RefCount: 64
     m_Data: {fileID: 4865326696082551069, guid: 2f7e1d3270946964da0f37d0f03ce681, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 8167515066073003205, guid: d54cd72ebeb413e4fbb8f2f22b709bc8, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 8167515066073003205, guid: d54cd72ebeb413e4fbb8f2f22b709bc8, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -8430064834786304492, guid: 8939561cee4ae314587eb2551a2c7803, type: 3}
   - m_RefCount: 1
@@ -8210,7 +8210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019abcf1f65670468e093479e6044c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collection: {fileID: 11400000, guid: 4a00f76f703a91048a3bb07867ef3c11, type: 2}
   heldArthropod: {fileID: 0}
   facingRight: 1
   animator: {fileID: 734921880}
@@ -10612,7 +10611,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.09411766, b: 0.09411766, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
