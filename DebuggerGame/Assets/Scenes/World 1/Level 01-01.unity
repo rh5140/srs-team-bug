@@ -4398,9 +4398,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c734175a035c25b409da5cebad66c7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 0100
-  unlockLevels:
-  - 0101
+  levelName: 0101
+  unlockLevels: []
   boardObjects: []
   width: 14
   height: 10
@@ -5766,7 +5765,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1757904236}
   - component: {fileID: 1757904240}
-  - component: {fileID: 1757904238}
   - component: {fileID: 1757904237}
   - component: {fileID: 1757904239}
   m_Layer: 0
@@ -5808,19 +5806,6 @@ MonoBehaviour:
   directions:
   - {x: 1, y: 0}
   playerOnly: 1
---- !u!114 &1757904238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757904235}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62ad1c73bea7424e973c744b73ba8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
 --- !u!114 &1757904239
 MonoBehaviour:
   m_ObjectHideFlags: 0

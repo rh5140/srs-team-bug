@@ -168,7 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: 00D3
-  unlockLevels: []
+  unlockLevels:
+  - 0100
   boardObjects: []
   width: 12
   height: 7
