@@ -3419,10 +3419,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757904235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
+  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rulesEnabled: 1
+  range: 2
+  directions:
+  - {x: 1, y: 0}
+  playerOnly: 1
 --- !u!4 &1823423764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286820799582127423, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}

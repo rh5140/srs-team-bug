@@ -2884,9 +2884,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 287971618}
-  - component: {fileID: 287971621}
   - component: {fileID: 287971620}
-  - component: {fileID: 287971619}
   m_Layer: 0
   m_Name: ChaoticWormEnemy (1)
   m_TagString: Untagged
@@ -2909,24 +2907,6 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &287971619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287971617}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbf198503138974a999f0b9c5de8738, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
-  range: 5
-  directions:
-  - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  playerOnly: 1
 --- !u!114 &287971620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2944,19 +2924,6 @@ MonoBehaviour:
   directions:
   - {x: 1, y: 0}
   playerOnly: 1
---- !u!114 &287971621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 287971617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62ad1c73bea7424e973c744b73ba8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
 --- !u!4 &288802534 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286820799582127423, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
@@ -5764,9 +5731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757904236}
-  - component: {fileID: 1757904240}
   - component: {fileID: 1757904237}
-  - component: {fileID: 1757904239}
   m_Layer: 0
   m_Name: ChaoticWormEnemy
   m_TagString: Untagged
@@ -5806,37 +5771,6 @@ MonoBehaviour:
   directions:
   - {x: 1, y: 0}
   playerOnly: 1
---- !u!114 &1757904239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757904235}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbf198503138974a999f0b9c5de8738, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
-  range: 5
-  directions:
-  - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  playerOnly: 1
---- !u!114 &1757904240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757904235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
 --- !u!1001 &1772995898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6288,10 +6222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1935456780}
-  - component: {fileID: 1935456784}
-  - component: {fileID: 1935456783}
   - component: {fileID: 1935456782}
-  - component: {fileID: 1935456781}
   m_Layer: 0
   m_Name: ChaoticWormEnemy (2)
   m_TagString: Untagged
@@ -6314,24 +6245,6 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1935456781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935456779}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbf198503138974a999f0b9c5de8738, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
-  range: 5
-  directions:
-  - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  playerOnly: 1
 --- !u!114 &1935456782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6349,32 +6262,6 @@ MonoBehaviour:
   directions:
   - {x: 1, y: 0}
   playerOnly: 1
---- !u!114 &1935456783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935456779}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62ad1c73bea7424e973c744b73ba8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
---- !u!114 &1935456784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935456779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rulesEnabled: 1
 --- !u!1001 &1954010941
 PrefabInstance:
   m_ObjectHideFlags: 0
