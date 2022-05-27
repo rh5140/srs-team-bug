@@ -1,0 +1,4 @@
+*.cs text eol=lf
+*.sln eol=crlf
+*.csproj eol=crlf
+*.asset eol=lf

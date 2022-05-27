@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c13a46a28d38b34490fa914de5da452, type: 3}
+  m_Name: 1g-melody-vamp
+  m_EditorClassIdentifier: 
+  glitchClipInfo:
+    clip: {fileID: 8300000, guid: f1c2d74ee59647542acf8b63f4fc0e74, type: 3}
+    mixerGroup: {fileID: 0}
+    maxVolume: 1
+    minVolume: 0
+  normalClipInfo:
+    clip: {fileID: 8300000, guid: bda2d9de506918c48b1333122ffb864e, type: 3}
+    mixerGroup: {fileID: 0}
+    maxVolume: 1
+    minVolume: 0

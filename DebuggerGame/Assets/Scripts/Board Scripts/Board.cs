@@ -40,9 +40,12 @@ public class Board : MonoBehaviour
     public List<string> unlockLevels = new List<string>();
 
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
-    private int numBugs; //Number of bugs currently left in the stage
+    public int numBugs { get; private set; } //Number of bugs currently left in the stage
+    public int nBugsCaught { get; private set; }
 
     public List<BoardObject> boardObjects;
+
+    public Event BugsCaughtChangeEvent = new Event();
 
     public void BugCountIncrement()
     {
@@ -52,9 +55,16 @@ public class Board : MonoBehaviour
     {
         numBugs--;
     }
-    public int GetNumBugs()
+
+    public void BugsCaughtIncrement()
     {
-        return numBugs;
+        nBugsCaught++;
+        BugsCaughtChangeEvent.Invoke();
+    }
+    public void BugsCaughtDecrement()
+    {
+        nBugsCaught--;
+        BugsCaughtChangeEvent.Invoke();
     }
 
 
@@ -91,6 +101,12 @@ public class Board : MonoBehaviour
             return timeSinceEndTurn == null ? null : timeSinceEndTurn / TimePerAction;
         }
     }
+
+    /// <summary>
+    /// Invoked after Start has finished
+    /// </summary>
+    public Event ReadyEvent = new Event();
+    public bool ready = false;
 
     /// <summary>
     /// Event raised after the execute phase has passed 
@@ -198,6 +214,7 @@ public class Board : MonoBehaviour
        
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
+        nBugsCaught = 0;
 
         //Initialize collidables list
         foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
@@ -263,6 +280,9 @@ public class Board : MonoBehaviour
                     )
             )
         );
+
+        ReadyEvent.Invoke();
+        ready = true;
     }
 
     private void OnDisable()
@@ -573,5 +593,8 @@ public class Board : MonoBehaviour
         PostArthropodExecuteEvent.RemoveAllListeners();
 
         EndLevelEvent.RemoveAllListeners();
+
+        ReadyEvent.RemoveAllListeners();
+        BugsCaughtChangeEvent.RemoveAllListeners();
     }
 }
