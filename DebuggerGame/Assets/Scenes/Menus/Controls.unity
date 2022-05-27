@@ -234,6 +234,8 @@ MonoBehaviour:
 
     E
 
+    Q
+
     ESC
 
     R
@@ -646,12 +648,14 @@ MonoBehaviour:
 
     Swallow Held Bug
 
+    Release Held Bug
+
     Pause Level
 
-    Restart Level
+    Restart
+    Level
 
-    Check
-    Controls
+    Check Controls
 
     Instawin'
   m_isRightToLeft: 0
