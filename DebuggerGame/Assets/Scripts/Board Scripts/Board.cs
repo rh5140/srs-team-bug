@@ -169,11 +169,17 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+        bool pushableAtCoord = false;
+        if(boardObject is Arthropod) {
+            foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
+                if(pushable.coordinate == coordinate) pushableAtCoord = true;
+            }
+        }
         bool collidableAtCoord = (
                 collidableCoordinates.ContainsKey(coordinate)
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
-            || (boardObject is Arthropod && GetBoardObjectAtCoordinate(coordinate) is PushableObject);
+            || (boardObject is Arthropod && pushableAtCoord);
         
         bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
