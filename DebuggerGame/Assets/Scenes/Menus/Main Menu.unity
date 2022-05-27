@@ -666,7 +666,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910641056}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: LoadMap
+        m_MethodName: LoadSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -827,7 +827,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1061172033}
         m_TargetAssemblyTypeName: UI_script, Assembly-CSharp
-        m_MethodName: quit_game
+        m_MethodName: LoadExtras
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1337,7 +1337,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

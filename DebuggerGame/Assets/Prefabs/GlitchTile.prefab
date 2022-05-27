@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: -855381371400427871, guid: 0a0f2571ad47be04b8718ba27af7b155, type: 3}
     - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_Color.b
@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6286820799582127417, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_SortingOrder
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6286820799582127420, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
       propertyPath: m_Name
@@ -87,5 +87,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6286820799582127422, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+--- !u!1 &4247089782376877797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6286820799582127420, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}
+  m_PrefabInstance: {fileID: 7912815280548645849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2742163999376787112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247089782376877797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2dac762508043999904e8d9a5ed5ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bugsCanPass: 1
+  pushablesCanPass: 1

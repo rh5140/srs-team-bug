@@ -5,17 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class Player : BoardObject
 {
-
-    public SaveState collection;
-    // public InventorySystem collection;
-
     public Arthropod heldArthropod;
+
+    public bool facingRight = true;
+    public Animator animator;
+    private SpriteRenderer spriteRenderer;
         
     protected override void Start()
     {
         base.Start();
-        collection.currentLevel = Board.instance.levelName;
+        SaveManager.instance.currentLevel = Board.instance.levelName;
         heldArthropod = null;
+        animator.SetBool("facingDown", false);
+        animator.SetBool("facingUp", false);
+        animator.SetBool("horizontal", true);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     
@@ -43,7 +47,7 @@ public class Player : BoardObject
             Board.instance.InstantWin();
         }
 
-        if (board.lastBoardEvent == Board.EventState.StartTurn)
+        if (board.lastBoardEvent == Board.EventState.StartPlayerTurn)
         {
             //Debug.Log("Running");
 
@@ -67,6 +71,34 @@ public class Player : BoardObject
                 Input.GetAxisRaw("Vertical")
             );
 
+            // Flipping animation
+            if (input.x > 0)
+            {
+                spriteRenderer.flipX = !facingRight ? true : false;
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.x < 0)
+            {
+                spriteRenderer.flipX = facingRight ? true : false;
+                animator.SetBool("horizontal", true);
+                animator.SetBool("facingDown", false);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y < 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingDown", true);
+                animator.SetBool("facingUp", false);
+            }
+            else if (input.y > 0)
+            {
+                animator.SetBool("horizontal", false);
+                animator.SetBool("facingUp", true);
+                animator.SetBool("facingDown", false);
+            }
+
             // check if input is nonzero
             // if it is, move in whatever direction in with component velocity 1
             Vector2Int direction = new Vector2Int(
@@ -83,12 +115,13 @@ public class Player : BoardObject
                 actions.Enqueue(new MovementAction(this, direction));
                 board.EndTurn();
             }
+
         }
     }
 
-    protected override void OnStartTurn()
+    protected override void OnStartPlayerTurn()
     {
-        base.OnStartTurn();
+        base.OnStartPlayerTurn();
         //Debug.Log("New Turn");
         /*
         Note: The bug overlap has to be checked for at the beginning of the turn since position has to update before we check if player is overlapping,
@@ -117,6 +150,18 @@ public class Player : BoardObject
         }
         */
 
+        CatchArthropods();
+    }
+
+    protected override void OnPostPlayerExecute()
+    {
+        base.OnPostPlayerExecute();
+
+        CatchArthropods();
+    }
+
+    protected void CatchArthropods()
+    {
         //Coordinate based implementation for bug catching
         foreach (Arthropod arthropod in board.GetBoardObjectsOfType<Arthropod>())
         {
@@ -129,19 +174,17 @@ public class Player : BoardObject
     }
 
     //To be called when the level ends
-    //Adds all of the unlockLevels in board to the unlockedLevels in collection
+    //Adds all of the unlockLevels in board to the unlockedLevels in SaveManager
     protected override void OnEndLevel()
     {
         base.OnEndLevel();
-        collection.currentLevel = null;
+        SaveManager.instance.currentLevel = null;
         foreach (string levelName in Board.instance.unlockLevels)
         {
-            collection.unlockedLevels.Add(levelName);
+            SaveManager.instance.unlockedLevels.Add(levelName);
+            SaveManager.instance.Save();
         }
         
     }
-
-    private void OnApplicationQuit()
-    {
-    }
+    
 }

@@ -7,6 +7,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private float sizePadding = 1f;
 
+    [SerializeField]
+    private Vector2Int offset = new Vector2Int(0, 0);
+
     private Board board;
 
     private float? lastAspect = null;
@@ -31,19 +34,24 @@ public class CameraManager : MonoBehaviour
     {
         lastAspect = safeScreenAspect;
 
+        // Center camera
         Camera.main.gameObject.transform.position = new Vector3(
-            board.width / 2f - 0.5f, board.height / 2f - 0.5f,
+            (board.width-1)/ 2f + offset.x, (board.height-1) / 2f + offset.y,
             Camera.main.gameObject.transform.position.z
         );
         
-        float boardAspect = (float)board.width / board.height;
+        float boardAspect = (float)(board.width + 2*sizePadding)/ (board.height + 2 * sizePadding);
         if(boardAspect > lastAspect)
         {
-            Camera.main.orthographicSize = board.width / 2f + 2 * sizePadding;
+            // width can vary freely
+            // half-height will be determined by the half-width
+            Camera.main.orthographicSize = (board.width / 2f + sizePadding)/lastAspect.Value;
         }
         else
         {
-            Camera.main.orthographicSize = board.height / 2f + 2 * sizePadding;
+            // height can vary freely without making board go off screen
+            // half-height based off of board height
+            Camera.main.orthographicSize = board.height / 2f + sizePadding;
         }
     }
 }

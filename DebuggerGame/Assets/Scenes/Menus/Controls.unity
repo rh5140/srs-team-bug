@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: -290}
+  m_AnchoredPosition: {x: 500, y: -285}
   m_SizeDelta: {x: 1000, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &134064612
@@ -234,6 +234,8 @@ MonoBehaviour:
 
     TAB
 
+    Q
+
     E
 
     ESC
@@ -242,7 +244,7 @@ MonoBehaviour:
 
     C
 
-    T'
+    Y'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 150bf0784aa41aa47949c17623a83db7, type: 2}
   m_sharedMaterial: {fileID: -124417052113846487, guid: 150bf0784aa41aa47949c17623a83db7, type: 2}
@@ -621,7 +623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -290}
+  m_AnchoredPosition: {x: -400, y: -285}
   m_SizeDelta: {x: 600, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848547185
@@ -648,12 +650,14 @@ MonoBehaviour:
 
     View Held Bug
 
+    Release Held Bug
+
     Swallow Held Bug
 
-    Pause Level
-
-    Restart
+    Pause
     Level
+
+    Restart Level
 
     Check Controls
 

@@ -26,7 +26,7 @@ abstract public class Arthropod : BoardObject
     public virtual void Catch(GameObject player)
     {
         isCaught = true;
-        rulesEnabled = false;
+        //rulesEnabled = false;
         transform.SetParent(player.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         player.GetComponent<Player>().setArthropod(this.GetComponent<Arthropod>());
@@ -36,7 +36,7 @@ abstract public class Arthropod : BoardObject
     public virtual void Release(GameObject player)
     {
         isCaught = false;
-        rulesEnabled = true;
+        //rulesEnabled = true;
         transform.SetParent(board.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = true;
         player.GetComponent<Player>().setArthropod(null);
@@ -47,6 +47,7 @@ abstract public class Arthropod : BoardObject
     {
         player.GetComponent<Player>().setArthropod(null);
         board.SetWinCondition(winConIndex, true);
+        board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
         RemoveListeners();
@@ -60,9 +61,9 @@ abstract public class Arthropod : BoardObject
         board.actionRules.Add(rule);
     }
 
-    protected override void OnStartTurn()
+    protected override void OnStartPlayerTurn()
     {
-        base.OnStartTurn();
+        base.OnStartPlayerTurn();
         this.coordinate = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
         //Debug.Log(this.coordinate);

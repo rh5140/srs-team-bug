@@ -16,7 +16,8 @@ abstract public class BoardObject : MonoBehaviour
 
 
     
-    protected Queue<BoardAction> actions = new Queue<BoardAction>();
+    public Queue<BoardAction> actions = new Queue<BoardAction>();
+
     /// <summary>
     /// When in execution phase, the action that is currently being executed
     /// </summary>
@@ -72,6 +73,49 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
+
+    public void AddActionMidExecution(BoardAction action, int? actionOffset)
+    {
+        actions.Enqueue(action);
+        if(board.lastBoardEvent == Board.EventState.PlayerExecute)
+        {
+            if(actions.Count == 1)
+            {
+                executingActionOffset = actionOffset;
+                board.SetActionsLeft(this, 1);
+            }
+        }
+    }
+
+    public BoardAction PeekNextBoardAction()
+    {
+        if(executingAction != null)
+        {
+            return executingAction;
+        }
+        else if(actions.Count > 0)
+        {
+            return actions.Peek();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Vector2Int PeekNextWeakCoordinate()
+    {
+        if(!(PeekNextBoardAction() is MovementAction movementAction))
+        {
+            return coordinate;
+        }
+        else
+        {
+            return coordinate + movementAction.direction;
+        }
+    }
+
+
     private void Awake()
     {
         // TODO: Sanitize position to be on the grid?
@@ -87,42 +131,54 @@ abstract public class BoardObject : MonoBehaviour
         // so that empty handlers won't bloat the event, but
         // there shouldb't be a significant performance gain so it's
         // not necessary
-        board.StartTurnEvent.AddListener(OnStartTurn);
-        board.EndTurnEvent.AddListener(OnEndTurn);
-        board.PostEndTurnEvent.AddListener(OnPostEndTurn);
-        board.PreExecuteEvent.AddListener(OnPreExecute);
-        board.ExecuteEvent.AddListener(OnExecute);
-        board.PostExecuteEvent.AddListener(OnPostExecute);
+        board.StartPlayerTurnEvent.AddListener(OnStartPlayerTurn);
+        board.EndPlayerTurnEvent.AddListener(OnEndPlayerTurn);
+        board.PostPlayerEndTurnEvent.AddListener(OnPostPlayerEndTurn);
+
+        board.PrePlayerExecuteEvent.AddListener(OnPrePlayerExecute);
+        board.PlayerExecuteEvent.AddListener(OnPlayerExecute);
+        board.PostPlayerExecuteEvent.AddListener(OnPostPlayerExecute);
+
+        board.StartArthropodTurnEvent.AddListener(OnStartArthropodTurn);
+        board.EndArthropodTurnEvent.AddListener(OnEndArthropodTurn);
+
+        board.PreArthropodExecuteEvent.AddListener(OnPreArthropodExecute);
+        board.ArthropodExecuteEvent.AddListener(OnArthropodExecute);
+        board.PostArthropodExecuteEvent.AddListener(OnPostArthropodExecute);
+
         board.EndLevelEvent.AddListener(OnEndLevel);
     }
 
 
     protected void OnDestroy()
     {
-        board.StartTurnEvent.RemoveAllListeners();
-        board.EndTurnEvent.RemoveAllListeners();
-        board.PostEndTurnEvent.RemoveAllListeners();
-        board.PreExecuteEvent.RemoveAllListeners();
-        board.ExecuteEvent.RemoveAllListeners();
-        board.PostExecuteEvent.RemoveAllListeners();
-        board.EndLevelEvent.RemoveAllListeners();
+        RemoveListeners();
     }
 
     //removes listeners for the functions of this boardobject
     public void RemoveListeners()
     {
-        board.StartTurnEvent.RemoveListener(OnStartTurn);
-        board.EndTurnEvent.RemoveListener(OnEndTurn);
-        board.PostEndTurnEvent.RemoveListener(OnPostEndTurn);
-        board.PreExecuteEvent.RemoveListener(OnPostExecute);
-        board.ExecuteEvent.RemoveListener(OnExecute);
-        board.PostExecuteEvent.RemoveListener(OnPostExecute);
+        board.StartPlayerTurnEvent.RemoveListener(OnStartPlayerTurn);
+        board.EndPlayerTurnEvent.RemoveListener(OnEndPlayerTurn);
+        board.PostPlayerEndTurnEvent.RemoveListener(OnPostPlayerEndTurn);
+
+        board.PrePlayerExecuteEvent.RemoveListener(OnPrePlayerExecute);
+        board.PlayerExecuteEvent.RemoveListener(OnPlayerExecute);
+        board.PostPlayerExecuteEvent.RemoveListener(OnPostPlayerExecute);
+
+        board.StartArthropodTurnEvent.RemoveListener(OnStartArthropodTurn);
+        board.EndArthropodTurnEvent.RemoveListener(OnEndArthropodTurn);
+
+        board.PreArthropodExecuteEvent.RemoveListener(OnPreArthropodExecute);
+        board.ArthropodExecuteEvent.RemoveListener(OnArthropodExecute);
+        board.PostArthropodExecuteEvent.RemoveListener(OnPostArthropodExecute);
+
         board.EndLevelEvent.RemoveListener(OnEndLevel);
     }
 
     protected virtual void Update()
     {
-        if(board.lastBoardEvent == Board.EventState.Execute)
+        if(board.lastBoardEvent == Board.EventState.PlayerExecute || board.lastBoardEvent == Board.EventState.ArthropodExecute)
         {
             // Execute all the actions in the queue 
             while (executingAction == null && actions.Count > 0)
@@ -130,16 +186,27 @@ abstract public class BoardObject : MonoBehaviour
                 // If the previous action finished/we have not started executing, get new action if available
                 // and increase the index by 1 (or set to 0 if not previously set)
                 executingAction = actions.Dequeue();
-                executingAction.ExecuteStart();
-                if (executingAction.usesTime)
+                if (!board.FilterStateDependentAction(this, executingAction, executingActionOffset))
                 {
-                    executingActionOffset = executingActionOffset + 1 ?? 0; // either increment if nonnull or set to 0
+                    // state dependent filter disallowed action
+                    executingAction = null;
+                    board.SetActionsLeft(this, actions.Count);
                 }
                 else
                 {
-                    executingAction.ExecuteFinish();
-                    executingAction = null;
+                    executingAction.ExecuteStart();
+                    if (executingAction.usesTime)
+                    {
+                        executingActionOffset = executingActionOffset + 1 ?? 0; // either increment if nonnull or set to 0
+                    }
+                    else
+                    {
+                        executingAction.ExecuteFinish();
+                        executingAction = null;
+                        board.SetActionsLeft(this, actions.Count);
+                    }
                 }
+                
             }
 
 
@@ -154,6 +221,7 @@ abstract public class BoardObject : MonoBehaviour
                 // If it has been at least 1.0 actions since when the action started, the action finished
                 executingAction?.ExecuteFinish();
                 executingAction = null;
+                board.SetActionsLeft(this, actions.Count);
             }
         }
     }
@@ -162,24 +230,24 @@ abstract public class BoardObject : MonoBehaviour
     /// <summary>
     /// Handler for Board.StartTurnEvent
     /// </summary>
-    /// <see cref="Board.StartTurnEvent"/>
-    protected virtual void OnStartTurn()
+    /// <see cref="Board.StartPlayerTurnEvent"/>
+    protected virtual void OnStartPlayerTurn()
     { }
 
 
     /// <summary>
     /// Handler for Board.EndTurnEvent
     /// </summary>
-    /// <see cref="Board.EndTurnEvent"/>
-    protected virtual void OnEndTurn()
+    /// <see cref="Board.EndPlayerTurnEvent"/>
+    protected virtual void OnEndPlayerTurn()
     { }
 
 
     /// <summary>
     /// Handler for Board.PostEndTurnEvent
     /// </summary>
-    /// <see cref="Board.PostEndTurnEvent"/>
-    protected virtual void OnPostEndTurn()
+    /// <see cref="Board.PostPlayerEndTurnEvent"/>
+    protected virtual void OnPostPlayerEndTurn()
     { }
 
 
@@ -187,17 +255,17 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PreExecuteEvent
     /// </summary>
     /// <see cref="Board.PreExecuteEvent"/>
-    virtual protected void OnPreExecute()
+    virtual protected void OnPrePlayerExecute()
     {
-        int maxActions = 0;
+        int actionsLeft = 0;
         for (int i = 0; i < actions.Count; i++)
         {
             BoardAction action = board.ApplyRules(this, actions.Dequeue());
             actions.Enqueue(action);
             // If the action uses a turn, then add 1 to max actions
-            maxActions += action.usesTime ? 1 : 0;
+            actionsLeft += action.usesTime ? 1 : 0;
         }
-        board.SetMaxActions(maxActions);
+        board.SetActionsLeft(this, actionsLeft);
         // See BoardObject.Update for continuation of the logic
     }
 
@@ -205,7 +273,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.ExecuteEvent
     /// </summary>
     /// <see cref="Board.ExecuteEvent"/>
-    protected virtual void OnExecute()
+    protected virtual void OnPlayerExecute()
     { }
 
 
@@ -213,7 +281,7 @@ abstract public class BoardObject : MonoBehaviour
     /// Handler for Board.PostExecuteEvent
     /// </summary>
     /// <see cref="Board.PostExecuteEvent"/>
-    protected virtual void OnPostExecute()
+    protected virtual void OnPostPlayerExecute()
     {
         if (executingAction != null)
         {
@@ -223,6 +291,47 @@ abstract public class BoardObject : MonoBehaviour
         }
         executingActionOffset = null;
     }
+
+    protected virtual void OnStartArthropodTurn()
+    {
+
+    }
+
+    protected virtual void OnEndArthropodTurn()
+    {
+
+    }
+
+
+    protected virtual void OnPreArthropodExecute()
+    {
+        int actionsLeft = 0;
+        for (int i = 0; i < actions.Count; i++)
+        {
+            BoardAction action = board.ApplyRules(this, actions.Dequeue());
+            actions.Enqueue(action);
+            // If the action uses a turn, then add 1 to max actions
+            actionsLeft += action.usesTime ? 1 : 0;
+        }
+        board.SetActionsLeft(this, actionsLeft);
+        // See BoardObject.Update for continuation of the logic
+    }
+
+    protected virtual void OnArthropodExecute()
+    { }
+
+
+    protected virtual void OnPostArthropodExecute()
+    {
+        if (executingAction != null)
+        {
+            executingAction?.ExecuteUpdate(executingActionProgress.Value);
+            executingAction?.ExecuteFinish();
+            executingAction = null;
+        }
+        executingActionOffset = null;
+    }
+
 
     /// <summary>
     /// Method to be called when the level finishes

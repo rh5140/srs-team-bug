@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4813943156607320776}
   - component: {fileID: 8433302864288576045}
+  - component: {fileID: 101992362177277679}
   m_Layer: 0
   m_Name: BasicFlyEnemySprite
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6396053138045743586, guid: 987ddceb67f9d7a4187b5049ebe3dde7, type: 3}
+  m_Sprite: {fileID: 9111334756037703160, guid: 95f4882b3f5025c48a10a4cdabb073ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,3 +83,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &101992362177277679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007193898850059639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ea767aa08632445864c7289888e316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatStrength: 0.05
+  speed: 7

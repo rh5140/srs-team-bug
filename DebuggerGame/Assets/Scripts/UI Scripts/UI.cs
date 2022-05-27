@@ -81,6 +81,12 @@ public class UI : MonoBehaviour
         SceneManager.LoadScene("world_map");
     }
 
+    public void LoadSave()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Save Menu");
+    }
+
     public void OpenMap()
     {
         WorldMap.SetActive(true);

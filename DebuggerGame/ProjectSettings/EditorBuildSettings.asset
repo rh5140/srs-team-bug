@@ -6,17 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Test Scenes/level 1.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Menus/Collection.unity
-    guid: 4febb672e83d11449971cca2914dd0c3
-  - enabled: 1
     path: Assets/Scenes/Menus/Main Menu.unity
     guid: 1695b63f3d974554c8fa7d42980b5e29
-  - enabled: 1
-    path: Assets/Scenes/world_map.unity
-    guid: 07986e0c06caff14180d4dedacddf516
+  - enabled: 0
+    path: Assets/Scenes/Test Scenes/level 1.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/Menus/Collection.unity
+    guid: 4febb672e83d11449971cca2914dd0c3
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
@@ -26,4 +23,49 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/Controls.unity
     guid: 3ac8a3497e1ec0f4b95f280bd78e9cfa
+  - enabled: 1
+    path: Assets/Scenes/Menus/Save Menu.unity
+    guid: 641c6791db78d9a40a352e75720c5a58
+  - enabled: 1
+    path: Assets/Scenes/Menus/world_map.unity
+    guid: 07986e0c06caff14180d4dedacddf516
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-00.unity
+    guid: fe93d8b8ec7d23944a4f68bd9c6cef5e
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-01.unity
+    guid: fd8a7978be1393e4d93d1ea301f9f439
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-02.unity
+    guid: c4b79ad9ea894f741a9e71702a61981e
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-03.unity
+    guid: 5456f1aa56fa7b445b6bfe8e7357a491
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-04.unity
+    guid: b33887c1dc7349c4fbd659ca17d08c77
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-05.unity
+    guid: 68f24d3450e4aa64ba6af17881bfe48a
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-06.unity
+    guid: 5b5fa4a5ff1363c499d0bacf542a9b20
+  - enabled: 1
+    path: Assets/Scenes/World 0/Level 00-07.unity
+    guid: 2dd90d23794d17542bcefb3bc014caeb
+  - enabled: 1
+    path: Assets/Scenes/Story stuf/Level 00-D0.unity
+    guid: 920335fcc94c30f4897af5a4930eb210
+  - enabled: 1
+    path: Assets/Scenes/Story stuf/Level 00-D1.unity
+    guid: 2e927dc2fbdba8b418d333ed3ff4447b
+  - enabled: 1
+    path: Assets/Scenes/Story stuf/Level 00-D2.unity
+    guid: 94aa86419efb4a942941cc498615230a
+  - enabled: 1
+    path: Assets/Scenes/Story stuf/Level 00-D3.unity
+    guid: a4a57c3508033e449a0eff8c399d7400
+  - enabled: 1
+    path: Assets/Scenes/Menus/Extras.unity
+    guid: 9a225200fab12014dabe2d02bd7d6031
   m_configObjects: {}
