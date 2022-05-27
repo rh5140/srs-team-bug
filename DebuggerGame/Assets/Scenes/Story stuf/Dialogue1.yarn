@@ -136,7 +136,7 @@ Fly King: Bzzzzzzzzzzzzzzzzzzt...
 -> I don't understand.
 Fly King: Bzzzzt!
 <<SetSprite Sprite Player>>
-Thanks for playing! This marks the end of the demo. Feel free to stick around to listen to the music.
+Team Bug: Thanks for playing! This marks the end of the demo. Feel free to stick around to listen to the music. Stay tuned for future updates!
 <<SetSprite Sprite 0>>
 PRESS Y TO RETURN TO MAP
 
