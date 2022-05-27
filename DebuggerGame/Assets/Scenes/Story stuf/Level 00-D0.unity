@@ -322,6 +322,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8313242953970999947, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
+      propertyPath: noSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9b5406e252c10c9489277aaaab389c74, type: 3}
+    - target: {fileID: 8313242953970999947, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
+      propertyPath: otherSprite
+      value: 
+      objectReference: {fileID: -2108645610363664566, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
+    - target: {fileID: 8313242953970999947, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: -4541150122889840728, guid: da07ec40670ac0d4aacb4a88d80d320b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7638e70c8a8003d4aa75ac4c41a84dad, type: 3}
 --- !u!1 &358434896
