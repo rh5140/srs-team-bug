@@ -827,7 +827,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1061172033}
         m_TargetAssemblyTypeName: UI_script, Assembly-CSharp
-        m_MethodName: quit_game
+        m_MethodName: LoadExtras
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

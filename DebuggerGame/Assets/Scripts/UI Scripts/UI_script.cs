@@ -56,6 +56,11 @@ public class UI_script : MonoBehaviour
         SceneManager.LoadScene("Controls");
     }
 
+    public void LoadExtras()
+    {
+        SceneManager.LoadScene("Extras");
+    }
+
     public void LoadSave(int saveNum)
     {
         if (GameObject.Find("save" + saveNum + "Button").GetComponentInChildren<TextMeshProUGUI>().text == "New Save")
