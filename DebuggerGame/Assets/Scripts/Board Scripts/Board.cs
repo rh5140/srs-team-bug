@@ -593,10 +593,7 @@ public class Board : MonoBehaviour
         PostArthropodExecuteEvent.RemoveAllListeners();
 
         EndLevelEvent.RemoveAllListeners();
-    }
 
-    private void OnDestroy()
-    {
         ReadyEvent.RemoveAllListeners();
         BugsCaughtChangeEvent.RemoveAllListeners();
     }
