@@ -14,7 +14,7 @@ public class Player : BoardObject
     protected override void Start()
     {
         base.Start();
-//        SaveManager.instance.currentLevel = Board.instance.levelName;
+        SaveManager.instance.currentLevel = Board.instance.levelName;
         heldArthropod = null;
         animator.SetBool("facingDown", false);
         animator.SetBool("facingUp", false);
