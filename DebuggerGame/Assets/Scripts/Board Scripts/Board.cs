@@ -40,9 +40,12 @@ public class Board : MonoBehaviour
     public List<string> unlockLevels = new List<string>();
 
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
-    private int numBugs; //Number of bugs currently left in the stage
+    public int numBugs { get; private set; } //Number of bugs currently left in the stage
+    public int nBugsCaught { get; private set; }
 
     public List<BoardObject> boardObjects;
+
+    public Event BugsCaughtChangeEvent = new Event();
 
     public void BugCountIncrement()
     {
@@ -52,9 +55,16 @@ public class Board : MonoBehaviour
     {
         numBugs--;
     }
-    public int GetNumBugs()
+
+    public void BugsCaughtIncrement()
     {
-        return numBugs;
+        nBugsCaught++;
+        BugsCaughtChangeEvent.Invoke();
+    }
+    public void BugsCaughtDecrement()
+    {
+        nBugsCaught--;
+        BugsCaughtChangeEvent.Invoke();
     }
 
 
@@ -91,6 +101,12 @@ public class Board : MonoBehaviour
             return timeSinceEndTurn == null ? null : timeSinceEndTurn / TimePerAction;
         }
     }
+
+    /// <summary>
+    /// Invoked after Start has finished
+    /// </summary>
+    public Event ReadyEvent = new Event();
+    public bool ready = false;
 
     /// <summary>
     /// Event raised after the execute phase has passed 
@@ -169,14 +185,22 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+        bool pushableAtCoord = false;
+        if(boardObject is Arthropod) {
+            foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
+                if(pushable.coordinate == coordinate) pushableAtCoord = true;
+            }
+        }
         bool collidableAtCoord = (
                 collidableCoordinates.ContainsKey(coordinate)
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
-            || (boardObject is Arthropod && GetBoardObjectAtCoordinate(coordinate) is PushableObject);
+            || (boardObject is Arthropod && pushableAtCoord);
+        
+        bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
-        return !collidableAtCoord && inBounds;// !collidableAtCoord;
+        return (!collidableAtCoord || pushableOnGlitch) && inBounds;// !collidableAtCoord;
     }
 
     private void OnEnable()
@@ -196,6 +220,7 @@ public class Board : MonoBehaviour
        
         //Bug counting initialization
         numBugs = CountBoardObjectsOfType<Arthropod>();
+        nBugsCaught = 0;
 
         //Initialize collidables list
         foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
@@ -261,6 +286,9 @@ public class Board : MonoBehaviour
                     )
             )
         );
+
+        ReadyEvent.Invoke();
+        ready = true;
     }
 
     private void OnDisable()
@@ -571,5 +599,8 @@ public class Board : MonoBehaviour
         PostArthropodExecuteEvent.RemoveAllListeners();
 
         EndLevelEvent.RemoveAllListeners();
+
+        ReadyEvent.RemoveAllListeners();
+        BugsCaughtChangeEvent.RemoveAllListeners();
     }
 }

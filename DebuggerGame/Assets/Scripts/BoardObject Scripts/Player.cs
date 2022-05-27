@@ -9,6 +9,7 @@ public class Player : BoardObject
 
     public bool facingRight = true;
     public Animator animator;
+    public AudioSource swallowSFX;
     private SpriteRenderer spriteRenderer;
         
     protected override void Start()
@@ -62,6 +63,8 @@ public class Player : BoardObject
             float swallow = Input.GetAxisRaw("Swallow");
             if (!Mathf.Approximately(swallow, 0f) && heldArthropod != null)
             {
+                if (swallowSFX != null)
+                    swallowSFX.Play();
                 heldArthropod.Swallow(this.gameObject);
             }
 

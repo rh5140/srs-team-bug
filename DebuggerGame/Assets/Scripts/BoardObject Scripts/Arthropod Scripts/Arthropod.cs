@@ -30,7 +30,7 @@ abstract public class Arthropod : BoardObject
         transform.SetParent(player.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         player.GetComponent<Player>().setArthropod(this.GetComponent<Arthropod>());
-        board.BugCountDecrement();
+        board.BugsCaughtIncrement();
     }
 
     public virtual void Release(GameObject player)
@@ -40,7 +40,7 @@ abstract public class Arthropod : BoardObject
         transform.SetParent(board.transform, true);
         GetComponentInChildren<SpriteRenderer>().enabled = true;
         player.GetComponent<Player>().setArthropod(null);
-        board.BugCountIncrement();
+        board.BugsCaughtDecrement();
     }
 
     public virtual void Swallow(GameObject player)
