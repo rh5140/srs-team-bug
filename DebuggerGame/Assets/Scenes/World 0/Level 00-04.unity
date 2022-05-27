@@ -5359,6 +5359,7 @@ GameObject:
   - component: {fileID: 919987660}
   - component: {fileID: 919987659}
   - component: {fileID: 919987658}
+  - component: {fileID: 919987661}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -5399,6 +5400,7 @@ MonoBehaviour:
   height: 13
   boundsEnabled: 1
   collidablesEnabled: 1
+  ready: 0
   gameWon: 0
 --- !u!4 &919987660
 Transform:
@@ -5419,6 +5421,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &919987661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919987657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b4e78095619b4419498a949718d14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelMusic: {fileID: 11400000, guid: 303c1865d4f4f1a408a16799edf74de7, type: 2}
+  transitionSpeed: 5
 --- !u!1001 &927739683
 PrefabInstance:
   m_ObjectHideFlags: 0

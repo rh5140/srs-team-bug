@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c13a46a28d38b34490fa914de5da452, type: 3}
-  m_Name: 
+  m_Name: 3g-vamp
   m_EditorClassIdentifier: 
   glitchClipInfo:
-    clip: {fileID: 8300000, guid: 6f46299c27ca3ec42ac4007dca225c70, type: 3}
+    clip: {fileID: 8300000, guid: 1dc4583156685494fae6d0f87a8df2ab, type: 3}
     mixerGroup: {fileID: 0}
     maxVolume: 1
     minVolume: 0
   normalClipInfo:
-    clip: {fileID: 8300000, guid: dd16b5fcace61f045b36b476389ce1bd, type: 3}
+    clip: {fileID: 8300000, guid: e4ac49b5fe717204a846addc4a8900c7, type: 3}
     mixerGroup: {fileID: 0}
     maxVolume: 1
     minVolume: 0

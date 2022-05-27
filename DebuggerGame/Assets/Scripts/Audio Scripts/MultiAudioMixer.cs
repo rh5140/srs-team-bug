@@ -11,7 +11,7 @@ public class MultiAudioMixer : MonoBehaviour
     LevelMusicDescription levelMusic;
 
     [SerializeField]
-    float transitionSpeed = 1f;
+    float transitionSpeed = 5f;
 
     AudioSource glitchSource, normalSource;
 
@@ -26,11 +26,19 @@ public class MultiAudioMixer : MonoBehaviour
     void Start()
     {
         board = GetComponent<Board>();
-        board.ReadyEvent.AddListener(OnReady);
+        if (board.ready)
+        {
+            OnReady();
+        }
+        else {
+            board.ReadyEvent.AddListener(OnReady);
+        }
+        
         board.BugsCaughtChangeEvent.AddListener(OnBugsCaughtChange);
     }
 
     void OnReady() {
+        Debug.Log("Ready");
         nBugsTotal = board.numBugs;
 
         glitchSource = gameObject.AddComponent<AudioSource>();

@@ -96,6 +96,7 @@ public class Board : MonoBehaviour
     /// Invoked after Start has finished
     /// </summary>
     public Event ReadyEvent = new Event();
+    public bool ready = false;
 
     /// <summary>
     /// Event raised after the execute phase has passed 
@@ -247,6 +248,7 @@ public class Board : MonoBehaviour
         );
 
         ReadyEvent.Invoke();
+        ready = true;
     }
 
     private void OnDisable()
