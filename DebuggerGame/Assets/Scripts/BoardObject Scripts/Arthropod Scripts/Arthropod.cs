@@ -51,7 +51,6 @@ abstract public class Arthropod : BoardObject
         board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
         board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
-        rulesEnabled = false;
         RemoveListeners();
         this.gameObject.SetActive(false);
         Debug.Log("Swallowed");
