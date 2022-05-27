@@ -46,6 +46,7 @@ abstract public class Arthropod : BoardObject
     public virtual void Swallow(GameObject player)
     {
         player.GetComponent<Player>().setArthropod(null);
+        rulesEnabled = false;
         board.SetWinCondition(winConIndex, true);
         board.DeallocateActionsLeft(this);
         board.BugCountDecrement();

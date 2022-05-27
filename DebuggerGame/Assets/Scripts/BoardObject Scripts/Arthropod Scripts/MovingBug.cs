@@ -9,7 +9,6 @@ public class MovingBug : Arthropod
     protected override void OnEndArthropodTurn()
     {
         base.OnEndArthropodTurn();
-
         if (isCaught)
         {
             myTurn = true;
