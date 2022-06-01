@@ -18,6 +18,6 @@ Team Bug consists of 10 UCLA students and 2 friends from UCSD:
     Andrew Zhu - Gameplay Programmer
     Spencer Gouw - Composer
 
-GitHub repository: https://github.com/rh5140/srs-team-bug
-SFX from ZapSplat.com
-Glitch Shader Copyright (c) 2014 Tilman Schmidt (@KeyMaster_)
+SFX from [ZapSplat.com](https://www.zapsplat.com/)
+
+[Glitch Shader](https://gist.github.com/KeyMaster-/363d3d5c35b956dfacdd) Copyright (c) 2014 Tilman Schmidt (@KeyMaster_)
