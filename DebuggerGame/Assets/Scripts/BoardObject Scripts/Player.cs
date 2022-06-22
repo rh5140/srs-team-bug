@@ -118,8 +118,16 @@ public class Player : BoardObject
                 // if we have input, add an action and then end turn
                 actions.Enqueue(new MovementAction(this, direction));
                 board.EndTurn();
+                return;
             }
 
+
+            if (Input.GetButtonDown("Wait"))
+            {
+                actions.Enqueue(new NullAction(this));
+                board.EndTurn();
+                return;
+            }
         }
     }
 
