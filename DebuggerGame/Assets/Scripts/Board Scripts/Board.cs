@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps; // ### To use tilemap stuff
 
 public class Board : MonoBehaviour
 {
@@ -67,6 +68,7 @@ public class Board : MonoBehaviour
         BugsCaughtChangeEvent.Invoke();
     }
 
+    public Collider2D collidableTilemap; // ###
 
     public static Board instance { get; private set; } = null;
 
@@ -185,6 +187,7 @@ public class Board : MonoBehaviour
 
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+
         bool pushableAtCoord = false;
         if(boardObject is Arthropod) {
             foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
@@ -223,8 +226,23 @@ public class Board : MonoBehaviour
         nBugsCaught = 0;
 
         //Initialize collidables list
-        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
-            collidableCoordinates.Add(collidable.coordinate, collidable);
+        //foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
+        //    collidableCoordinates.Add(collidable.coordinate, collidable);
+        //}
+
+        // ### Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
+        //  within these bounds, add it to collidableCoordinates
+        collidableTilemap = GameObject.FindGameObjectWithTag("Collidable1").GetComponent<TilemapCollider2D>();
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector2Int currentPos = new Vector2Int(i, j);
+                if (collidableTilemap.OverlapPoint(currentPos))
+                {
+                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
+                }
+            }
         }
 
         actionFilterRules.Add(
