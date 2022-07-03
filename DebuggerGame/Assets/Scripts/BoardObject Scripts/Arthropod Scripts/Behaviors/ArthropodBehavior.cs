@@ -17,6 +17,15 @@ public abstract class ArthropodBehavior
         this.arthropod = arthropod;
     }
 
+    public bool FilterRange(BoardAction action)
+    {
+        if(range >= 0)
+        {
+            return action.boardObject.DistanceTo(arthropod) <= range;
+        }
+        return true;
+    }
+
     public virtual void OnStartPlayerTurn() { }
     public virtual void OnEndPlayerTurn() { }
     public virtual void OnPostPlayerEndTurn() { }

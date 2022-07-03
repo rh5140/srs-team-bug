@@ -23,7 +23,7 @@ public class RestrictMovementArthropodBehavior : ArthropodBehavior
                 directions,
                 (BoardAction action) =>
                     (playerOnly ? action.boardObject is Player : true)
-                    && action.boardObject.DistanceTo(arthropod) <= range
+                    && FilterRange(action)
             )
         );
     }
