@@ -696,9 +696,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 455386519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 1
   rulesEnabled: 1
 --- !u!4 &563524228 stripped
 Transform:
@@ -2840,9 +2842,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1553690347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 1
   rulesEnabled: 1
 --- !u!4 &1568341187 stripped
 Transform:

@@ -36,6 +36,7 @@ public class Board : MonoBehaviour
     //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
     //Example levelName: 0000 (world 0 level 0)
     public string levelName;
+
     //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
@@ -351,11 +352,6 @@ public class Board : MonoBehaviour
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
-            if (rule.creator is RangedBug) {
-                RangedBug creator = (RangedBug)rule.creator;
-                if (!isInRange(boardObject, creator))
-                    continue;
-            }
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {
