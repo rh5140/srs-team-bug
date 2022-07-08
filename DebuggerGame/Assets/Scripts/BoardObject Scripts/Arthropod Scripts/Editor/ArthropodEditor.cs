@@ -62,13 +62,20 @@ public class ArthropodEditor : Editor
                 
                 EditorGUILayout.BeginHorizontal();
 
-                behavior.enabled = EditorGUILayout.ToggleLeft(
+                
+                EditorGUI.BeginChangeCheck();
+                var newEnabled = EditorGUILayout.ToggleLeft(
                     GUIContent.none,
                     behavior.enabled,
                     GUILayout.Width(
                         new GUIStyle(GUI.skin.toggle).CalcSize(GUIContent.none).x * 2f
                     )
                 );
+                if(EditorGUI.EndChangeCheck()){
+                    Undo.RecordObject(target, "Enabled behavior");
+                    behavior.enabled = newEnabled;
+                }
+                
 
                 if (behavior.enabled)
                 {
@@ -91,6 +98,7 @@ public class ArthropodEditor : Editor
         }
 
         DrawPropertiesExcluding(serializedObject, behaviorPropertyNames.ToArray());
+
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -3826,7 +3826,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
     enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!1001 &1050388447
 PrefabInstance:
@@ -5091,7 +5097,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
     enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!1001 &1398098270
 PrefabInstance:
@@ -5777,8 +5789,8 @@ Transform:
   m_Children:
   - {fileID: 416366700}
   - {fileID: 163058906}
-  - {fileID: 783766919}
   - {fileID: 1848859887}
+  - {fileID: 783766919}
   - {fileID: 1738265855}
   - {fileID: 1381032911}
   - {fileID: 1043833135}
@@ -10902,7 +10914,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
     enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!1001 &1748182239
 PrefabInstance:
@@ -11392,7 +11410,7 @@ Transform:
   m_Children:
   - {fileID: 1050388448}
   m_Father: {fileID: 1522167916}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1848859888
 MonoBehaviour:
@@ -11408,6 +11426,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
     enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!1001 &1872470803
 PrefabInstance:
