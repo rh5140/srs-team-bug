@@ -7,21 +7,50 @@ public class Player : BoardObject
 {
     public Arthropod heldArthropod;
 
+    [System.Serializable]
+    private enum FacingDirection
+    {
+        Left, Right, Up, Down
+    }
+    private FacingDirection facingDirection = FacingDirection.Right;
+
     public bool facingRight = true;
     public Animator animator;
     public AudioSource swallowSFX;
     private SpriteRenderer spriteRenderer;
-        
+
+    #region undo
+    public override Dictionary<string, object> SaveState()
+    {
+        var dict = base.SaveState();
+        dict.Add(
+            nameof(Player),
+            new Dictionary<string, object>
+            {
+                {nameof(facingDirection), facingDirection }
+            }
+        );
+        return dict;
+    }
+
+    public override void LoadState(Dictionary<string, object> data)
+    {
+        base.LoadState(data);
+        var playerData = (Dictionary<string, object>)data[nameof(Player)];
+        facingDirection = (FacingDirection)playerData[nameof(facingDirection)];
+        ApplyFacingDirection();
+    }
+
+    #endregion
+
     protected override void Start()
     {
         base.Start();
         if (SaveManager.instance != null) // Useful for testing individual levels withou having to start from the Save Menu
             SaveManager.instance.currentLevel = Board.instance.levelName;
         heldArthropod = null;
-        animator.SetBool("facingDown", false);
-        animator.SetBool("facingUp", false);
-        animator.SetBool("horizontal", true);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        ApplyFacingDirection();
     }
 
     
@@ -79,34 +108,6 @@ public class Player : BoardObject
                 Input.GetAxisRaw("Vertical")
             );
 
-            // Flipping animation
-            if (input.x > 0)
-            {
-                spriteRenderer.flipX = !facingRight ? true : false;
-                animator.SetBool("horizontal", true);
-                animator.SetBool("facingDown", false);
-                animator.SetBool("facingUp", false);
-            }
-            else if (input.x < 0)
-            {
-                spriteRenderer.flipX = facingRight ? true : false;
-                animator.SetBool("horizontal", true);
-                animator.SetBool("facingDown", false);
-                animator.SetBool("facingUp", false);
-            }
-            else if (input.y < 0)
-            {
-                animator.SetBool("horizontal", false);
-                animator.SetBool("facingDown", true);
-                animator.SetBool("facingUp", false);
-            }
-            else if (input.y > 0)
-            {
-                animator.SetBool("horizontal", false);
-                animator.SetBool("facingUp", true);
-                animator.SetBool("facingDown", false);
-            }
-
             // check if input is nonzero
             // if it is, move in whatever direction in with component velocity 1
             Vector2Int direction = new Vector2Int(
@@ -116,6 +117,18 @@ public class Player : BoardObject
 
             // if x direction is nonzero, then set y direction to zero (no diagonal movement)
             direction.y = direction.x == 0 ? direction.y : 0;
+
+            facingDirection =
+                direction.x > 0
+                ? FacingDirection.Right
+                : direction.x < 0
+                ? FacingDirection.Left
+                : direction.y > 0
+                ? FacingDirection.Up
+                : direction.y < 0
+                ? FacingDirection.Down
+                : facingDirection;
+            ApplyFacingDirection();
 
             if (!Mathf.Approximately(direction.magnitude, 0f))
             {
@@ -195,4 +208,16 @@ public class Player : BoardObject
         
     }
     
+    private void ApplyFacingDirection()
+    {
+        spriteRenderer.flipX =
+            facingDirection == FacingDirection.Left
+            ? facingRight // if sprite is facing right, flip when facing left
+            : facingDirection == FacingDirection.Right
+            ? !facingRight
+            : false;
+        animator.SetBool("facingDown", facingDirection == FacingDirection.Down);
+        animator.SetBool("facingUp", facingDirection == FacingDirection.Up);
+        animator.SetBool("horizontal", facingDirection == FacingDirection.Left || facingDirection == FacingDirection.Right);
+    }
 }

@@ -14,6 +14,9 @@ abstract public class BoardObject : MonoBehaviour
     [System.NonSerialized]
     public Vector2Int coordinate;
 
+    [SerializeField]
+    protected bool stationary = false;
+
     
     public Queue<BoardAction> actions = new Queue<BoardAction>();
 
@@ -77,21 +80,31 @@ abstract public class BoardObject : MonoBehaviour
 
     public virtual Dictionary<string, object> SaveState()
     {
-        return new Dictionary<string, object>
+        if (!stationary)
         {
-            {nameof(coordinate), coordinate},
-        };
+            return new Dictionary<string, object>
+            {
+                {nameof(coordinate), coordinate},
+            };
+        }
+        else
+        {
+            return new Dictionary<string, object>();
+        }
     }
 
     public virtual void LoadState(Dictionary<string, object> data)
     {
-        if(data == null)
+        if (!stationary)
         {
-            Debug.LogError("Undo adding boardobject: not implemented");
-        }
+            if (data == null)
+            {
+                Debug.LogError("Undo adding boardobject: not implemented");
+            }
 
-        coordinate = (Vector2Int) data[nameof(coordinate)];
-        transform.position = new Vector3(coordinate.x, coordinate.y, transform.position.z);
+            coordinate = (Vector2Int)data[nameof(coordinate)];
+            transform.position = new Vector3(coordinate.x, coordinate.y, transform.position.z);
+        }
     }
 
     #endregion
