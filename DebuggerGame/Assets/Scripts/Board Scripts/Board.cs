@@ -81,6 +81,13 @@ public class Board : MonoBehaviour
     public bool boundsEnabled = true;
     public bool collidablesEnabled = true;
 
+
+    #region undo
+
+    private Stack<Dictionary<BoardObject, Dictionary<string, object>>> undoStack = new Stack<Dictionary<BoardObject, Dictionary<string, object>>>();
+
+    #endregion
+
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
 
@@ -297,12 +304,48 @@ public class Board : MonoBehaviour
         Board.instance = null;
     }
 
+    #region undo
+
+    private void PushUndoStack()
+    {
+        var undoData = new Dictionary<BoardObject, Dictionary<string, object>>();
+        foreach (var boardObject in boardObjects)
+        {
+            undoData[boardObject] = boardObject.SaveState();
+        }
+        undoStack.Push(undoData);
+    }
+
+    public void Undo()
+    {
+        Debug.Assert(lastBoardEvent == EventState.StartPlayerTurn, "Cannot call undo after EndTurn");
+
+        if(undoStack.Count > 0)
+        {
+            var undoData = undoStack.Pop();
+            foreach (var boardObject in boardObjects)
+            {
+                if (undoData.ContainsKey(boardObject))
+                {
+                    boardObject.LoadState(undoData[boardObject]);
+                }
+                else
+                {
+                    boardObject.LoadState(null);
+                }
+            }
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Goes from state StartTurn up to Execute
     /// </summary>
     public void EndTurn()
     {
+        PushUndoStack();
+
         lastBoardEvent = EventState.EndPlayerTurn;
         EndPlayerTurnEvent.Invoke();
 

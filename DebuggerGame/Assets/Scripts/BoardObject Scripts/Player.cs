@@ -51,7 +51,12 @@ public class Player : BoardObject
 
         if (board.lastBoardEvent == Board.EventState.StartPlayerTurn)
         {
-            //Debug.Log("Running");
+            if (Input.GetButtonUp("Undo"))
+            {
+                Debug.Log("UNDO");
+                board.Undo();
+                return;
+            }
 
             //release captured arthropod!
             float release = Input.GetAxisRaw("Release");

@@ -7,6 +7,30 @@ public class MovingArthropodBehavior : ArthropodBehavior
 {
     bool currentTurn = false;
 
+    #region undo
+
+    public override Dictionary<string, object> SaveState()
+    {
+        var dict = base.SaveState();
+        dict.Add(
+            nameof(MovingArthropodBehavior),
+            new Dictionary<string, object>
+            {
+                {nameof(currentTurn), currentTurn},
+            }
+        );
+        return dict;
+    }
+
+    public override void LoadState(Dictionary<string, object> data)
+    {
+        base.LoadState(data);
+        var behaviorState = (Dictionary<string, object>) data[nameof(MovingArthropodBehavior)];
+        currentTurn = (bool) behaviorState[nameof(currentTurn)];
+    }
+
+    #endregion
+
     public override void OnEndArthropodTurn()
     {
         base.OnEndArthropodTurn();

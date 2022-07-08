@@ -14,7 +14,6 @@ abstract public class BoardObject : MonoBehaviour
     [System.NonSerialized]
     public Vector2Int coordinate;
 
-
     
     public Queue<BoardAction> actions = new Queue<BoardAction>();
 
@@ -73,6 +72,30 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
+
+    #region UNDO
+
+    public virtual Dictionary<string, object> SaveState()
+    {
+        return new Dictionary<string, object>
+        {
+            {nameof(coordinate), coordinate},
+        };
+    }
+
+    public virtual void LoadState(Dictionary<string, object> data)
+    {
+        if(data == null)
+        {
+            Debug.LogError("Undo adding boardobject: not implemented");
+        }
+
+        coordinate = (Vector2Int) data[nameof(coordinate)];
+        transform.position = new Vector3(coordinate.x, coordinate.y, transform.position.z);
+        Debug.LogFormat("Set position for {0} to {1}", this, coordinate);
+    }
+
+    #endregion
 
     public void AddActionMidExecution(BoardAction action, int? actionOffset)
     {
@@ -138,6 +161,18 @@ abstract public class BoardObject : MonoBehaviour
     {
         board = Board.instance;
 
+        AddListeners();
+    }
+
+
+    protected void OnDestroy()
+    {
+        RemoveListeners();
+    }
+
+
+    public void AddListeners()
+    {
         // Add handlers
         // In future, handlers may be added in the implementation
         // so that empty handlers won't bloat the event, but
@@ -159,12 +194,6 @@ abstract public class BoardObject : MonoBehaviour
         board.PostArthropodExecuteEvent.AddListener(OnPostArthropodExecute);
 
         board.EndLevelEvent.AddListener(OnEndLevel);
-    }
-
-
-    protected void OnDestroy()
-    {
-        RemoveListeners();
     }
 
     //removes listeners for the functions of this boardobject
