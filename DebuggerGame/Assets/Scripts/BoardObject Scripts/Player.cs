@@ -53,7 +53,6 @@ public class Player : BoardObject
         {
             if (Input.GetButtonUp("Undo"))
             {
-                Debug.Log("UNDO");
                 board.Undo();
                 return;
             }

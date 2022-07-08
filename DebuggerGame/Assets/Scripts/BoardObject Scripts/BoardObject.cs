@@ -92,7 +92,6 @@ abstract public class BoardObject : MonoBehaviour
 
         coordinate = (Vector2Int) data[nameof(coordinate)];
         transform.position = new Vector3(coordinate.x, coordinate.y, transform.position.z);
-        Debug.LogFormat("Set position for {0} to {1}", this, coordinate);
     }
 
     #endregion
