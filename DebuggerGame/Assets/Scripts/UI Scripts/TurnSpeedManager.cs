@@ -13,8 +13,8 @@ public class TurnSpeedManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("turnSpeed"))
         {
-            UpdateTurnSpeed(1);
-            slider.value = 1;
+            UpdateTurnSpeed(1f/Board.instance.ActionTimeMultiplier);
+            slider.value = 1f / Board.instance.ActionTimeMultiplier;
         }
     }
 

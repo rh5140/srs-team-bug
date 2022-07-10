@@ -96,8 +96,8 @@ public class Board : MonoBehaviour
             }
         }
     }
-    private float NextActionTimeMultiplier = 1.0f;
-    private float CurrentActionTimeMultiplier = 1.0f;
+    private float NextActionTimeMultiplier = 0.66f;
+    private float CurrentActionTimeMultiplier = 0.66f;
     public float TimePerAction
     {
         get => BaseTimePerAction * ActionTimeMultiplier;
