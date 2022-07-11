@@ -17,7 +17,7 @@ public class BobbingAnimation : MonoBehaviour
     void Update()
     {
         transform.localPosition = new Vector3(transform.localPosition.x,
-            originalY + ((float)Mathf.Sin(Time.time * speed) * floatStrength),
+            originalY + ((float)Mathf.Sin(Board.instance.unpausedTime * speed) * floatStrength),
             transform.localPosition.z);
     }
 
