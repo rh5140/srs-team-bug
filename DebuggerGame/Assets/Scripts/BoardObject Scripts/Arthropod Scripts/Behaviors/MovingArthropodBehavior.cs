@@ -8,7 +8,6 @@ public class MovingArthropodBehavior : ArthropodBehavior
     bool currentTurn = false;
 
     #region undo
-
     public override Dictionary<string, object> SaveState()
     {
         var dict = base.SaveState();

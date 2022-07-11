@@ -34,6 +34,10 @@ public class Arthropod : BoardObject
     public override Dictionary<string, object> SaveState()
     {
         var dict = base.SaveState();
+        //foreach(var key in dict.Keys)
+        //{
+        //    Debug.LogFormat("{0}: {1}", key, (Vector2Int)dict[key]);
+        //}
 
         var behaviorState = new List<Dictionary<string, object>>();
         foreach(var behavior in enabledArthropodBehaviors)
@@ -92,11 +96,10 @@ public class Arthropod : BoardObject
 
     #endregion
 
-
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
-        foreach(var field in typeof(Arthropod).GetFields())
+        base.Awake();
+        foreach (var field in typeof(Arthropod).GetFields())
         {
             if (field.FieldType.IsSubclassOf(typeof(ArthropodBehavior)))
             {
@@ -107,6 +110,11 @@ public class Arthropod : BoardObject
                 }
             }
         }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         winConIndex = board.AllocateWinCondition();
 

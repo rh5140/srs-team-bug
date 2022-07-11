@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,7 +85,7 @@ abstract public class BoardObject : MonoBehaviour
         {
             return new Dictionary<string, object>
             {
-                {nameof(coordinate), coordinate},
+                {nameof(coordinate), coordinate },
             };
         }
         else
@@ -163,7 +164,7 @@ abstract public class BoardObject : MonoBehaviour
         );
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         // TODO: Sanitize position to be on the grid?
         // TODO: If there is an offset from the grid, implement for coordinate
