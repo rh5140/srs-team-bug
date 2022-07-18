@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tilemap_Colliders
+  - Tilemap_Glitches
   layers:
   - Default
   - TransparentFX
