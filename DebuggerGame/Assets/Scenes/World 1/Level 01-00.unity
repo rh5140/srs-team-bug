@@ -3347,7 +3347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757904236}
-  - component: {fileID: 1757904237}
+  - component: {fileID: 1757904238}
   m_Layer: 0
   m_Name: ChaoticFlyEnemy
   m_TagString: Untagged
@@ -3370,7 +3370,7 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1757904237
+--- !u!114 &1757904238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3379,14 +3379,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757904235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 1
+    range: 2
+    directions:
+    - {x: 1, y: 0}
+    playerOnly: 1
   rulesEnabled: 1
-  range: 2
-  directions:
-  - {x: 1, y: 0}
-  playerOnly: 1
 --- !u!4 &1823423764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6286820799582127423, guid: c1a2ae481573b6542b02275206a6f0bb, type: 3}

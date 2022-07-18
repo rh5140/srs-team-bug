@@ -115,6 +115,18 @@ abstract public class BoardObject : MonoBehaviour
         }
     }
 
+    public int DistanceTo(BoardObject other)
+    {
+        return DistanceTo(other.coordinate);
+    }
+
+    public int DistanceTo(Vector2Int coord)
+    {
+        return System.Math.Max(
+            System.Math.Abs(this.coordinate.x - coord.x),
+            System.Math.Abs(this.coordinate.y - coord.y)
+        );
+    }
 
     private void Awake()
     {

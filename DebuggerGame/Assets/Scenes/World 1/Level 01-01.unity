@@ -2919,6 +2919,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 0
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
   range: 4
   directions:
@@ -5692,7 +5700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757904236}
-  - component: {fileID: 1757904237}
+  - component: {fileID: 1757904238}
   m_Layer: 0
   m_Name: ChaoticWormEnemy
   m_TagString: Untagged
@@ -5715,7 +5723,7 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1757904237
+--- !u!114 &1757904238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5724,14 +5732,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757904235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 1
+    range: 3
+    directions:
+    - {x: 1, y: 0}
+    playerOnly: 1
   rulesEnabled: 1
-  range: 3
-  directions:
-  - {x: 1, y: 0}
-  playerOnly: 1
 --- !u!1001 &1772995898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6183,7 +6196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1935456780}
-  - component: {fileID: 1935456782}
+  - component: {fileID: 1935456781}
   m_Layer: 0
   m_Name: ChaoticWormEnemy (2)
   m_TagString: Untagged
@@ -6206,7 +6219,7 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1935456782
+--- !u!114 &1935456781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6215,14 +6228,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1935456779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 1
+    range: 3
+    directions:
+    - {x: 1, y: 0}
+    playerOnly: 1
   rulesEnabled: 1
-  range: 3
-  directions:
-  - {x: 1, y: 0}
-  playerOnly: 1
 --- !u!1001 &1954010941
 PrefabInstance:
   m_ObjectHideFlags: 0
