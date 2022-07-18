@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Collidable1
+  - Tilemap_Colliders
   layers:
   - Default
   - TransparentFX
