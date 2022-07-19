@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class DisplayHeldBug : MonoBehaviour
 {
+
     public Sprite transparent;
-    void OnEnable()
+
+    Player player;
+    Arthropod miscArthro;
+    void Start()
     {
-        Arthropod miscArthro = GameObject.Find("PlayerController").GetComponent<Player>().heldArthropod;
+        player = GameObject.Find("PlayerController").GetComponent<Player>();
+        miscArthro = null;
+    }
+
+    void Update()
+    {
+        miscArthro = player.heldArthropod;
         Sprite bugSprite;
         if (miscArthro == null)
         {
@@ -21,4 +31,5 @@ public class DisplayHeldBug : MonoBehaviour
         }
 
     }
+
 }
