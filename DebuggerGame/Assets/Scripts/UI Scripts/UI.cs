@@ -6,57 +6,87 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    public static bool MapIsOpen = false;
+    public static bool ControlIsOpen = false;
+    public static bool OptionIsOpen = false;
 
     public static bool InventoryIsOpen = false;
-    public GameObject PauseMenuUI;
-    public GameObject WorldMap;
+    public GameObject OptionsMenu;
+    public GameObject ControlScreen;
     public GameObject Inventory;
+    public GameObject LevelName;
+
+    void Start()
+    {
+        string levelName = Board.instance.levelName;
+        levelName = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2, 2);
+        LevelName.GetComponent<TMPro.TextMeshProUGUI>().SetText(levelName);
+
+    }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+
             if (GameIsPaused)
+            {
+                CloseAll();
                 Resume();
+            }
             else
-                Pause();
+            {
+                OpenOptions();
+            }
+
         }
 
         // CONTROLS, NOT WORLD MAP ANYMORE
         if(Input.GetKeyDown(KeyCode.C))
         {
-            if(MapIsOpen)
-                CloseMap();
+            if (ControlIsOpen)
+            {
+                CloseAll();
+                Resume();
+            }  
             else
-                OpenMap();
+            {
+                OpenControls();
+            }
+
         }
 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            if(InventoryIsOpen)
-                CloseInventory();
+            if (InventoryIsOpen)
+            {
+                CloseAll();
+                Resume();
+            }  
             else
+            {
                 OpenInventory();
+            }
+
         }
     }
+
+    public void CloseAll()
+    {
+        CloseInventory();
+        CloseControls();
+        CloseOptions();
+    }
+
     public void Resume()
     {
-        PauseMenuUI.SetActive(false);
         Time.timeScale = 1;
         GameIsPaused = false;
     }
 
     public void Pause()
     {
-        PauseMenuUI.SetActive(true);
         Time.timeScale = 0;
         GameIsPaused = true;
-    }
-
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("level 1");
     }
 
     public void QuitGame()
@@ -64,10 +94,12 @@ public class UI : MonoBehaviour
         Application.Quit();
     }
 
+    /* ?
     public void openCollection()
     {
         SceneManager.LoadScene("collection");
     }
+    */
 
     public void LoadMenu()
     {
@@ -87,20 +119,38 @@ public class UI : MonoBehaviour
         SceneManager.LoadScene("Save Menu");
     }
 
-    public void OpenMap()
+
+
+    public void OpenOptions()
     {
-        WorldMap.SetActive(true);
-        MapIsOpen = true;
+        CloseAll();
+        Pause();
+        OptionsMenu.SetActive(true);
     }
 
-    public void CloseMap()
+    public void CloseOptions()
     {
-        WorldMap.SetActive(false);
-        MapIsOpen = false;
+        OptionsMenu.SetActive(false);
+    }
+
+    public void OpenControls()
+    {
+        CloseAll();
+        //Pause(); if you pause, the control screen popout animation cannot play
+        ControlScreen.SetActive(true);
+        ControlIsOpen = true;
+    }
+
+    public void CloseControls()
+    {
+        ControlScreen.SetActive(false);
+        ControlIsOpen = false;
     }
 
     public void OpenInventory()
     {
+        CloseAll();
+        Pause();
         Inventory.SetActive(true);
         InventoryIsOpen = true;
     }

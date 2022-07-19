@@ -949,6 +949,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause and Overlays
       objectReference: {fileID: 0}
+    - target: {fileID: 207445185752165681, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 207445185752165692, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
