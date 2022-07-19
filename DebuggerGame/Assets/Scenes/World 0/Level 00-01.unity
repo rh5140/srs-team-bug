@@ -685,7 +685,7 @@ Transform:
   m_Children:
   - {fileID: 1947291088}
   m_Father: {fileID: 1508721395}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &455386521
 MonoBehaviour:
@@ -701,6 +701,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
     enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!4 &563524228 stripped
 Transform:
@@ -1499,6 +1505,12 @@ PrefabInstance:
     - target: {fileID: 207445185752165692, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7185771398270024576, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
+      propertyPath: m_text
+      value: 'Level XX-XX
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
@@ -2552,8 +2564,8 @@ Transform:
   m_Children:
   - {fileID: 1246885241}
   - {fileID: 648192784}
-  - {fileID: 1416045318}
   - {fileID: 455386520}
+  - {fileID: 1416045318}
   - {fileID: 1553690348}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2693,6 +2705,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movingArthropodBehavior:
     enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!4 &1568341187 stripped
 Transform:
