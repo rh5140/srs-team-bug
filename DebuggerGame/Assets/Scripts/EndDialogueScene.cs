@@ -28,6 +28,11 @@ public class EndDialogueScene : MonoBehaviour
             SaveManager.instance.Save();
         }
 
+        foreach (string characterName in Board.instance.unlockCharacters)
+        {
+            SaveManager.instance.unlockedCharacters.Add(characterName);
+            SaveManager.instance.Save();
+        }
     }
 }
 

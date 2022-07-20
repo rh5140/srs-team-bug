@@ -20,6 +20,8 @@ public class SaveManager : MonoBehaviour
     //public List<Level> completedLevels = new List<Level>();
     public HashSet<string> unlockedLevels = new HashSet<string>();
 
+    public HashSet<string> unlockedCharacters = new HashSet<string>();
+
     //Map info
     public Vector2Int mapPosition;
 
@@ -91,6 +93,8 @@ public class SaveManager : MonoBehaviour
         currentLevel = save.currentLevel;
         // mapPosition = save.mapPosition;
         unlockedLevels = save.unlockedLevels;
+        unlockedCharacters = save.unlockedCharacters;
+
         Collection = save.Collection;
     }
 
@@ -111,6 +115,7 @@ public class SaveManager : MonoBehaviour
         save.saveCreated = false;
         save.currentLevel = null;
         save.unlockedLevels = new HashSet<string>();
+        save.unlockedCharacters = new HashSet<string>();
         mapPosition = Vector2Int.zero;
         save.Collection.Clear();
         save.Save();

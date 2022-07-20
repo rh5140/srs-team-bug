@@ -629,11 +629,14 @@ MonoBehaviour:
   levelName: 00D0
   unlockLevels:
   - 0001
+  unlockCharacters:
+  - elderFlytrap
   boardObjects: []
   width: 12
   height: 7
   boundsEnabled: 1
   collidablesEnabled: 1
+  ready: 0
   gameWon: 0
 --- !u!4 &869829813
 Transform:

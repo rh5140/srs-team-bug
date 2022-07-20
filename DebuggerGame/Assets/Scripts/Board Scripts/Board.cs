@@ -39,6 +39,9 @@ public class Board : MonoBehaviour
     //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
+    //The character names that are unlocked upon finishing this level
+    public List<string> unlockCharacters = new List<string>();
+
     //Felix: Temporary implementation for bug counting (done with permissions from HiccupHan)
     public int numBugs { get; private set; } //Number of bugs currently left in the stage
     public int nBugsCaught { get; private set; }

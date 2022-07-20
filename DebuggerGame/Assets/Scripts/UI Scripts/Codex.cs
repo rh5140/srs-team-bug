@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Codex : MonoBehaviour
 {
-    public static Codex instance = null;
+    //public static Codex instance = null;
+
+    public string[] characterNames = {"elderFlytrap","cryingClover","flyKing","basicFly","weirdFly"};
 
     public static bool codexOpen = false;
     public GameObject codexDisplay;
@@ -22,9 +25,6 @@ public class Codex : MonoBehaviour
     private GameObject basicFlyEntry;
     private GameObject weirdFlyEntry;
 
-    //Codex
-    private HashSet<string> codex = new HashSet<string>();
-
     // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     void Start() 
     {
@@ -36,10 +36,18 @@ public class Codex : MonoBehaviour
         //Find enemy entries
         basicFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Basic Fly Entry").gameObject;
         weirdFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Weird Fly Entry").gameObject;
+
+        foreach (string characterName in characterNames)
+        {
+            if (SaveManager.instance.unlockedCharacters.Contains(characterName))
+            {
+                AddToCodex(characterName);
+            }
+        }
     }
 
     // Update is called every frame, if the MonoBehaviour is enabled.
-    void Update() 
+    /*void Update() 
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -65,9 +73,27 @@ public class Codex : MonoBehaviour
         {
             AddToCodex("weirdFly");
         }
+    }*/
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Save Menu"){
+            // Destroy the gameobject this script is attached to
+            Destroy(this.gameObject);
+        }
     }
 
-    private void Awake()
+    /*private void Awake()
     {
         //Singleton pattern
         if (instance == null)
@@ -75,20 +101,19 @@ public class Codex : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-    }
+    }*/
 
     // Functionality methods
 
-    public void AddToCodex(string s)
+    public void AddToCodex(string characterName)
     {
-        codex.Add(s);
-        UnhideCharacter(s);
+        UnhideCharacter(characterName);
     }
 
-    public void UnhideCharacter(string s)
+    public void UnhideCharacter(string characterName)
     {
 
-        switch (s)
+        switch (characterName)
         {
             case "elderFlytrap":
                 elderFlytrapEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
@@ -121,6 +146,8 @@ public class Codex : MonoBehaviour
                 break;
 
             default:
+                string errorString = "No such character with name " + characterName;
+                Debug.Log(errorString);
                 break;
         }
     }

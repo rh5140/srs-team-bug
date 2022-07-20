@@ -188,7 +188,12 @@ public class Player : BoardObject
             SaveManager.instance.unlockedLevels.Add(levelName);
             SaveManager.instance.Save();
         }
-        
+
+        foreach (string characterName in Board.instance.unlockCharacters)
+        {
+            SaveManager.instance.unlockedCharacters.Add(characterName);
+            SaveManager.instance.Save();
+        }
     }
     
 }

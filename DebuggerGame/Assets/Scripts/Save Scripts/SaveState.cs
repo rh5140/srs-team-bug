@@ -18,6 +18,9 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public HashSet<string> unlockedLevels = new HashSet<string>();
     public List<string> unlockedLevelsSerializable = new List<string>();
 
+    public HashSet<string> unlockedCharacters = new HashSet<string>();
+    public List<string> unlockedCharactersSerializable = new List<string>();
+
     //public levelDatabase levelDatabase;
     public bool saveCreated;
 
@@ -54,12 +57,14 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public void Save()
     {
         unlockedLevelsSerializable = unlockedLevels.ToList();
+        unlockedCharactersSerializable = unlockedCharacters.ToList();
         string saveData = JsonUtility.ToJson(this, true);
         Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         bf.Serialize(file, saveData);
         file.Close();
+        unlockedCharactersSerializable.Clear();
         unlockedLevelsSerializable.Clear();
     }
 
@@ -88,6 +93,11 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         foreach (string level in unlockedLevelsSerializable)
         {
             unlockedLevels.Add(level);
+        }
+
+        foreach (string character in unlockedCharactersSerializable)
+        {
+            unlockedCharacters.Add(character);
         }
     }
 }

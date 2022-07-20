@@ -729,6 +729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: 01D0
   unlockLevels: []
+  unlockCharacters:
+  - flyKing
   boardObjects: []
   width: 12
   height: 7

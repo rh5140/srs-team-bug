@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savePath: /state1.save
   currentLevel: 0000
+  unlockedLevelsSerializable:
+  - 0000
   saveCreated: 1
   mapPosition: {x: 0, y: 0}
-  arthropodDatabase: {fileID: 11400000, guid: c7800d2771b93ed469aebe301938bff2, type: 2}
+  arthropodDatabase: {fileID: 0}
   Collection: []
