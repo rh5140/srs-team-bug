@@ -81,6 +81,14 @@ public class Board : MonoBehaviour
     public bool boundsEnabled = true;
     public bool collidablesEnabled = true;
 
+
+    #region undo
+
+    private Dictionary<BoardObject, Dictionary<string, object>> currentUndoState = null;
+    private Stack<Dictionary<BoardObject, Dictionary<string, object>>> undoStack = new Stack<Dictionary<BoardObject, Dictionary<string, object>>>();
+
+    #endregion
+
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
 
@@ -214,7 +222,7 @@ public class Board : MonoBehaviour
     private void Start()
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
-        StartPlayerTurnEvent.AddListener(this.OnStartTurn);
+        StartPlayerTurnEvent.AddListener(this.OnStartPlayerTurn);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
@@ -290,6 +298,8 @@ public class Board : MonoBehaviour
 
         ReadyEvent.Invoke();
         ready = true;
+
+        PushUndoStack();
     }
 
     private void OnDisable()
@@ -297,6 +307,44 @@ public class Board : MonoBehaviour
         Board.instance = null;
     }
 
+    #region undo
+
+    private void PushUndoStack()
+    {
+        var undoData = new Dictionary<BoardObject, Dictionary<string, object>>();
+        foreach (var boardObject in boardObjects)
+        {
+            undoData[boardObject] = boardObject.SaveState();
+        }
+        if(currentUndoState != null)
+        {
+            undoStack.Push(currentUndoState);
+        }
+        currentUndoState = undoData;
+    }
+
+    public void Undo()
+    {
+        Debug.Assert(lastBoardEvent == EventState.StartPlayerTurn, "Cannot call undo after EndTurn");
+
+        if(undoStack.Count > 0)
+        {
+            currentUndoState = undoStack.Pop();
+            foreach (var boardObject in boardObjects)
+            {
+                if (currentUndoState.ContainsKey(boardObject))
+                {
+                    boardObject.LoadState(currentUndoState[boardObject]);
+                }
+                else
+                {
+                    boardObject.LoadState(null);
+                }
+            }
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Goes from state StartTurn up to Execute
@@ -567,8 +615,9 @@ public class Board : MonoBehaviour
     /// <summary>
     /// Receiver to OnStartTurn message. Resets max actions for the next turn.
     /// </summary>
-    private void OnStartTurn()
+    private void OnStartPlayerTurn()
     {
+        PushUndoStack();
         actionsLeftDict.Clear();
     }
 

@@ -38,7 +38,6 @@ public class MultiAudioMixer : MonoBehaviour
     }
 
     void OnReady() {
-        Debug.Log("Ready");
         nBugsTotal = board.numBugs;
 
         glitchSource = gameObject.AddComponent<AudioSource>();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ abstract public class BoardObject : MonoBehaviour
     [System.NonSerialized]
     public Vector2Int coordinate;
 
+    [SerializeField]
+    protected bool stationary = false;
 
     
     public Queue<BoardAction> actions = new Queue<BoardAction>();
@@ -74,6 +77,39 @@ abstract public class BoardObject : MonoBehaviour
     }
 
 
+    #region UNDO
+
+    public virtual Dictionary<string, object> SaveState()
+    {
+        if (!stationary)
+        {
+            return new Dictionary<string, object>
+            {
+                {nameof(coordinate), coordinate },
+            };
+        }
+        else
+        {
+            return new Dictionary<string, object>();
+        }
+    }
+
+    public virtual void LoadState(Dictionary<string, object> data)
+    {
+        if (!stationary)
+        {
+            if (data == null)
+            {
+                Debug.LogError("Undo adding boardobject: not implemented");
+            }
+
+            coordinate = (Vector2Int)data[nameof(coordinate)];
+            transform.position = new Vector3(coordinate.x, coordinate.y, transform.position.z);
+        }
+    }
+
+    #endregion
+
     public void AddActionMidExecution(BoardAction action, int? actionOffset)
     {
         actions.Enqueue(action);
@@ -128,7 +164,7 @@ abstract public class BoardObject : MonoBehaviour
         );
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         // TODO: Sanitize position to be on the grid?
         // TODO: If there is an offset from the grid, implement for coordinate
@@ -138,6 +174,18 @@ abstract public class BoardObject : MonoBehaviour
     {
         board = Board.instance;
 
+        AddListeners();
+    }
+
+
+    protected void OnDestroy()
+    {
+        RemoveListeners();
+    }
+
+
+    public void AddListeners()
+    {
         // Add handlers
         // In future, handlers may be added in the implementation
         // so that empty handlers won't bloat the event, but
@@ -159,12 +207,6 @@ abstract public class BoardObject : MonoBehaviour
         board.PostArthropodExecuteEvent.AddListener(OnPostArthropodExecute);
 
         board.EndLevelEvent.AddListener(OnEndLevel);
-    }
-
-
-    protected void OnDestroy()
-    {
-        RemoveListeners();
     }
 
     //removes listeners for the functions of this boardobject
