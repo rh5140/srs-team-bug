@@ -244,8 +244,10 @@ public class Board : MonoBehaviour
 
         // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
         //  within these bounds, add it to collidableCoordinates
-        collidableTilemap = GameObject.FindGameObjectWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
-        glitchTilemap = GameObject.FindGameObjectWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+        collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
+        if (GameObject.FindWithTag("Tilemap_Glitches") != null)
+            glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+        else glitchTilemap = null;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -257,7 +259,7 @@ public class Board : MonoBehaviour
                     //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
                     collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
                 }
-                else if (glitchTilemap.OverlapPoint(currentPos))
+                else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
                 {
                     // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
                     collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());

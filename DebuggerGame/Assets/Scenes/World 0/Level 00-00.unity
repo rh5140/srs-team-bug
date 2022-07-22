@@ -1329,8 +1329,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1335743012}
-  - {fileID: 446138873}
   - {fileID: 1757904236}
+  - {fileID: 446138873}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1586,7 +1586,7 @@ Transform:
   m_Children:
   - {fileID: 2346804209212354768}
   m_Father: {fileID: 1117165264}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1757904237
 MonoBehaviour:
@@ -1597,9 +1597,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757904235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53e5792f91e0248259e52d85bc33f852, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 0
+    range: -1
+    directions: []
+    playerOnly: 0
   rulesEnabled: 1
 --- !u!1 &2108410728
 GameObject:
@@ -1663,6 +1672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619499a370c414a9ea134d31a9a8dfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
   bugsCanPass: 0
   pushablesCanPass: 0
 --- !u!483693784 &2108410732

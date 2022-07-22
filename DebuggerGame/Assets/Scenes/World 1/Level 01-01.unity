@@ -2351,6 +2351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c019abcf1f65670468e093479e6044c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
   heldArthropod: {fileID: 0}
   facingRight: 1
   animator: {fileID: 446138875}
@@ -2765,7 +2766,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757904236}
-  - component: {fileID: 1757904237}
+  - component: {fileID: 1757904238}
   m_Layer: 0
   m_Name: Fly2_NoRight
   m_TagString: Untagged
@@ -2788,7 +2789,7 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1757904237
+--- !u!114 &1757904238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2797,14 +2798,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757904235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 1
+    range: 3
+    directions:
+    - {x: 1, y: 0}
+    playerOnly: 1
   rulesEnabled: 1
-  range: 3
-  directions:
-  - {x: 1, y: 0}
-  playerOnly: 1
 --- !u!1001 &1774753674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2908,6 +2915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619499a370c414a9ea134d31a9a8dfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
   bugsCanPass: 0
   pushablesCanPass: 0
 --- !u!483693784 &1808859903
@@ -4226,7 +4234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1935456780}
-  - component: {fileID: 1935456782}
+  - component: {fileID: 1935456781}
   m_Layer: 0
   m_Name: Fly1_NoRight
   m_TagString: Untagged
@@ -4249,7 +4257,7 @@ Transform:
   m_Father: {fileID: 1117165264}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1935456782
+--- !u!114 &1935456781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4258,14 +4266,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1935456779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d57b3faa9fb6042b22388ce5577020, type: 3}
+  m_Script: {fileID: 11500000, guid: e0aa91c00bfaed343a7f61730e7f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stationary: 0
+  movingArthropodBehavior:
+    enabled: 1
+    range: -1
+  restrictMovementArthropodBehavior:
+    enabled: 1
+    range: 3
+    directions:
+    - {x: 1, y: 0}
+    playerOnly: 1
   rulesEnabled: 1
-  range: 3
-  directions:
-  - {x: 1, y: 0}
-  playerOnly: 1
 --- !u!4 &2046378922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813943156607320776, guid: e4f1195687facdc44bf01164d3a44a7b, type: 3}
