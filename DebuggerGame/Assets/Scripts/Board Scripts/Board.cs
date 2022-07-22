@@ -241,7 +241,7 @@ public class Board : MonoBehaviour
                     //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
                     collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
                 }
-                if (glitchTilemap.OverlapPoint(currentPos))
+                else if (glitchTilemap.OverlapPoint(currentPos))
                 {
                     // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
                     collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
