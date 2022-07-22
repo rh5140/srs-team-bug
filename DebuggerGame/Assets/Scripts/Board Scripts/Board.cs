@@ -190,20 +190,27 @@ public class Board : MonoBehaviour
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate)
     {
         bool pushableAtCoord = false;
-        if(boardObject is Arthropod) {
-            foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
-                if(pushable.coordinate == coordinate) pushableAtCoord = true;
+        if (boardObject is Arthropod) {
+            foreach (PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
+                if (pushable.coordinate == coordinate) pushableAtCoord = true;
             }
         }
+
+        // Bug moving into collidable or glitch
         bool collidableAtCoord = (
                 collidableCoordinates.ContainsKey(coordinate)
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
             || (boardObject is Arthropod && pushableAtCoord);
-        
-        bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
+        // Pushable moving into glitch
+        bool pushableOnGlitch = (
+                collidableCoordinates.ContainsKey(coordinate)
+                && boardObject is PushableObject && collidableCoordinates[coordinate].BugsCanPass());
+
+        // Within level bounds
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
+
         return (!collidableAtCoord || pushableOnGlitch) && inBounds;// !collidableAtCoord;
     }
 
