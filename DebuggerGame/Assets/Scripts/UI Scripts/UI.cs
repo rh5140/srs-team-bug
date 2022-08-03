@@ -27,8 +27,15 @@ public class UI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseAll();
-            Resume();
+            if (InventoryIsOpen || ControlIsOpen || OptionIsOpen)
+            {
+                Exit();
+
+            }
+            else
+            {
+                OpenOptions();
+            }
 
         }
 
@@ -37,8 +44,7 @@ public class UI : MonoBehaviour
         {
             if (ControlIsOpen)
             {
-                CloseAll();
-                Resume();
+                Exit();
             }  
             else
             {
@@ -51,8 +57,7 @@ public class UI : MonoBehaviour
         {
             if (InventoryIsOpen)
             {
-                CloseAll();
-                Resume();
+                Exit();
             }  
             else
             {
@@ -124,6 +129,7 @@ public class UI : MonoBehaviour
         CloseAll();
         Pause();
         OptionsMenu.SetActive(true);
+        OptionIsOpen = true;
     }
 
     public void CloseOptions()
