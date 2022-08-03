@@ -2196,6 +2196,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2377281589678931018, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2377281589678931018, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7531534515760319686, guid: 8f6cc1bfb33b5f94098f7d118310b125, type: 3}
+    - target: {fileID: 6299596170974369911, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05eb92d176009d341bd65200c79a7c2f, type: 3}
 --- !u!1 &1059115561
@@ -2411,8 +2423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d63020febcd5ce4a8292af509915ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizePadding: 1
-  offset: {x: 0, y: 0}
+  sizePadding: 2
+  offset: {x: 0, y: 1}
 --- !u!114 &1117165266
 MonoBehaviour:
   m_ObjectHideFlags: 0

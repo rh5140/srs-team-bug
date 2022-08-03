@@ -1,37 +1,25 @@
 fileFormatVersion: 2
-guid: da03075d180d3324ab5812f0bb996eaa
+guid: 8f6cc1bfb33b5f94098f7d118310b125
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8923056055852348695
-    second: pixel_buttons_0
+      213: 6014844219033903945
+    second: Codex
   - first:
-      213: 1535205803103534246
-    second: pixel_buttons_1
+      213: 8435879183689324831
+    second: Codex_Hover
   - first:
-      213: -2540352548013998534
-    second: pixel_buttons_2
+      213: 7531534515760319686
+    second: Options
   - first:
-      213: -4654028077274906219
-    second: pixel_buttons_3
+      213: 7488398426356315057
+    second: Options_Hover
   - first:
-      213: -5054877597584669835
-    second: pixel_buttons_4
+      213: 5380582697037810843
+    second: Map
   - first:
-      213: 514663464764677493
-    second: pixel_buttons_5
-  - first:
-      213: -7356958598692737168
-    second: pixel_buttons_6
-  - first:
-      213: 8784737241390017932
-    second: pixel_buttons_7
-  - first:
-      213: -1395573419455994355
-    second: pixel_buttons_8
-  - first:
-      213: -1958105256834965238
-    second: pixel_buttons_9
+      213: -790885022930891848
+    second: Map_Hover
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -117,215 +105,143 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixel_buttons_0
+      name: Codex
       rect:
         serializedVersion: 2
         x: 0
-        y: 590
-        width: 380
-        height: 110
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9eac5082bcfea2480800000000000000
-      internalID: -8923056055852348695
+      spriteID: 943e3def2f4097350800000000000000
+      internalID: 6014844219033903945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_1
+      name: Codex_Hover
       rect:
         serializedVersion: 2
-        x: 480
-        y: 600
-        width: 100
-        height: 100
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6acba174b852e4510800000000000000
-      internalID: 1535205803103534246
+      spriteID: f191aef1c63421570800000000000000
+      internalID: 8435879183689324831
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 440
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3efd5321dadebcd0800000000000000
-      internalID: -2540352548013998534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_3
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 450
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 591c55f2f12996fb0800000000000000
-      internalID: -4654028077274906219
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_4
+      name: Options
       rect:
         serializedVersion: 2
         x: 0
-        y: 300
-        width: 380
-        height: 110
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 573c2ec5b9779d9b0800000000000000
-      internalID: -5054877597584669835
+      spriteID: 6cccc710db2658860800000000000000
+      internalID: 7531534515760319686
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_5
+      name: Options_Hover
       rect:
         serializedVersion: 2
-        x: 480
-        y: 300
-        width: 100
-        height: 100
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57d9b24c1b3742700800000000000000
-      internalID: 514663464764677493
+      spriteID: 1b3ff8b81b22ce760800000000000000
+      internalID: 7488398426356315057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 150
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 07fe9a12225d6e990800000000000000
-      internalID: -7356958598692737168
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_7
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 150
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c8d623e3af7a9e970800000000000000
-      internalID: 8784737241390017932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_8
+      name: Map
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 380
-        height: 110
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d06295b7e5de1ace0800000000000000
-      internalID: -1395573419455994355
+      spriteID: b9c4d85947babaa40800000000000000
+      internalID: 5380582697037810843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_9
+      name: Map_Hover
       rect:
         serializedVersion: 2
-        x: 480
+        x: 32
         y: 0
-        width: 100
-        height: 100
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a01e685b4a963d4e0800000000000000
-      internalID: -1958105256834965238
+      spriteID: 8bb070e03463605f0800000000000000
+      internalID: -790885022930891848
       vertices: []
       indices: 
       edges: []
