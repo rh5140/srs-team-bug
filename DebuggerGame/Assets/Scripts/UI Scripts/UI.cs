@@ -27,16 +27,8 @@ public class UI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-
-            if (GameIsPaused)
-            {
-                CloseAll();
-                Resume();
-            }
-            else
-            {
-                OpenOptions();
-            }
+            CloseAll();
+            Resume();
 
         }
 
