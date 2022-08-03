@@ -70,6 +70,12 @@ public class UI : MonoBehaviour
         }
     }
 
+    public void Exit()
+    {
+        CloseAll();
+        Resume();
+    }
+
     public void CloseAll()
     {
         CloseInventory();
