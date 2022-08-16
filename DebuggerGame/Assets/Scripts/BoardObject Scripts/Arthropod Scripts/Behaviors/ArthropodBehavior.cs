@@ -12,6 +12,19 @@ public abstract class ArthropodBehavior
     public int range = -1;
 
     protected Arthropod arthropod;
+
+    #region undo
+
+    public virtual Dictionary<string, object> SaveState()
+    {
+        return new Dictionary<string, object>();
+    }
+
+    public virtual void LoadState(Dictionary<string, object> data) { }
+
+    #endregion
+
+
     public virtual void Start(Arthropod arthropod)
     {
         this.arthropod = arthropod;
