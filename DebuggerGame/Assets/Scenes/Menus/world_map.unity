@@ -1721,6 +1721,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1261515651955338408, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: Fly King
+      objectReference: {fileID: 0}
+    - target: {fileID: 2157135352350510293, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: The Old Hunter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3017332990477714048, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: Little Clover
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734449721485072105, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734449721485072105, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734449721485072105, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3854033653067215462, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: "A fabled lord of bugs. Few have succeeded in deciphering its cryptic
+        tongue\u2026\r\n\r\n\u201Cbzzttt bzzzt bzzzztt BZZZT BZZTTZ BZZZZZZZ bzzz
+        bzzz\u201D\r\n\r\nA local translator\u2019s attempted translation: something
+        something\u2026 RULE THE WORLD\u2026 something something\u2026 MUHAHAHAH\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052568110720777952, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: "I helped this child make it back home. \r\n\r\n\u201CWhere is home?
+        What does it mean to be home? Are u willing to give it up? Or let it change?\u201D\r"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720103716574906427, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720103716574906427, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720103716574906427, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321411995233567348, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321411995233567348, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321411995233567348, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5489819551015814708, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1816,6 +1876,56 @@ PrefabInstance:
     - target: {fileID: 5489819552571163533, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
       propertyPath: m_Name
       value: Codex Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186914644845117712, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186914644845117712, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186914644845117712, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222614673880872555, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: Basic Fly
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410866102627745112, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410866102627745112, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410866102627745112, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413272356075962127, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: '[INSERT DESCRIPTION]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8103666519664578829, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: '[INSERT DESCRIPTION]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778763214207170249, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: Weird Fly
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054954108242427167, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_text
+      value: "A veteran fly catcher. Cynical, maybe even a tad judgemental. They\u2019ve
+        seen a lot from their days as a bug catcher during the Breach!! They don\u2019t
+        seem to think very highly of me\u2026 I must prove them wrong!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054954108242427167, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_isRightToLeft
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}

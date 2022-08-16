@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Codex : MonoBehaviour
 {
-    //public static Codex instance = null;
-
-    public string[] characterNames = {"elderFlytrap","cryingClover","flyKing","basicFly","weirdFly"};
+    public Dictionary<string, GameObject> characterEntries = new Dictionary<string, GameObject>();
 
     public static bool codexOpen = false;
     public GameObject codexDisplay;
@@ -37,45 +35,34 @@ public class Codex : MonoBehaviour
         basicFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Basic Fly Entry").gameObject;
         weirdFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Weird Fly Entry").gameObject;
 
+        string[] characterNames = {"elderFlytrap", "cryingClover1", "cryingClover2", "flyKing", "basicFly", "weirdFly"};
+
+        characterEntries.Add("elderFlytrap", elderFlytrapEntry);
+        characterEntries.Add("cryingClover1", cryingCloverEntry);
+        characterEntries.Add("cryingClover2", cryingCloverEntry);
+        characterEntries.Add("flyKing", flyKingEntry);
+        characterEntries.Add("basicFly", basicFlyEntry);
+        characterEntries.Add("weirdFly", weirdFlyEntry);
+
         foreach (string characterName in characterNames)
         {
-            if (SaveManager.instance.unlockedCharacters.Contains(characterName))
+            if (!SaveManager.instance.unlockedCharacters.Contains(characterName))
             {
-                AddToCodex(characterName);
+                HideEntry(characterEntries[characterName], characterName);
             }
+        }
+
+        foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
+        {
+            characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.red;
         }
     }
 
     // Update is called every frame, if the MonoBehaviour is enabled.
     /*void Update() 
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            AddToCodex("elderFlytrap");
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            AddToCodex("cryingClover");
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddToCodex("flyKing");
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            AddToCodex("basicFly");
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddToCodex("weirdFly");
-        }
     }*/
 
-    void OnEnable()
+    /*void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -84,70 +71,35 @@ public class Codex : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Save Menu"){
             // Destroy the gameobject this script is attached to
             Destroy(this.gameObject);
         }
-    }
-
-    /*private void Awake()
-    {
-        //Singleton pattern
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
     }*/
 
     // Functionality methods
 
-    public void AddToCodex(string characterName)
+    public void HideEntry(GameObject characterEntry, string name)
     {
-        UnhideCharacter(characterName);
-    }
-
-    public void UnhideCharacter(string characterName)
-    {
-
-        switch (characterName)
+        switch (name) 
         {
-            case "elderFlytrap":
-                elderFlytrapEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-                elderFlytrapEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "Elder Flytrap";
-                elderFlytrapEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "[INSERT DESCRIPTION]";
-                break;
-            
-            case "cryingClover":
-                cryingCloverEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-                cryingCloverEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "Crying Clover";
-                cryingCloverEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "[INSERT DESCRIPTION]";
-                break;
-            
-            case "flyKing":
-                flyKingEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-                flyKingEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "Fly King";
-                flyKingEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "[INSERT DESCRIPTION]";
+            case "cryingClover1":
+                characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
+                characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
                 break;
 
-            case "basicFly":
-                basicFlyEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-                basicFlyEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "Basic Fly";
-                basicFlyEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "[INSERT DESCRIPTION]";
-                break;
-            
-            case "weirdFly":
-                weirdFlyEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-                weirdFlyEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "Weird Fly";
-                weirdFlyEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "[INSERT DESCRIPTION]";
+            case "cryingClover2":
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
                 break;
 
             default:
-                string errorString = "No such character with name " + characterName;
-                Debug.Log(errorString);
+                characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
+                characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
                 break;
         }
     }
@@ -167,6 +119,14 @@ public class Codex : MonoBehaviour
     {
         codexDisplay.SetActive(false);
         codexOpen = false;
+
+        foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
+        {
+            characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
+        }
+
+        SaveManager.instance.newestCharacterUnlocks = new HashSet<string>();
+        SaveManager.instance.Save();
     }
 
     public void ToggleDenizensDisplay()

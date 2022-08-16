@@ -32,6 +32,8 @@ public class EndDialogueScene : MonoBehaviour
         {
             SaveManager.instance.unlockedCharacters.Add(characterName);
             SaveManager.instance.Save();
+            SaveManager.instance.newestCharacterUnlocks.Add(characterName);
+            SaveManager.instance.Save();
         }
     }
 }

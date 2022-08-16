@@ -21,6 +21,9 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public HashSet<string> unlockedCharacters = new HashSet<string>();
     public List<string> unlockedCharactersSerializable = new List<string>();
 
+    public HashSet<string> newestCharacterUnlocks = new HashSet<string>();
+    public List<string> newestCharacterUnlocksSerializable = new List<string>();
+
     //public levelDatabase levelDatabase;
     public bool saveCreated;
 
@@ -58,6 +61,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     {
         unlockedLevelsSerializable = unlockedLevels.ToList();
         unlockedCharactersSerializable = unlockedCharacters.ToList();
+        newestCharacterUnlocksSerializable = newestCharacterUnlocks.ToList();
         string saveData = JsonUtility.ToJson(this, true);
         Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
@@ -66,6 +70,7 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         file.Close();
         unlockedCharactersSerializable.Clear();
         unlockedLevelsSerializable.Clear();
+        newestCharacterUnlocksSerializable.Clear();
     }
 
     public void Load()
@@ -98,6 +103,11 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         foreach (string character in unlockedCharactersSerializable)
         {
             unlockedCharacters.Add(character);
+        }
+
+        foreach (string newCharacter in newestCharacterUnlocksSerializable)
+        {
+            newestCharacterUnlocks.Add(newCharacter);
         }
     }
 }

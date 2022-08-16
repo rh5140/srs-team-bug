@@ -193,6 +193,8 @@ public class Player : BoardObject
         {
             SaveManager.instance.unlockedCharacters.Add(characterName);
             SaveManager.instance.Save();
+            SaveManager.instance.newestCharacterUnlocks.Add(characterName);
+            SaveManager.instance.Save();
         }
     }
     

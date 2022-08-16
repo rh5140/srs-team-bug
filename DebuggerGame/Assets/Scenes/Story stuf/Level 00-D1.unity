@@ -1366,7 +1366,7 @@ MonoBehaviour:
   unlockLevels:
   - 0003
   unlockCharacters:
-  - cryingClover
+  - cryingClover1
   boardObjects: []
   width: 12
   height: 7
