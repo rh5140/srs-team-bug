@@ -36,7 +36,6 @@ public class Board : MonoBehaviour
     //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
     //Example levelName: 0000 (world 0 level 0)
     public string levelName;
-
     //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
@@ -80,6 +79,8 @@ public class Board : MonoBehaviour
     public int height = 5;
     public bool boundsEnabled = true;
     public bool collidablesEnabled = true;
+
+    public RangeOutlineTilemap outlineMap;
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -211,7 +212,7 @@ public class Board : MonoBehaviour
         Board.instance = this;
     }
 
-    private void Start()
+    private async void Start()
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
         StartPlayerTurnEvent.AddListener(this.OnStartTurn);
@@ -349,9 +350,25 @@ public class Board : MonoBehaviour
 
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
     {
+        //Remove all range outlines
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                //outlineMap.DeactivateTile(i, j);
+            }
+        }
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
+            if (rule.creator is RangedBug) {
+                RangedBug creator = (RangedBug)rule.creator;
+                for(int i = creator.coordinate.x - creator.range; i < creator.coordinate.x + creator.range; i++) {
+                    for(int j = creator.coordinate.y - creator.range; j < creator.coordinate.y + creator.range; j++) {
+                        //outlineMap.ActivateTile(i, j);
+                    }
+                }
+                if (!isInRange(boardObject, creator))
+                    continue;
+            }
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {
