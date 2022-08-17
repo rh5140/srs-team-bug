@@ -1519,7 +1519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619499a370c414a9ea134d31a9a8dfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationary: 0
+  stationary: 1
   bugsCanPass: 0
   pushablesCanPass: 0
 --- !u!483693784 &856645600
