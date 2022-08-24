@@ -301,13 +301,19 @@ public class Board : MonoBehaviour
                 enableCondition: (BoardObject creator, Board board, int? offset)
                         => board != null && boundsEnabled,
                 filter: (BoardAction action, int? offset) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
-                    && GetBoardObjectAtCoordinate(
+                    action.boardObject is Player                                         // Action performed by player
+                    && action is MovementAction movementAction                           // Action is movement
+                    && GetBoardObjectAtCoordinate(                                       // Target destination has a pushable
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
                     ) is PushableObject pushableObject
-                    && !(pushableObject.Push(movementAction.direction, offset))
+
+                    && CanEnterCoordinate(                                               // Player can move to target destination
+                        action.boardObject,
+                        action.boardObject.coordinate + movementAction.direction
+                    )
+
+                    && !(pushableObject.Push(movementAction.direction, offset))          // Pushable can be pushed
             )
         );
 
