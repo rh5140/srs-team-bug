@@ -2337,8 +2337,9 @@ GameObject:
   - component: {fileID: 1979290743191416921}
   - component: {fileID: 5501295519690643494}
   - component: {fileID: 7105051796358227076}
+  - component: {fileID: 4371505520744877730}
   m_Layer: 5
-  m_Name: BackgroundHighlight
+  m_Name: MouthUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2391,7 +2392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c4f61cca512586a4f830a9bba0753d36, type: 3}
+  m_Sprite: {fileID: 559297114893892171, guid: 160f86357ff13334a93f52529009456a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2401,6 +2402,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &4371505520744877730
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221499611721270931}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 985e2d7a7ce702748b7ed9ad93347ec2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5875187058659621319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,6 +2717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transparent: {fileID: 21300000, guid: 9b5406e252c10c9489277aaaab389c74, type: 3}
+  animator: {fileID: 4371505520744877730}
 --- !u!1 &6309307970140759640
 GameObject:
   m_ObjectHideFlags: 0

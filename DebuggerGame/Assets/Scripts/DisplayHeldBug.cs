@@ -8,12 +8,17 @@ public class DisplayHeldBug : MonoBehaviour
 
     public Sprite transparent;
 
+    public Animator animator;
+    private bool isHeld;
+
     GameObject playerObj;
     Player player;
     Arthropod miscArthro;
     Board board;
+
     void Start()
     {
+        isHeld = false;
         playerObj = GameObject.Find("PlayerController");
         if (playerObj == null)
         {
@@ -21,6 +26,7 @@ public class DisplayHeldBug : MonoBehaviour
         }
         player = playerObj.GetComponent<Player>();
         miscArthro = null;
+        animator.SetBool("empty", true);
     }
 
     void Update()
@@ -34,10 +40,12 @@ public class DisplayHeldBug : MonoBehaviour
         Sprite bugSprite;
         if (miscArthro == null)
         {
+            animator.SetBool("empty", true);
             transform.GetComponent<Image>().sprite = transparent;
         }
         else
         {
+            animator.SetBool("empty", false);
             bugSprite = miscArthro.GetComponentInChildren<SpriteRenderer>().sprite;
             transform.GetComponent<Image>().sprite = bugSprite;
         }
