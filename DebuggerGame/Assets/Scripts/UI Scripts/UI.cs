@@ -18,7 +18,7 @@ public class UI : MonoBehaviour
     void Start()
     {
         string levelName = Board.instance.levelName;
-        levelName = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2, 2);
+        levelName = levelName.Substring(0,2) + "-" + levelName.Substring(2, 2);
         LevelName.GetComponent<TMPro.TextMeshProUGUI>().SetText(levelName);
 
     }
