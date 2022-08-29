@@ -8,16 +8,28 @@ public class DisplayHeldBug : MonoBehaviour
 
     public Sprite transparent;
 
+    GameObject playerObj;
     Player player;
     Arthropod miscArthro;
+    Board board;
     void Start()
     {
-        player = GameObject.Find("PlayerController").GetComponent<Player>();
+        playerObj = GameObject.Find("PlayerController");
+        if (playerObj == null)
+        {
+            return;
+        }
+        player = playerObj.GetComponent<Player>();
         miscArthro = null;
     }
 
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
+
         miscArthro = player.heldArthropod;
         Sprite bugSprite;
         if (miscArthro == null)
