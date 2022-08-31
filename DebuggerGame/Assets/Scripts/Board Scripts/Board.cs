@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class Board : MonoBehaviour
     //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
     //Example levelName: 0000 (world 0 level 0)
     public string levelName;
+
     //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
@@ -67,6 +69,8 @@ public class Board : MonoBehaviour
         BugsCaughtChangeEvent.Invoke();
     }
 
+    private Collider2D collidableTilemap;
+    private Collider2D glitchTilemap;
 
     public static Board instance { get; private set; } = null;
 
@@ -79,6 +83,14 @@ public class Board : MonoBehaviour
     public int height = 5;
     public bool boundsEnabled = true;
     public bool collidablesEnabled = true;
+
+
+    #region undo
+
+    private Dictionary<BoardObject, Dictionary<string, object>> currentUndoState = null;
+    private Stack<Dictionary<BoardObject, Dictionary<string, object>>> undoStack = new Stack<Dictionary<BoardObject, Dictionary<string, object>>>();
+
+    #endregion
 
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
@@ -183,23 +195,31 @@ public class Board : MonoBehaviour
 
     private Dictionary<BoardObject, int> actionsLeftDict = new Dictionary<BoardObject, int>();
 
-    //Determines if a BoardObject can enter a coordinate
-    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
+    // Determines if a BoardObject can enter a coordinate
+    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate)
+    {
         bool pushableAtCoord = false;
-        if(boardObject is Arthropod) {
-            foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
-                if(pushable.coordinate == coordinate) pushableAtCoord = true;
+        if (boardObject is Arthropod) {
+            foreach (PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
+                if (pushable.coordinate == coordinate) pushableAtCoord = true;
             }
         }
+
+        // Bug moving into collidable or glitch
         bool collidableAtCoord = (
                 collidableCoordinates.ContainsKey(coordinate)
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
             || (boardObject is Arthropod && pushableAtCoord);
-        
-        bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
+        // Pushable moving into glitch
+        bool pushableOnGlitch = (
+                collidableCoordinates.ContainsKey(coordinate)
+                && boardObject is PushableObject && collidableCoordinates[coordinate].BugsCanPass());
+
+        // Within level bounds
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
+
         return (!collidableAtCoord || pushableOnGlitch) && inBounds;// !collidableAtCoord;
     }
 
@@ -213,7 +233,7 @@ public class Board : MonoBehaviour
     private void Start()
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
-        StartPlayerTurnEvent.AddListener(this.OnStartTurn);
+        StartPlayerTurnEvent.AddListener(this.OnStartPlayerTurn);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
@@ -222,9 +242,29 @@ public class Board : MonoBehaviour
         numBugs = CountBoardObjectsOfType<Arthropod>();
         nBugsCaught = 0;
 
-        //Initialize collidables list
-        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
-            collidableCoordinates.Add(collidable.coordinate, collidable);
+        // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
+        //  within these bounds, add it to collidableCoordinates
+        collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
+        if (GameObject.FindWithTag("Tilemap_Glitches") != null)
+            glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+        else glitchTilemap = null;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector2Int currentPos = new Vector2Int(i, j);
+                if (collidableTilemap.OverlapPoint(currentPos))
+                {
+                    // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
+                    //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
+                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
+                }
+                else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
+                {
+                    // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
+                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                }
+            }
         }
 
         actionFilterRules.Add(
@@ -261,13 +301,19 @@ public class Board : MonoBehaviour
                 enableCondition: (BoardObject creator, Board board, int? offset)
                         => board != null && boundsEnabled,
                 filter: (BoardAction action, int? offset) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
-                    && GetBoardObjectAtCoordinate(
+                    action.boardObject is Player                                         // Action performed by player
+                    && action is MovementAction movementAction                           // Action is movement
+                    && GetBoardObjectAtCoordinate(                                       // Target destination has a pushable
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
                     ) is PushableObject pushableObject
-                    && !(pushableObject.Push(movementAction.direction, offset))
+
+                    && CanEnterCoordinate(                                               // Player can move to target destination
+                        action.boardObject,
+                        action.boardObject.coordinate + movementAction.direction
+                    )
+
+                    && !(pushableObject.Push(movementAction.direction, offset))          // Pushable can be pushed
             )
         );
 
@@ -289,6 +335,8 @@ public class Board : MonoBehaviour
 
         ReadyEvent.Invoke();
         ready = true;
+
+        PushUndoStack();
     }
 
     private void OnDisable()
@@ -296,6 +344,44 @@ public class Board : MonoBehaviour
         Board.instance = null;
     }
 
+    #region undo
+
+    private void PushUndoStack()
+    {
+        var undoData = new Dictionary<BoardObject, Dictionary<string, object>>();
+        foreach (var boardObject in boardObjects)
+        {
+            undoData[boardObject] = boardObject.SaveState();
+        }
+        if(currentUndoState != null)
+        {
+            undoStack.Push(currentUndoState);
+        }
+        currentUndoState = undoData;
+    }
+
+    public void Undo()
+    {
+        Debug.Assert(lastBoardEvent == EventState.StartPlayerTurn, "Cannot call undo after EndTurn");
+
+        if(undoStack.Count > 0)
+        {
+            currentUndoState = undoStack.Pop();
+            foreach (var boardObject in boardObjects)
+            {
+                if (currentUndoState.ContainsKey(boardObject))
+                {
+                    boardObject.LoadState(currentUndoState[boardObject]);
+                }
+                else
+                {
+                    boardObject.LoadState(null);
+                }
+            }
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// Goes from state StartTurn up to Execute
@@ -351,11 +437,6 @@ public class Board : MonoBehaviour
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
-            if (rule.creator is RangedBug) {
-                RangedBug creator = (RangedBug)rule.creator;
-                if (!isInRange(boardObject, creator))
-                    continue;
-            }
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {
@@ -571,8 +652,9 @@ public class Board : MonoBehaviour
     /// <summary>
     /// Receiver to OnStartTurn message. Resets max actions for the next turn.
     /// </summary>
-    private void OnStartTurn()
+    private void OnStartPlayerTurn()
     {
+        PushUndoStack();
         actionsLeftDict.Clear();
     }
 
