@@ -84,6 +84,12 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         }
     }
 
+    public void ClearNewestCharacterUnlocks()
+    {
+        newestCharacterUnlocks = new HashSet<string>();
+        Save();
+    }
+
     public void OnBeforeSerialize()
     {
     }

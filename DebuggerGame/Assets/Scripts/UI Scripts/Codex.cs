@@ -58,28 +58,6 @@ public class Codex : MonoBehaviour
         }
     }
 
-    // Update is called every frame, if the MonoBehaviour is enabled.
-    /*void Update() 
-    }*/
-
-    /*void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "Save Menu"){
-            // Destroy the gameobject this script is attached to
-            Destroy(this.gameObject);
-        }
-    }*/
-
     // Functionality methods
 
     public void HideEntry(GameObject characterEntry, string name)
@@ -118,15 +96,19 @@ public class Codex : MonoBehaviour
     public void CloseCodex()
     {
         codexDisplay.SetActive(false);
-        codexOpen = false;
 
-        foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
+        if (codexOpen) 
         {
-            characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
+            foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
+            {
+                characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
+            }
+
+            SaveManager.instance.ClearNewestCharacterUnlocks();
+            SaveManager.instance.Save();
         }
 
-        SaveManager.instance.newestCharacterUnlocks = new HashSet<string>();
-        SaveManager.instance.Save();
+        codexOpen = false;
     }
 
     public void ToggleDenizensDisplay()

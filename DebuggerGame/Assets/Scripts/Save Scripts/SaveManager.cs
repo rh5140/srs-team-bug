@@ -174,4 +174,11 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    public void ClearNewestCharacterUnlocks()
+    {
+        newestCharacterUnlocks = new HashSet<string>();
+        save.ClearNewestCharacterUnlocks();
+        Save();
+    }
+
 }
