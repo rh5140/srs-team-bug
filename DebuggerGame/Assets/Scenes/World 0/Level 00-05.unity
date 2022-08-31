@@ -2259,6 +2259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizePadding: 1
   offset: {x: 0, y: 0}
+  menuBarPadding: 1.15
 --- !u!114 &1014907564
 MonoBehaviour:
   m_ObjectHideFlags: 0

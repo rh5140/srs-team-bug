@@ -2468,8 +2468,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d63020febcd5ce4a8292af509915ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizePadding: 1
+  sizePadding: 0
   offset: {x: 0, y: 0}
+  menuBarPadding: 1.15
 --- !u!114 &1117165266
 MonoBehaviour:
   m_ObjectHideFlags: 0
