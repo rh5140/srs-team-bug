@@ -11,29 +11,23 @@ public class Codex : MonoBehaviour
 
     public static bool codexOpen = false;
     public GameObject codexDisplay;
-    public GameObject denizensDisplay;
-    public GameObject bugsDisplay;
+    public Component[] pages;
+    private int currentPage = 0;
 
     //Denizen entries
-    private GameObject elderFlytrapEntry;
-    private GameObject cryingCloverEntry;
-    private GameObject flyKingEntry;
+    public GameObject elderFlytrapEntry;
+    public GameObject cryingCloverEntry;
+    public GameObject flyKingEntry;
 
     //Enemy entries
-    private GameObject basicFlyEntry;
-    private GameObject weirdFlyEntry;
+    public GameObject basicFlyEntry;
+    public GameObject weirdFlyEntry;
 
     // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     void Start() 
     {
-        //Find denizen entries
-        elderFlytrapEntry = denizensDisplay.transform.Find("Scroll View/Viewport/Content/Elder Flytrap Entry").gameObject;
-        cryingCloverEntry = denizensDisplay.transform.Find("Scroll View/Viewport/Content/Crying Clover Entry").gameObject;
-        flyKingEntry = denizensDisplay.transform.Find("Scroll View/Viewport/Content/Fly King Entry").gameObject;
-
-        //Find enemy entries
-        basicFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Basic Fly Entry").gameObject;
-        weirdFlyEntry = bugsDisplay.transform.Find("Scroll View/Viewport/Content/Weird Fly Entry").gameObject;
+        pages = codexDisplay.GetComponentsInChildren<Canvas>(true);
+        Debug.Log(pages.Length);
 
         string[] characterNames = {"elderFlytrap", "cryingClover1", "cryingClover2", "flyKing", "basicFly", "weirdFly"};
 
@@ -111,15 +105,10 @@ public class Codex : MonoBehaviour
         codexOpen = false;
     }
 
-    public void ToggleDenizensDisplay()
+    public void FlipRight()
     {
-        denizensDisplay.SetActive(true);
-        bugsDisplay.SetActive(false);
-    }
-
-    public void ToggleBugsDisplay()
-    {
-        bugsDisplay.SetActive(true);
-        denizensDisplay.SetActive(false);
+        pages[currentPage].GetComponent<Canvas>().enabled = false;
+        currentPage = Mathf.Clamp(currentPage + 1, 0, pages.Length - 1);
+        pages[currentPage].GetComponent<Canvas>().enabled = true;
     }
 }
