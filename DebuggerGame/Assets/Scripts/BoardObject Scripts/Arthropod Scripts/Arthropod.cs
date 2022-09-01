@@ -20,16 +20,86 @@ public class Arthropod : BoardObject
 
 
     public bool isCaught { get; private set; } = false;
+    public bool isSwallowed { get; private set; } = false;
     public bool rulesEnabled = true;
 
     public List<IActionRule> rules { get; protected set; } = new List<IActionRule>();
 
     
     private int winConIndex;
-    protected override void Start()
+
+
+    #region undo
+
+    public override Dictionary<string, object> SaveState()
     {
-        base.Start();
-        foreach(var field in typeof(Arthropod).GetFields())
+        var dict = base.SaveState();
+        //foreach(var key in dict.Keys)
+        //{
+        //    Debug.LogFormat("{0}: {1}", key, (Vector2Int)dict[key]);
+        //}
+
+        var behaviorState = new List<Dictionary<string, object>>();
+        foreach(var behavior in enabledArthropodBehaviors)
+        {
+            behaviorState.Add(behavior.SaveState());
+        }
+
+        dict.Add(
+            nameof(Arthropod),
+            new Dictionary<string, object>
+            {
+                {nameof(isCaught), isCaught},
+                {nameof(isSwallowed), isSwallowed},
+                {nameof(enabledArthropodBehaviors), behaviorState}
+            }
+        );
+
+        return dict;
+    }
+
+    public override void LoadState(Dictionary<string, object> data)
+    {
+        base.LoadState(data);
+        var arthropodData = (Dictionary<string, object>) data[nameof(Arthropod)];
+
+        var newIsCaught = (bool) arthropodData[nameof(isCaught)];
+        if(isCaught && !newIsCaught)
+        {
+            Release(board.GetBoardObjectOfType<Player>().gameObject);
+        }
+        else if(!isCaught && newIsCaught)
+        {
+            Catch(board.GetBoardObjectOfType<Player>().gameObject);
+        }
+        isCaught = newIsCaught;
+
+
+        var newIsSwallowed = (bool)arthropodData[nameof(isSwallowed)];
+        if (isSwallowed && !newIsSwallowed)
+        {
+            UnSwallow(board.GetBoardObjectOfType<Player>().gameObject);
+        }
+        else if (!isSwallowed && newIsSwallowed)
+        {
+            Swallow(board.GetBoardObjectOfType<Player>().gameObject);
+        }
+        isSwallowed = newIsSwallowed;
+
+        var behaviorStateList = (List<Dictionary<string, object>>)arthropodData[nameof(enabledArthropodBehaviors)];
+        for(int i = 0; i < behaviorStateList.Count; i++)
+        {
+            var behaviorState = behaviorStateList[i];
+            enabledArthropodBehaviors[i].LoadState(behaviorState);
+        }
+    }
+
+    #endregion
+
+    protected override void Awake()
+    {
+        base.Awake();
+        foreach (var field in typeof(Arthropod).GetFields())
         {
             if (field.FieldType.IsSubclassOf(typeof(ArthropodBehavior)))
             {
@@ -40,6 +110,11 @@ public class Arthropod : BoardObject
                 }
             }
         }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         winConIndex = board.AllocateWinCondition();
 
@@ -71,15 +146,27 @@ public class Arthropod : BoardObject
 
     public virtual void Swallow(GameObject player)
     {
+        isSwallowed = true;
+
         player.GetComponent<Player>().setArthropod(null);
         rulesEnabled = false;
         board.SetWinCondition(winConIndex, true);
-        board.DeallocateActionsLeft(this);
         board.BugCountDecrement();
-        board.boardObjects.Remove(this.gameObject.GetComponent<BoardObject>());
         RemoveListeners();
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
         Debug.Log("Swallowed");
+    }
+
+    public virtual void UnSwallow(GameObject player)
+    {
+        isSwallowed = false;
+
+        player.GetComponent<Player>().setArthropod(this);
+        rulesEnabled = true;
+        board.SetWinCondition(winConIndex, false);
+        board.BugCountIncrement();
+        AddListeners();
+        gameObject.SetActive(true);
     }
 
     public void AddActionRule(IActionRule rule)

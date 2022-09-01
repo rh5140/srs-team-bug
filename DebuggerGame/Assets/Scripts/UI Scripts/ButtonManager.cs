@@ -17,6 +17,7 @@ public class ButtonManager : MonoBehaviour
         {
             TMPro.TextMeshProUGUI text = cTransform.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Image image = cTransform.GetChild(0).GetComponentInChildren<Image>();
+            Image image2 = cTransform.GetChild(1).GetComponentInChildren<Image>();
 
             string lName = cTransform.GetComponent<ButtonOnClick>().levelName;
             if (!SaveManager.instance.unlockedLevels.Contains(lName))
@@ -27,6 +28,12 @@ public class ButtonManager : MonoBehaviour
                     newColor = text.color;
                     newColor.a = newColor.a / 3;
                     text.color = newColor;
+
+                    Debug.Log(image.color.a);   
+                    newColor = image.color;
+                    newColor.a = newColor.a / 2;
+                    image.color = newColor;
+                    Debug.Log(image.color.a);
                 }
                 else
                 {
@@ -35,6 +42,12 @@ public class ButtonManager : MonoBehaviour
                     newColor.a = newColor.a / 2;
                     image.color = newColor;
                     Debug.Log(image.color.a);
+
+                    Debug.Log(image2.color.a);   
+                    newColor = image2.color;
+                    newColor.a = newColor.a / 2;
+                    image2.color = newColor;
+                    Debug.Log(image2.color.a);
                 }
                 
             }
