@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class Board : MonoBehaviour
     public bool collidablesEnabled = true;
 
     public RangeOutlineTilemap outlineMap;
+    
 
     #region undo
 
@@ -236,6 +238,8 @@ public class Board : MonoBehaviour
             collidableCoordinates.Add(collidable.coordinate, collidable);
         }
 
+        outlineMap = FindObjectOfType<RangeOutlineTilemap>();
+
         actionFilterRules.Add(
             new EFActionDeleterRule(
                 null,
@@ -388,11 +392,12 @@ public class Board : MonoBehaviour
         actionsLeftDict[boardObject] = nActions;
     }
 
-    public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
-        return boardObject.coordinate.x <= rangedBug.coordinate.x + rangedBug.range &&
-           boardObject.coordinate.x >= rangedBug.coordinate.x - rangedBug.range &&
-           boardObject.coordinate.y <= rangedBug.coordinate.y + rangedBug.range &&
-           boardObject.coordinate.y >= rangedBug.coordinate.y - rangedBug.range;
+    public bool isInRange(BoardObject boardObject, Arthropod rangedBug) {
+        int range = rangedBug.restrictMovementArthropodBehavior.range;
+        return boardObject.coordinate.x <= rangedBug.coordinate.x + range &&
+           boardObject.coordinate.x >= rangedBug.coordinate.x - range &&
+           boardObject.coordinate.y <= rangedBug.coordinate.y + range &&
+           boardObject.coordinate.y >= rangedBug.coordinate.y - range;
     }
 
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
@@ -400,17 +405,25 @@ public class Board : MonoBehaviour
         //Remove all range outlines
         for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
-                //outlineMap.DeactivateTile(i, j);
+                outlineMap.DeactivateTile(i, j);
             }
         }
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
-            if (rule.creator is RangedBug) {
-                RangedBug creator = (RangedBug)rule.creator;
-                for(int i = creator.coordinate.x - creator.range; i < creator.coordinate.x + creator.range; i++) {
-                    for(int j = creator.coordinate.y - creator.range; j < creator.coordinate.y + creator.range; j++) {
-                        //outlineMap.ActivateTile(i, j);
+            Arthropod ruleCreator = new Arthropod();
+            if (rule.creator is Arthropod) {
+                ruleCreator = (Arthropod)rule.creator;
+            }
+
+            if (rule.creator is Arthropod && ruleCreator.restrictMovementArthropodBehavior.range > -1) {
+                Arthropod creator = (Arthropod)rule.creator;
+                int creatorRange = creator.restrictMovementArthropodBehavior.range;
+                for(int i = creator.coordinate.x - creatorRange - 1; i < creator.coordinate.x + creatorRange; i++) {
+                    for(int j = creator.coordinate.y - creatorRange - 1; j < creator.coordinate.y + creatorRange; j++) {
+                        if (i <= width && i >= 0 && j <= height && j >= 0) {
+                            outlineMap.ActivateTile(i, j);
+                        }
                     }
                 }
                 if (!isInRange(boardObject, creator))

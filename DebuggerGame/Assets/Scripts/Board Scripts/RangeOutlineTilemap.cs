@@ -8,6 +8,7 @@ public class RangeOutlineTilemap : MonoBehaviour
 {
 
     Tilemap tilemap;
+    public TileBase outlineTile;
     public int width;
     public int height;
 
@@ -35,12 +36,17 @@ public class RangeOutlineTilemap : MonoBehaviour
     }
 
     public void ActivateTile(int x, int y) {
+        if(x > width || x < 0 || y > height || y < 0) return;
         activeTiles[x, y] = true;
-
+        Debug.Log("Activating" + x + "," + y);
+        tilemap.SetTile(new Vector3Int(x, y, 0), outlineTile);
     }
 
     public void DeactivateTile(int x, int y) {
+        if(x > width || x < 0 || y > height || y < 0) return;
         activeTiles[x, y] = false;
+        Debug.Log("Deactivating" + x + "," + y);
+        tilemap.SetTile(new Vector3Int(x, y, 0), null);
     }
 
     public bool isActivated(int x, int y) {
