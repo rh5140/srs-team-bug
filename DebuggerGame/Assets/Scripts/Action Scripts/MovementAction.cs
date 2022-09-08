@@ -48,6 +48,9 @@ public class MovementAction : BoardAction
     public override void ExecuteFinish()
     {
         base.ExecuteFinish();
+        
+        Vector2Int oldCoord = boardObject.coordinate;
+
         boardObject.coordinate = new Vector2Int((int)initialPosition.x, (int)initialPosition.y) + direction;
         
         Arthropod ruleCreator;
@@ -59,11 +62,13 @@ public class MovementAction : BoardAction
             Arthropod creator = (Arthropod)boardObject;
             int creatorRange = creator.restrictMovementArthropodBehavior.range;
 
-            for(int i = 0; i < Board.instance.width; i++) {
-                for(int j = 0; j < Board.instance.height; j++) {
-                    Board.instance.outlineMap.DeactivateTile(i, j);
+            for(int i = oldCoord.x - creatorRange; i < oldCoord.x + creatorRange + 1; i++) {
+                for(int j = oldCoord.y - creatorRange; j < oldCoord.y + creatorRange + 1; j++) {
+                    if (i < Board.instance.width && i >= 0 && j < Board.instance.height && j >= 0) {
+                        Board.instance.outlineMap.DeactivateTile(i, j);
+                    }
                 }
-            }    
+            }   
 
             for(int i = boardObject.coordinate.x - creatorRange; i < boardObject.coordinate.x + creatorRange + 1; i++) {
                 for(int j = boardObject.coordinate.y - creatorRange; j < boardObject.coordinate.y + creatorRange + 1; j++) {
