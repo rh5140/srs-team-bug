@@ -439,15 +439,15 @@ public class Board : MonoBehaviour
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
     {
         //Remove all range outlines
-        for(int i = 0; i < width; i++) {
+        /*for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
                 outlineMap.DeactivateTile(i, j);
             }
-        }
+        }*/
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
-            Arthropod ruleCreator = new Arthropod();
+            /*Arthropod ruleCreator = new Arthropod();
             if (rule.creator is Arthropod) {
                 ruleCreator = (Arthropod)rule.creator;
             }
@@ -455,16 +455,16 @@ public class Board : MonoBehaviour
             if (rule.creator is Arthropod && ruleCreator.restrictMovementArthropodBehavior.range > -1) {
                 Arthropod creator = (Arthropod)rule.creator;
                 int creatorRange = creator.restrictMovementArthropodBehavior.range;
-                for(int i = creator.coordinate.x - creatorRange - 1; i < creator.coordinate.x + creatorRange; i++) {
-                    for(int j = creator.coordinate.y - creatorRange - 1; j < creator.coordinate.y + creatorRange; j++) {
-                        if (i <= width && i >= 0 && j <= height && j >= 0) {
+                for(int i = creator.coordinate.x - creatorRange; i < creator.coordinate.x + creatorRange + 1; i++) {
+                    for(int j = creator.coordinate.y - creatorRange; j < creator.coordinate.y + creatorRange + 1; j++) {
+                        if (i < width && i >= 0 && j < height && j >= 0) {
                             outlineMap.ActivateTile(i, j);
                         }
                     }
                 }
                 if (!isInRange(boardObject, creator))
                     continue;
-            }
+            }*/
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {

@@ -49,6 +49,30 @@ public class MovementAction : BoardAction
     {
         base.ExecuteFinish();
         boardObject.coordinate = new Vector2Int((int)initialPosition.x, (int)initialPosition.y) + direction;
+        
+        Arthropod ruleCreator;
+        if (boardObject is Arthropod) {
+            ruleCreator = (Arthropod)boardObject;
+        }
+
+        if (boardObject is Arthropod && (boardObject as Arthropod).restrictMovementArthropodBehavior.range > -1) {
+            Arthropod creator = (Arthropod)boardObject;
+            int creatorRange = creator.restrictMovementArthropodBehavior.range;
+
+            for(int i = 0; i < Board.instance.width; i++) {
+                for(int j = 0; j < Board.instance.height; j++) {
+                    Board.instance.outlineMap.DeactivateTile(i, j);
+                }
+            }    
+
+            for(int i = boardObject.coordinate.x - creatorRange; i < boardObject.coordinate.x + creatorRange + 1; i++) {
+                for(int j = boardObject.coordinate.y - creatorRange; j < boardObject.coordinate.y + creatorRange + 1; j++) {
+                    if (i < Board.instance.width && i >= 0 && j < Board.instance.height && j >= 0) {
+                        Board.instance.outlineMap.ActivateTile(i, j);
+                    }
+                }
+            }
+        }
     }
 
 
