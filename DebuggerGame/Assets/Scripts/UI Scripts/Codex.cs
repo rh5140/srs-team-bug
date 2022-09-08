@@ -12,7 +12,11 @@ public class Codex : MonoBehaviour
     public static bool codexOpen = false;
     public GameObject codexDisplay;
     public Component[] pages;
-    private int currentPage = 0;
+    private int currentPage = 0; // MIGHT WANT TO MOVE THIS ?
+
+    public GameObject greyedLeftButton;
+    public GameObject greyedRightButton;
+    public GameObject exclamationMark;
 
     //Denizen entries
     public GameObject elderFlytrapEntry;
@@ -48,6 +52,7 @@ public class Codex : MonoBehaviour
 
         foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
         {
+            exclamationMark.SetActive(true);
             characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.red;
         }
     }
@@ -77,6 +82,32 @@ public class Codex : MonoBehaviour
     }
 
     // UI methods
+
+    public void CodexButton()
+    {
+        // Open Codex
+        if (!codexOpen)
+        {
+            codexDisplay.SetActive(true);
+            codexOpen = true;
+        }  
+
+        // Close Codex
+        else
+        {
+            foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
+            {
+                characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
+            }
+            SaveManager.instance.ClearNewestCharacterUnlocks();
+            SaveManager.instance.Save();
+
+            codexDisplay.SetActive(false);
+            codexOpen = false;
+
+            exclamationMark.SetActive(false);
+        }
+    }
 
     public void OpenCodex()
     {
@@ -110,5 +141,30 @@ public class Codex : MonoBehaviour
         pages[currentPage].GetComponent<Canvas>().enabled = false;
         currentPage = Mathf.Clamp(currentPage + 1, 0, pages.Length - 1);
         pages[currentPage].GetComponent<Canvas>().enabled = true;
+        if (currentPage == pages.Length - 1)
+        {
+            greyedRightButton.SetActive(true);
+            greyedLeftButton.SetActive(false);
+        }
+        else
+        {
+            greyedRightButton.SetActive(false);
+        }
+    }
+
+    public void FlipLeft()
+    {
+        pages[currentPage].GetComponent<Canvas>().enabled = false;
+        currentPage = Mathf.Clamp(currentPage - 1, 0, pages.Length - 1);
+        pages[currentPage].GetComponent<Canvas>().enabled = true;
+        if (currentPage == 0)
+        {
+            greyedLeftButton.SetActive(true);
+            greyedRightButton.SetActive(false);
+        }
+        else
+        {
+            greyedLeftButton.SetActive(false);
+        }
     }
 }
