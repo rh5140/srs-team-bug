@@ -38,14 +38,12 @@ public class RangeOutlineTilemap : MonoBehaviour
     public void ActivateTile(int x, int y) {
         if(x > width || x < 0 || y > height || y < 0) return;
         activeTiles[x, y] = true;
-        Debug.Log("Activating" + x + "," + y);
         tilemap.SetTile(new Vector3Int(x, y, 0), outlineTile);
     }
 
     public void DeactivateTile(int x, int y) {
         if(x > width || x < 0 || y > height || y < 0) return;
         activeTiles[x, y] = false;
-        Debug.Log("Deactivating" + x + "," + y);
         tilemap.SetTile(new Vector3Int(x, y, 0), null);
     }
 
