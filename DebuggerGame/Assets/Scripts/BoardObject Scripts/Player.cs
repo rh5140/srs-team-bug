@@ -64,6 +64,10 @@ public class Player : BoardObject
     {
         base.Update();
 
+        if(board.gameState == Board.GameState.Paused)
+        {
+            return;
+        }
         //Check for restart key (TEMP)
         float restart = Input.GetAxisRaw("Restart");
         if (!Mathf.Approximately(restart, 0f))

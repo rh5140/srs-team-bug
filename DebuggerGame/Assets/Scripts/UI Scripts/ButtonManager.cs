@@ -29,25 +29,25 @@ public class ButtonManager : MonoBehaviour
                     newColor.a = newColor.a / 3;
                     text.color = newColor;
 
-                    Debug.Log(image.color.a);   
+                    //Debug.Log(image.color.a);   
                     newColor = image.color;
                     newColor.a = newColor.a / 2;
                     image.color = newColor;
-                    Debug.Log(image.color.a);
+                    //Debug.Log(image.color.a);
                 }
                 else
                 {
-                    Debug.Log(image.color.a);   
+                    //Debug.Log(image.color.a);   
                     newColor = image.color;
                     newColor.a = newColor.a / 2;
                     image.color = newColor;
-                    Debug.Log(image.color.a);
+                    //Debug.Log(image.color.a);
 
-                    Debug.Log(image2.color.a);   
+                    //Debug.Log(image2.color.a);   
                     newColor = image2.color;
                     newColor.a = newColor.a / 2;
                     image2.color = newColor;
-                    Debug.Log(image2.color.a);
+                    //Debug.Log(image2.color.a);
                 }
                 
             }
@@ -60,7 +60,7 @@ public class ButtonManager : MonoBehaviour
         if (SaveManager.instance.unlockedLevels.Contains(levelName))
         {
             string combineString = "Level " + levelName.Substring(0,2) + "-" + levelName.Substring(2,2);
-            Debug.Log("loading level" + combineString);
+            //Debug.Log("loading level" + combineString);
             SceneManager.LoadScene(combineString);
             SaveManager.instance.currentLevel = levelName;
         }

@@ -34,6 +34,13 @@ public class Board : MonoBehaviour
         EndLevel,
     }
 
+    public enum GameState
+    {
+        Playing,
+        Paused,
+        Ended,
+    }
+
     //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
     //Example levelName: 0000 (world 0 level 0)
     public string levelName;
@@ -74,8 +81,36 @@ public class Board : MonoBehaviour
     public static Board instance { get; private set; } = null;
 
 
-    public const float TimePerAction = 0.3f;
-    public const float EmptyExecutionTime = 0.1f;
+    public const float BaseTimePerAction = 0.3f;
+    public const float BaseEmptyExecutionTime = 0.1f;
+    public float ActionTimeMultiplier
+    {
+        get => CurrentActionTimeMultiplier;
+        set
+        {
+            if (lastBoardEvent == EventState.PlayerExecute || lastBoardEvent == EventState.ArthropodExecute)
+            {
+                NextActionTimeMultiplier = value;
+            }
+            else
+            {
+                NextActionTimeMultiplier = value;
+                CurrentActionTimeMultiplier = value;
+            }
+        }
+    }
+    private float NextActionTimeMultiplier = 0.66f;
+    private float CurrentActionTimeMultiplier = 0.66f;
+    public float TimePerAction
+    {
+        get => BaseTimePerAction * ActionTimeMultiplier;
+    }
+    public float EmptyExecutionTime
+    {
+        get => BaseEmptyExecutionTime * ActionTimeMultiplier;
+    }
+
+
 
     //Bounds
     public int width = 5;
@@ -96,14 +131,48 @@ public class Board : MonoBehaviour
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
 
+    #region game state
 
+    private GameState? lastGameState = null;
+    public Stack<GameState> gameStateStack = new Stack<GameState>(new List<GameState> { GameState.Playing });
+    public GameState gameState {
+        get => gameStateStack.Peek();
+        set
+        {
+            if(gameState != value)
+            {
+                lastGameState = gameStateStack.Pop();
+                gameStateStack.Push(value);
+                GameStateChangeEvent.Invoke();
+            }
+        }
+    }
+    #endregion
     public EventState lastBoardEvent { get; private set; }
+
+    public float? pauseStartTime { get; private set; } = null;
+
+    public float netTimePaused { get; private set; } = 0;
+
+    public float unpausedTime { get
+        {
+            if(gameState == GameState.Paused)
+            {
+                return pauseStartTime.Value - netTimePaused;
+            }
+            else
+            {
+                return Time.time - netTimePaused;
+            }
+        }
+    }
+
     public float? startExecuteTime { get; private set; } = null;
     public float? timeSinceEndTurn
     {
         get
         {
-            return startExecuteTime == null ? null : Time.time - startExecuteTime;
+            return startExecuteTime == null ? null : unpausedTime - startExecuteTime;
         }
     }
 
@@ -175,6 +244,8 @@ public class Board : MonoBehaviour
     /// </summary>
     public Event EndLevelEvent = new Event();
 
+    public Event GameStateChangeEvent = new Event();
+
     /// <summary>
     /// Action rules take in an action and output a new one
     /// </summary>
@@ -196,9 +267,31 @@ public class Board : MonoBehaviour
 
     private Dictionary<BoardObject, int> actionsLeftDict = new Dictionary<BoardObject, int>();
 
-    // Determines if a BoardObject can enter a coordinate
-    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate)
+    #region game state
+
+    public void SetGameState(GameState state)
     {
+        gameState = state;
+    }
+
+    public void PushGameState(GameState state)
+    {
+        lastGameState = gameState;
+        gameStateStack.Push(state);
+        GameStateChangeEvent.Invoke();
+    }
+
+    public GameState PopGameState()
+    {
+        lastGameState = gameStateStack.Pop();
+        GameStateChangeEvent.Invoke();
+        return lastGameState.Value;
+    }
+
+    #endregion
+
+    //Determines if a BoardObject can enter a coordinate
+    public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
         bool pushableAtCoord = false;
         if (boardObject is Arthropod) {
             foreach (PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
@@ -235,6 +328,9 @@ public class Board : MonoBehaviour
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
         StartPlayerTurnEvent.AddListener(this.OnStartPlayerTurn);
+        GameStateChangeEvent.AddListener(this.OnGameStateChange);
+        PostPlayerExecuteEvent.AddListener(this.OnEndExecute);
+        PostArthropodExecuteEvent.AddListener(this.OnEndExecute);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
@@ -243,27 +339,31 @@ public class Board : MonoBehaviour
         numBugs = CountBoardObjectsOfType<Arthropod>();
         nBugsCaught = 0;
 
-        // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
-        //  within these bounds, add it to collidableCoordinates
-        collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
-        if (GameObject.FindWithTag("Tilemap_Glitches") != null)
-            glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
-        else glitchTilemap = null;
-        for (int i = 0; i < width; i++)
+        // If not dialogue level
+        if (!levelName.Contains("D"))
         {
-            for (int j = 0; j < height; j++)
+            // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
+            //  within these bounds, add it to collidableCoordinates
+            collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
+            if (GameObject.FindWithTag("Tilemap_Glitches") != null)
+                glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+            else glitchTilemap = null;
+            for (int i = 0; i < width; i++)
             {
-                Vector2Int currentPos = new Vector2Int(i, j);
-                if (collidableTilemap.OverlapPoint(currentPos))
+                for (int j = 0; j < height; j++)
                 {
-                    // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
-                    //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
-                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
-                }
-                else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
-                {
-                    // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
-                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                    Vector2Int currentPos = new Vector2Int(i, j);
+                    if (collidableTilemap.OverlapPoint(currentPos))
+                    {
+                        // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
+                        //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
+                    }
+                    else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
+                    {
+                        // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                    }
                 }
             }
         }
@@ -397,7 +497,7 @@ public class Board : MonoBehaviour
         lastBoardEvent = EventState.PostPlayerEndTurn;
         PostPlayerEndTurnEvent.Invoke();
 
-        startExecuteTime = Time.time;
+        startExecuteTime = unpausedTime;
 
         lastBoardEvent = EventState.PrePlayerExecute;
         PrePlayerExecuteEvent.Invoke();
@@ -654,7 +754,7 @@ public class Board : MonoBehaviour
             lastBoardEvent = EventState.EndArthropodTurn;
             EndArthropodTurnEvent.Invoke();
 
-            startExecuteTime = Time.time;
+            startExecuteTime = unpausedTime;
 
             lastBoardEvent = EventState.PreArthropodExecute;
             PreArthropodExecuteEvent.Invoke();
@@ -691,6 +791,24 @@ public class Board : MonoBehaviour
         actionsLeftDict.Clear();
     }
 
+    private void OnGameStateChange()
+    {
+        if(gameState == GameState.Paused)
+        {
+            pauseStartTime = Time.time;
+        }
+        else if(lastGameState == GameState.Paused)
+        {
+            netTimePaused += Time.time - pauseStartTime.Value;
+            pauseStartTime = null;
+        }
+    }
+
+    private void OnEndExecute()
+    {
+        CurrentActionTimeMultiplier = NextActionTimeMultiplier;
+    }
+
     private void OnDestroy()
     {
         StartPlayerTurnEvent.RemoveAllListeners();
@@ -712,5 +830,7 @@ public class Board : MonoBehaviour
 
         ReadyEvent.RemoveAllListeners();
         BugsCaughtChangeEvent.RemoveAllListeners();
+
+        GameStateChangeEvent.RemoveAllListeners();
     }
 }
