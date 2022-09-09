@@ -9,7 +9,6 @@ public class DisplayHeldBug : MonoBehaviour
     public Sprite transparent;
 
     public Animator animator;
-    private bool isHeld;
 
     GameObject playerObj;
     Player player;
@@ -18,7 +17,6 @@ public class DisplayHeldBug : MonoBehaviour
 
     void Start()
     {
-        isHeld = false;
         playerObj = GameObject.Find("PlayerController");
         if (playerObj == null)
         {

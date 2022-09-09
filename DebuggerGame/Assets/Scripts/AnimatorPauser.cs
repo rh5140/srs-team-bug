@@ -12,7 +12,7 @@ public class AnimatorPauser : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         defaultSpeed = animator.speed;
-        Debug.Log(Board.instance);
+        // Debug.Log(Board.instance);
         Board.instance.GameStateChangeEvent.AddListener(OnGameStateChange);
     }
 
