@@ -338,27 +338,31 @@ public class Board : MonoBehaviour
         numBugs = CountBoardObjectsOfType<Arthropod>();
         nBugsCaught = 0;
 
-        // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
-        //  within these bounds, add it to collidableCoordinates
-        collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
-        if (GameObject.FindWithTag("Tilemap_Glitches") != null)
-            glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
-        else glitchTilemap = null;
-        for (int i = 0; i < width; i++)
+        // If not dialogue level
+        if (!levelName.Contains("D"))
         {
-            for (int j = 0; j < height; j++)
+            // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
+            //  within these bounds, add it to collidableCoordinates
+            collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
+            if (GameObject.FindWithTag("Tilemap_Glitches") != null)
+                glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+            else glitchTilemap = null;
+            for (int i = 0; i < width; i++)
             {
-                Vector2Int currentPos = new Vector2Int(i, j);
-                if (collidableTilemap.OverlapPoint(currentPos))
+                for (int j = 0; j < height; j++)
                 {
-                    // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
-                    //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
-                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
-                }
-                else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
-                {
-                    // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
-                    collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                    Vector2Int currentPos = new Vector2Int(i, j);
+                    if (collidableTilemap.OverlapPoint(currentPos))
+                    {
+                        // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
+                        //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
+                    }
+                    else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
+                    {
+                        // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                    }
                 }
             }
         }
