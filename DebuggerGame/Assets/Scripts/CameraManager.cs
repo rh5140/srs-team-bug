@@ -10,6 +10,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private Vector2Int offset = new Vector2Int(0, 0);
 
+    [SerializeField]
+    private float menuBarPadding = 1.15f;
+
     private Board board;
 
     private float? lastAspect = null;
@@ -36,11 +39,11 @@ public class CameraManager : MonoBehaviour
 
         // Center camera
         Camera.main.gameObject.transform.position = new Vector3(
-            (board.width-1)/ 2f + offset.x, (board.height-1) / 2f + offset.y,
+            (board.width-1)/ 2f + offset.x, (board.height * menuBarPadding - 1) / 2f + offset.y,
             Camera.main.gameObject.transform.position.z
         );
         
-        float boardAspect = (float)(board.width + 2*sizePadding)/ (board.height + 2 * sizePadding);
+        float boardAspect = (float)(board.width + 2*sizePadding)/ (board.height * menuBarPadding + 2 * sizePadding);
         if(boardAspect > lastAspect)
         {
             // width can vary freely
@@ -51,7 +54,7 @@ public class CameraManager : MonoBehaviour
         {
             // height can vary freely without making board go off screen
             // half-height based off of board height
-            Camera.main.orthographicSize = board.height / 2f + sizePadding;
+            Camera.main.orthographicSize = board.height * menuBarPadding / 2f + sizePadding;
         }
     }
 }

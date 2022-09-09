@@ -70,7 +70,6 @@ public class UI_script : MonoBehaviour
         else
         {
             SaveManager.instance.LoadSave(saveNum);
-            Debug.Log(saveNum);
             SceneManager.LoadScene("world_map");
         }
     }

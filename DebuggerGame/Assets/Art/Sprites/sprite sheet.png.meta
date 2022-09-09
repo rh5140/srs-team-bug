@@ -1,37 +1,43 @@
 fileFormatVersion: 2
-guid: da03075d180d3324ab5812f0bb996eaa
+guid: d65bc0d90816e324a8afdcf81445da91
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8923056055852348695
-    second: pixel_buttons_0
+      213: -5207231776682384544
+    second: PC_Front_0
   - first:
-      213: 1535205803103534246
-    second: pixel_buttons_1
+      213: -8533962960574808602
+    second: PC_Front_1
   - first:
-      213: -2540352548013998534
-    second: pixel_buttons_2
+      213: -7233381385078609286
+    second: PC_Front_2
   - first:
-      213: -4654028077274906219
-    second: pixel_buttons_3
+      213: -8717975482313926904
+    second: PC_Front_3
   - first:
-      213: -5054877597584669835
-    second: pixel_buttons_4
+      213: 428769192662469898
+    second: PC_Back_0
   - first:
-      213: 514663464764677493
-    second: pixel_buttons_5
+      213: -1761608541376497799
+    second: PC_Back_1
   - first:
-      213: -7356958598692737168
-    second: pixel_buttons_6
+      213: 4865651850653354526
+    second: PC_Back_2
   - first:
-      213: 8784737241390017932
-    second: pixel_buttons_7
+      213: 8338297180362019975
+    second: PC_Back_3
   - first:
-      213: -1395573419455994355
-    second: pixel_buttons_8
+      213: -5662007422927484889
+    second: PC_Side_0
   - first:
-      213: -1958105256834965238
-    second: pixel_buttons_9
+      213: -6803488741268343020
+    second: PC_Side_1
+  - first:
+      213: 4882864879891092273
+    second: PC_Side_2
+  - first:
+      213: 6176696409724508548
+    second: PC_Side_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -117,215 +123,269 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixel_buttons_0
+      name: PC_Front_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 590
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 76
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9eac5082bcfea2480800000000000000
-      internalID: -8923056055852348695
+      spriteID: 06368b7c9423cb7b0800000000000000
+      internalID: -5207231776682384544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_1
+      name: PC_Front_1
       rect:
         serializedVersion: 2
-        x: 480
-        y: 600
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 32
+        y: 76
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6acba174b852e4510800000000000000
-      internalID: 1535205803103534246
+      spriteID: 6edf898f6e5419980800000000000000
+      internalID: -8533962960574808602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_2
+      name: PC_Front_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 440
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 64
+        y: 76
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3efd5321dadebcd0800000000000000
-      internalID: -2540352548013998534
+      spriteID: a7a677154fddd9b90800000000000000
+      internalID: -7233381385078609286
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_3
+      name: PC_Front_3
       rect:
         serializedVersion: 2
-        x: 480
-        y: 450
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 96
+        y: 76
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 591c55f2f12996fb0800000000000000
-      internalID: -4654028077274906219
+      spriteID: 8071d181d77830780800000000000000
+      internalID: -8717975482313926904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 300
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 573c2ec5b9779d9b0800000000000000
-      internalID: -5054877597584669835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_5
-      rect:
-        serializedVersion: 2
-        x: 480
-        y: 300
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 57d9b24c1b3742700800000000000000
-      internalID: 514663464764677493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pixel_buttons_6
+      name: PC_Back_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 150
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 38
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07fe9a12225d6e990800000000000000
-      internalID: -7356958598692737168
+      spriteID: a0d074b1f4b43f500800000000000000
+      internalID: 428769192662469898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_7
+      name: PC_Back_1
       rect:
         serializedVersion: 2
-        x: 480
-        y: 150
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 32
+        y: 38
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8d623e3af7a9e970800000000000000
-      internalID: 8784737241390017932
+      spriteID: 977b5f17d528d87e0800000000000000
+      internalID: -1761608541376497799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_8
+      name: PC_Back_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 38
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1a4aee2494468340800000000000000
+      internalID: 4865651850653354526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC_Back_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 38
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7849e1b7b1597b370800000000000000
+      internalID: 8338297180362019975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC_Side_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 380
-        height: 110
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d06295b7e5de1ace0800000000000000
-      internalID: -1395573419455994355
+      spriteID: 72848c85f328c61b0800000000000000
+      internalID: -5662007422927484889
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixel_buttons_9
+      name: PC_Side_1
       rect:
         serializedVersion: 2
-        x: 480
+        x: 32
         y: 0
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a01e685b4a963d4e0800000000000000
-      internalID: -1958105256834965238
+      spriteID: 417b45749072591a0800000000000000
+      internalID: -6803488741268343020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC_Side_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 133932cdcbb63c340800000000000000
+      internalID: 4882864879891092273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC_Side_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4895f0bb8a808b550800000000000000
+      internalID: 6176696409724508548
       vertices: []
       indices: 
       edges: []
