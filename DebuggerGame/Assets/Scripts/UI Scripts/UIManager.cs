@@ -1,3 +1,8 @@
+/* NOTE:
+ * THIS SCRIPT IS (MOST LIKELY) COMPLETELY UNUSED
+ * I HAVEN'T CHECKED EVERYTHING TO MAKE COMPLETE SURE THOUGH SO I'M LEAVING IT IN - RAY
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
