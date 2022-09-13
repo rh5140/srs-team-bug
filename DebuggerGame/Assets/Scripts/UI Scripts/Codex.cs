@@ -53,7 +53,7 @@ public class Codex : MonoBehaviour
         foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
         {
             exclamationMark.SetActive(true);
-            characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.red;
+            // characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.red;
         }
     }
 
@@ -109,33 +109,6 @@ public class Codex : MonoBehaviour
         }
     }
 
-    public void OpenCodex()
-    {
-        if (!codexOpen)
-        {
-            codexDisplay.SetActive(true);
-            codexOpen = true;
-        }  
-    }
-
-    public void CloseCodex()
-    {
-        codexDisplay.SetActive(false);
-
-        if (codexOpen) 
-        {
-            foreach (string newUnlock in SaveManager.instance.newestCharacterUnlocks) 
-            {
-                characterEntries[newUnlock].transform.Find("Image").gameObject.GetComponent<Image>().color = Color.white;
-            }
-
-            SaveManager.instance.ClearNewestCharacterUnlocks();
-            SaveManager.instance.Save();
-        }
-
-        codexOpen = false;
-    }
-
     public void FlipRight()
     {
         pages[currentPage].GetComponent<Canvas>().enabled = false;
@@ -149,6 +122,7 @@ public class Codex : MonoBehaviour
         else
         {
             greyedRightButton.SetActive(false);
+            greyedLeftButton.SetActive(false);
         }
     }
 
@@ -165,6 +139,7 @@ public class Codex : MonoBehaviour
         else
         {
             greyedLeftButton.SetActive(false);
+            greyedRightButton.SetActive(false);
         }
     }
 }
