@@ -93,12 +93,12 @@ public class Codex : MonoBehaviour
             case "cryingClover1":
                 characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
                 characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
-                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I still have a lot to learn about the world...";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 break;
 
             case "cryingClover2":
-                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I'm helping this child now...";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 break;
 
