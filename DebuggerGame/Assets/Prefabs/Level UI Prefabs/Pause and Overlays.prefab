@@ -8122,7 +8122,7 @@ GameObject:
   - component: {fileID: 6871980596180177765}
   - component: {fileID: 3260080438860358638}
   m_Layer: 5
-  m_Name: Entry
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
