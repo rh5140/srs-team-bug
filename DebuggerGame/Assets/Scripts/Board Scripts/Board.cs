@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
@@ -33,10 +34,16 @@ public class Board : MonoBehaviour
         EndLevel,
     }
 
+    public enum GameState
+    {
+        Playing,
+        Paused,
+        Ended,
+    }
+
     //Name of level (In the format of 4 characters first two indicating world and last two indicating level) 
     //Example levelName: 0000 (world 0 level 0)
     public string levelName;
-
     //The levelNames of the levels that are unlocked upon finishing this level
     public List<string> unlockLevels = new List<string>();
 
@@ -68,12 +75,42 @@ public class Board : MonoBehaviour
         BugsCaughtChangeEvent.Invoke();
     }
 
+    private Collider2D collidableTilemap;
+    private Collider2D glitchTilemap;
 
     public static Board instance { get; private set; } = null;
 
 
-    public const float TimePerAction = 0.3f;
-    public const float EmptyExecutionTime = 0.1f;
+    public const float BaseTimePerAction = 0.3f;
+    public const float BaseEmptyExecutionTime = 0.1f;
+    public float ActionTimeMultiplier
+    {
+        get => CurrentActionTimeMultiplier;
+        set
+        {
+            if (lastBoardEvent == EventState.PlayerExecute || lastBoardEvent == EventState.ArthropodExecute)
+            {
+                NextActionTimeMultiplier = value;
+            }
+            else
+            {
+                NextActionTimeMultiplier = value;
+                CurrentActionTimeMultiplier = value;
+            }
+        }
+    }
+    private float NextActionTimeMultiplier = 0.66f;
+    private float CurrentActionTimeMultiplier = 0.66f;
+    public float TimePerAction
+    {
+        get => BaseTimePerAction * ActionTimeMultiplier;
+    }
+    public float EmptyExecutionTime
+    {
+        get => BaseEmptyExecutionTime * ActionTimeMultiplier;
+    }
+
+
 
     //Bounds
     public int width = 5;
@@ -81,6 +118,8 @@ public class Board : MonoBehaviour
     public bool boundsEnabled = true;
     public bool collidablesEnabled = true;
 
+    public RangeOutlineTilemap outlineMap;
+    
 
     #region undo
 
@@ -92,14 +131,48 @@ public class Board : MonoBehaviour
     //public List<Rule> rules = new List<Rule>();
     //public Dictionary<string, Rule> namedRules = new Dictionary<string, Rule>();
 
+    #region game state
 
+    private GameState? lastGameState = null;
+    public Stack<GameState> gameStateStack = new Stack<GameState>(new List<GameState> { GameState.Playing });
+    public GameState gameState {
+        get => gameStateStack.Peek();
+        set
+        {
+            if(gameState != value)
+            {
+                lastGameState = gameStateStack.Pop();
+                gameStateStack.Push(value);
+                GameStateChangeEvent.Invoke();
+            }
+        }
+    }
+    #endregion
     public EventState lastBoardEvent { get; private set; }
+
+    public float? pauseStartTime { get; private set; } = null;
+
+    public float netTimePaused { get; private set; } = 0;
+
+    public float unpausedTime { get
+        {
+            if(gameState == GameState.Paused)
+            {
+                return pauseStartTime.Value - netTimePaused;
+            }
+            else
+            {
+                return Time.time - netTimePaused;
+            }
+        }
+    }
+
     public float? startExecuteTime { get; private set; } = null;
     public float? timeSinceEndTurn
     {
         get
         {
-            return startExecuteTime == null ? null : Time.time - startExecuteTime;
+            return startExecuteTime == null ? null : unpausedTime - startExecuteTime;
         }
     }
 
@@ -171,6 +244,8 @@ public class Board : MonoBehaviour
     /// </summary>
     public Event EndLevelEvent = new Event();
 
+    public Event GameStateChangeEvent = new Event();
+
     /// <summary>
     /// Action rules take in an action and output a new one
     /// </summary>
@@ -192,23 +267,53 @@ public class Board : MonoBehaviour
 
     private Dictionary<BoardObject, int> actionsLeftDict = new Dictionary<BoardObject, int>();
 
+    #region game state
+
+    public void SetGameState(GameState state)
+    {
+        gameState = state;
+    }
+
+    public void PushGameState(GameState state)
+    {
+        lastGameState = gameState;
+        gameStateStack.Push(state);
+        GameStateChangeEvent.Invoke();
+    }
+
+    public GameState PopGameState()
+    {
+        lastGameState = gameStateStack.Pop();
+        GameStateChangeEvent.Invoke();
+        return lastGameState.Value;
+    }
+
+    #endregion
+
     //Determines if a BoardObject can enter a coordinate
     public bool CanEnterCoordinate(BoardObject boardObject, Vector2Int coordinate) {
         bool pushableAtCoord = false;
-        if(boardObject is Arthropod) {
-            foreach(PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
-                if(pushable.coordinate == coordinate) pushableAtCoord = true;
+        if (boardObject is Arthropod) {
+            foreach (PushableObject pushable in instance.GetBoardObjectsOfType<PushableObject>()) {
+                if (pushable.coordinate == coordinate) pushableAtCoord = true;
             }
         }
+
+        // Bug moving into collidable or glitch
         bool collidableAtCoord = (
                 collidableCoordinates.ContainsKey(coordinate)
                 && !(boardObject is Arthropod && collidableCoordinates[coordinate].BugsCanPass())
             )
             || (boardObject is Arthropod && pushableAtCoord);
-        
-        bool pushableOnGlitch = (boardObject is PushableObject && GetBoardObjectAtCoordinate(coordinate) is GlitchTile);
 
+        // Pushable moving into glitch
+        bool pushableOnGlitch = (
+                collidableCoordinates.ContainsKey(coordinate)
+                && boardObject is PushableObject && collidableCoordinates[coordinate].BugsCanPass());
+
+        // Within level bounds
         bool inBounds = !(coordinate.x < 0 || coordinate.x >= width || coordinate.y < 0 || coordinate.y >= height);
+
         return (!collidableAtCoord || pushableOnGlitch) && inBounds;// !collidableAtCoord;
     }
 
@@ -219,10 +324,13 @@ public class Board : MonoBehaviour
         Board.instance = this;
     }
 
-    private void Start()
+    private async void Start()
     {
         PostPlayerExecuteEvent.AddListener(this.OnPostPlayerExecute);
         StartPlayerTurnEvent.AddListener(this.OnStartPlayerTurn);
+        GameStateChangeEvent.AddListener(this.OnGameStateChange);
+        PostPlayerExecuteEvent.AddListener(this.OnEndExecute);
+        PostArthropodExecuteEvent.AddListener(this.OnEndExecute);
 
         collidableCoordinates = new Dictionary<Vector2Int, CollidableObject>();
         boardObjects = new List<BoardObject>(GetComponentsInChildren<BoardObject>());
@@ -231,10 +339,36 @@ public class Board : MonoBehaviour
         numBugs = CountBoardObjectsOfType<Arthropod>();
         nBugsCaught = 0;
 
-        //Initialize collidables list
-        foreach(CollidableObject collidable in GetBoardObjectsOfType<CollidableObject>()) {            
-            collidableCoordinates.Add(collidable.coordinate, collidable);
+        // If not dialogue level
+        if (!levelName.Contains("D"))
+        {
+            // Check if every point within the bounds of the gameboard lies within the collidableTilemap2D bounds. If a point is
+            //  within these bounds, add it to collidableCoordinates
+            collidableTilemap = GameObject.FindWithTag("Tilemap_Colliders").GetComponent<TilemapCollider2D>();
+            if (GameObject.FindWithTag("Tilemap_Glitches") != null)
+                glitchTilemap = GameObject.FindWithTag("Tilemap_Glitches").GetComponent<TilemapCollider2D>();
+            else glitchTilemap = null;
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    Vector2Int currentPos = new Vector2Int(i, j);
+                    if (collidableTilemap.OverlapPoint(currentPos))
+                    {
+                        // GetBoardObjectOfType<CollidableObject>()) is probably not the best way to do this, but it works.
+                        //  The CollidableObject.cs script is now only used to ensure this doesn't lead to a NullReferenceExeption
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<CollidableObject>());
+                    }
+                    else if (glitchTilemap != null && glitchTilemap.OverlapPoint(currentPos))
+                    {
+                        // Note: Cannot have a glitch and collidable tile at the same coordinate! Careful when creating the tilemap!
+                        collidableCoordinates.Add(currentPos, GetBoardObjectOfType<GlitchTile>());
+                    }
+                }
+            }
         }
+
+        outlineMap = FindObjectOfType<RangeOutlineTilemap>();
 
         actionFilterRules.Add(
             new EFActionDeleterRule(
@@ -270,13 +404,19 @@ public class Board : MonoBehaviour
                 enableCondition: (BoardObject creator, Board board, int? offset)
                         => board != null && boundsEnabled,
                 filter: (BoardAction action, int? offset) =>
-                    action.boardObject is Player
-                    && action is MovementAction movementAction
-                    && GetBoardObjectAtCoordinate(
+                    action.boardObject is Player                                         // Action performed by player
+                    && action is MovementAction movementAction                           // Action is movement
+                    && GetBoardObjectAtCoordinate(                                       // Target destination has a pushable
                         action.boardObject.coordinate.x + movementAction.direction.x,
                         action.boardObject.coordinate.y + movementAction.direction.y
                     ) is PushableObject pushableObject
-                    && !(pushableObject.Push(movementAction.direction, offset))
+
+                    && CanEnterCoordinate(                                               // Player can move to target destination
+                        action.boardObject,
+                        action.boardObject.coordinate + movementAction.direction
+                    )
+
+                    && !(pushableObject.Push(movementAction.direction, offset))          // Pushable can be pushed
             )
         );
 
@@ -357,7 +497,7 @@ public class Board : MonoBehaviour
         lastBoardEvent = EventState.PostPlayerEndTurn;
         PostPlayerEndTurnEvent.Invoke();
 
-        startExecuteTime = Time.time;
+        startExecuteTime = unpausedTime;
 
         lastBoardEvent = EventState.PrePlayerExecute;
         PrePlayerExecuteEvent.Invoke();
@@ -388,18 +528,43 @@ public class Board : MonoBehaviour
         actionsLeftDict[boardObject] = nActions;
     }
 
-    public bool isInRange(BoardObject boardObject, RangedBug rangedBug) {
-        return boardObject.coordinate.x <= rangedBug.coordinate.x + rangedBug.range &&
-           boardObject.coordinate.x >= rangedBug.coordinate.x - rangedBug.range &&
-           boardObject.coordinate.y <= rangedBug.coordinate.y + rangedBug.range &&
-           boardObject.coordinate.y >= rangedBug.coordinate.y - rangedBug.range;
+    public bool isInRange(BoardObject boardObject, Arthropod rangedBug) {
+        int range = rangedBug.restrictMovementArthropodBehavior.range;
+        return boardObject.coordinate.x <= rangedBug.coordinate.x + range &&
+           boardObject.coordinate.x >= rangedBug.coordinate.x - range &&
+           boardObject.coordinate.y <= rangedBug.coordinate.y + range &&
+           boardObject.coordinate.y >= rangedBug.coordinate.y - range;
     }
 
     public BoardAction ApplyRules(BoardObject boardObject, BoardAction boardAction)
     {
+        //Remove all range outlines
+        /*for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                outlineMap.DeactivateTile(i, j);
+            }
+        }*/
         var currentAction = boardAction;
         foreach (var rule in actionRules)
         {
+            /*Arthropod ruleCreator = new Arthropod();
+            if (rule.creator is Arthropod) {
+                ruleCreator = (Arthropod)rule.creator;
+            }
+
+            if (rule.creator is Arthropod && ruleCreator.restrictMovementArthropodBehavior.range > -1) {
+                Arthropod creator = (Arthropod)rule.creator;
+                int creatorRange = creator.restrictMovementArthropodBehavior.range;
+                for(int i = creator.coordinate.x - creatorRange; i < creator.coordinate.x + creatorRange + 1; i++) {
+                    for(int j = creator.coordinate.y - creatorRange; j < creator.coordinate.y + creatorRange + 1; j++) {
+                        if (i < width && i >= 0 && j < height && j >= 0) {
+                            outlineMap.ActivateTile(i, j);
+                        }
+                    }
+                }
+                if (!isInRange(boardObject, creator))
+                    continue;
+            }*/
             var newAction = rule.Execute(currentAction);
             if (!ReferenceEquals(newAction, currentAction))
             {
@@ -589,7 +754,7 @@ public class Board : MonoBehaviour
             lastBoardEvent = EventState.EndArthropodTurn;
             EndArthropodTurnEvent.Invoke();
 
-            startExecuteTime = Time.time;
+            startExecuteTime = unpausedTime;
 
             lastBoardEvent = EventState.PreArthropodExecute;
             PreArthropodExecuteEvent.Invoke();
@@ -626,6 +791,24 @@ public class Board : MonoBehaviour
         actionsLeftDict.Clear();
     }
 
+    private void OnGameStateChange()
+    {
+        if(gameState == GameState.Paused)
+        {
+            pauseStartTime = Time.time;
+        }
+        else if(lastGameState == GameState.Paused)
+        {
+            netTimePaused += Time.time - pauseStartTime.Value;
+            pauseStartTime = null;
+        }
+    }
+
+    private void OnEndExecute()
+    {
+        CurrentActionTimeMultiplier = NextActionTimeMultiplier;
+    }
+
     private void OnDestroy()
     {
         StartPlayerTurnEvent.RemoveAllListeners();
@@ -647,5 +830,7 @@ public class Board : MonoBehaviour
 
         ReadyEvent.RemoveAllListeners();
         BugsCaughtChangeEvent.RemoveAllListeners();
+
+        GameStateChangeEvent.RemoveAllListeners();
     }
 }
