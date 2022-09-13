@@ -1366,6 +1366,8 @@ MonoBehaviour:
   levelName: 00D1
   unlockLevels:
   - 0003
+  unlockCharacters:
+  - cryingClover1
   boardObjects: []
   width: 12
   height: 7

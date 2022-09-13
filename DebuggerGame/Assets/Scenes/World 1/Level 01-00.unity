@@ -2336,6 +2336,8 @@ MonoBehaviour:
   levelName: 0100
   unlockLevels:
   - 0101
+  unlockCharacters:
+  - weirdFly
   boardObjects: []
   width: 12
   height: 7

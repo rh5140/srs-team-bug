@@ -18,6 +18,12 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public HashSet<string> unlockedLevels = new HashSet<string>();
     public List<string> unlockedLevelsSerializable = new List<string>();
 
+    public HashSet<string> unlockedCharacters = new HashSet<string>();
+    public List<string> unlockedCharactersSerializable = new List<string>();
+
+    public HashSet<string> newestCharacterUnlocks = new HashSet<string>();
+    public List<string> newestCharacterUnlocksSerializable = new List<string>();
+
     //public levelDatabase levelDatabase;
     public bool saveCreated;
 
@@ -54,13 +60,17 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
     public void Save()
     {
         unlockedLevelsSerializable = unlockedLevels.ToList();
+        unlockedCharactersSerializable = unlockedCharacters.ToList();
+        newestCharacterUnlocksSerializable = newestCharacterUnlocks.ToList();
         string saveData = JsonUtility.ToJson(this, true);
         Debug.Log(saveData);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
         bf.Serialize(file, saveData);
         file.Close();
+        unlockedCharactersSerializable.Clear();
         unlockedLevelsSerializable.Clear();
+        newestCharacterUnlocksSerializable.Clear();
     }
 
     public void Load()
@@ -72,6 +82,12 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
             JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
             file.Close();  
         }
+    }
+
+    public void ClearNewestCharacterUnlocks()
+    {
+        newestCharacterUnlocks = new HashSet<string>();
+        Save();
     }
 
     public void OnBeforeSerialize()
@@ -88,6 +104,16 @@ public class SaveState : ScriptableObject, ISerializationCallbackReceiver
         foreach (string level in unlockedLevelsSerializable)
         {
             unlockedLevels.Add(level);
+        }
+
+        foreach (string character in unlockedCharactersSerializable)
+        {
+            unlockedCharacters.Add(character);
+        }
+
+        foreach (string newCharacter in newestCharacterUnlocksSerializable)
+        {
+            newestCharacterUnlocks.Add(newCharacter);
         }
     }
 }

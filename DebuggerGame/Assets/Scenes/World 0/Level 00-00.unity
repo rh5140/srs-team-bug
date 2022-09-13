@@ -1310,6 +1310,8 @@ MonoBehaviour:
   levelName: 0000
   unlockLevels:
   - 00D0
+  unlockCharacters:
+  - basicFly
   boardObjects: []
   width: 12
   height: 7
