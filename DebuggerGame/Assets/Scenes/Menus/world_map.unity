@@ -2177,6 +2177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Codex Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5489819552571163533, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5489819552627523119, guid: 3c7dcb6a128958847bfd201fd8ee1416, type: 3}
       propertyPath: m_text
       value: 

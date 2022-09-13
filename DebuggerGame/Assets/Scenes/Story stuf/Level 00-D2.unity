@@ -916,11 +916,13 @@ MonoBehaviour:
   - 0004
   unlockCharacters:
   - cryingClover2
+  - whoAmI
   boardObjects: []
   width: 12
   height: 7
   boundsEnabled: 1
   collidablesEnabled: 1
+  outlineMap: {fileID: 0}
   ready: 0
   gameWon: 0
 --- !u!4 &1745102769

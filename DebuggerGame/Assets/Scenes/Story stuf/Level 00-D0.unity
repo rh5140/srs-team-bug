@@ -632,11 +632,14 @@ MonoBehaviour:
   - 0001
   unlockCharacters:
   - elderFlytrap
+  - theBreach
+  - theAcademy
   boardObjects: []
   width: 12
   height: 7
   boundsEnabled: 1
   collidablesEnabled: 1
+  outlineMap: {fileID: 0}
   ready: 0
   gameWon: 0
 --- !u!4 &869829813

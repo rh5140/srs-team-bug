@@ -18,14 +18,15 @@ public class Codex : MonoBehaviour
     public GameObject greyedRightButton;
     public GameObject exclamationMark;
 
-    //Denizen entries
+    // entries
+    public GameObject basicFlyEntry;
     public GameObject elderFlytrapEntry;
     public GameObject cryingCloverEntry;
-    public GameObject flyKingEntry;
-
-    //Enemy entries
-    public GameObject basicFlyEntry;
     public GameObject weirdFlyEntry;
+    public GameObject flyKingEntry;
+    public GameObject theAcademyEntry;
+    public GameObject theBreachEntry;
+    public GameObject whoAmIEntry;
 
     // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     void Start() 
@@ -33,7 +34,7 @@ public class Codex : MonoBehaviour
         pages = codexDisplay.GetComponentsInChildren<Canvas>(true);
         Debug.Log(pages.Length);
 
-        string[] characterNames = {"elderFlytrap", "cryingClover1", "cryingClover2", "flyKing", "basicFly", "weirdFly"};
+        string[] characterNames = {"elderFlytrap", "cryingClover1", "cryingClover2", "flyKing", "basicFly", "weirdFly", "theAcademy", "theBreach", "whoAmI"};
 
         characterEntries.Add("elderFlytrap", elderFlytrapEntry);
         characterEntries.Add("cryingClover1", cryingCloverEntry);
@@ -41,6 +42,9 @@ public class Codex : MonoBehaviour
         characterEntries.Add("flyKing", flyKingEntry);
         characterEntries.Add("basicFly", basicFlyEntry);
         characterEntries.Add("weirdFly", weirdFlyEntry);
+        characterEntries.Add("theAcademy", theAcademyEntry);
+        characterEntries.Add("theBreach", theBreachEntry);
+        characterEntries.Add("whoAmI", whoAmIEntry);
 
         foreach (string characterName in characterNames)
         {
@@ -63,20 +67,45 @@ public class Codex : MonoBehaviour
     {
         switch (name) 
         {
+            case "basicFly":
+                characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
+                characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I still have a lot to learn about the world...";
+                characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                characterEntry.transform.Find("Extra2").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                break;
+
+            case "flyKing":
+                characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
+                characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "Bzzzzz... something's missing...";
+                characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                characterEntry.transform.Find("Extra2").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                break;
+
+            case "elderFlytrap":
+                characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
+                characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I still have a lot to learn about the world...";
+                characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
+                break;
+
             case "cryingClover1":
                 characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
                 characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
-                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I still have a lot to learn about the world...";
+                characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 break;
 
             case "cryingClover2":
-                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I'm helping this child now...";
+                characterEntry.transform.Find("Extra1").gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 break;
 
             default:
                 characterEntry.transform.Find("Image").gameObject.GetComponent<Image>().color = Color.black;
                 characterEntry.transform.Find("Name").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
-                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "???";
+                characterEntry.transform.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text = "I still have a lot to learn about the world...";
                 break;
         }
     }
