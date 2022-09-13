@@ -2,27 +2,27 @@
 ---
 <<SetSprite Sprite Other>>
 There's a child sitting by the river...
-Child: H-hello...
+Little Clover: H-hello...
 -> What are you doing out here?
-Child: They got to my home...
-Child: over there... by the riverside...
-Child: I didn't know what to do...
-Child: so I ran away...
+Little Clover: They got to my home...
+Little Clover: ...over there... by the riverside...
+Little Clover: I didn't know what to do...
+Little Clover: ...so I ran away...
 ->I'm a bug hunter. I can get your home back
-Child: Bug hunter? My momma told me stories about you...
-Child: Have they ever gotten to your home before?
+Little Clover: Bug hunter? My momma told me stories about you...
+Little Clover: Have they ever gotten to your home before?
 ->I-uh-we don't really have homes...
 ->Bug hunters don't live in homes...
-Child: no home? where do you live then?
+Little Clover: no home? where do you live then?
 ->We... don't live in one place. We're travellers. We roam the plane catching bugs.
-Child: I like my home... Does it ever get lonely for you when you're travelling?
+Little Clover: I like my home... Does it ever get lonely for you when you're travelling?
 ->Sometimes... but it's part of the job.
 	<<SetSprite Sprite Player>>
 	You: I used to have a home... But it's long gone now...
 	You: Not to bugs or glitches, but something just as bad I guess...
 	You: Then there was the academy... but I've left that behind too...
 	<<SetSprite Sprite Other>>
-	Child: I think I'd get lonely if I left my home... I'd miss my momma...
+	Little Clover: I think I'd get lonely if I left my home... I'd miss my momma...
 	->The plane is my home. We travel. We catch bugs. We help people.
 		<<SetSprite Sprite Player>>
 		You: It's what bug catchers do.
@@ -31,12 +31,12 @@ Child: I like my home... Does it ever get lonely for you when you're travelling?
 		You: But every so often, every odd night, I miss the stars and the grass and the old weeping willow I used to call home. 
 	->The academy was my home. But I had to leave so I could finally face the world. And help kids like you.
 		<<SetSprite Sprite Other>>
-		child: do you miss your home then?
+		Little Clover: Do you miss your home then?
 		-> I think home means something different now. The plane is my home now.
 			<<SetSprite Sprite Player>>
 			You: It's not so bad... I get to meet kids like you!
 			<<SetSprite Sprite Other>>
-			Child:...heh...
+			Little Clover:...heh...
 			<<SetSprite Sprite Player>>
 			You: But every so often, every odd night, I miss the stars and the grass and the old weeping willow I used to call home. 
 		-> I'm... not sure. I'm not even sure what home really means anymore...
@@ -44,18 +44,18 @@ Child: I like my home... Does it ever get lonely for you when you're travelling?
 			You: But I do know that every so often I miss the stars and the grass and the old weeping willow I used to call home.
 ->Not really. I like to keep moving. It's freeing. I don't get stuck anywhere. And I get to see so much of the world
 	<<SetSprite Sprite Other>>
-	Child: Like what?
+	Little Clover: Like what?
 	-> Like winding, gushing rivers, even longer than this one.
 	-> Like beautiful mountains that stretch out into the space beyond the digital plane
 	-> Like stars twinkling in the night sky into shapes of things that exist only in your imagination...
-	Child: Wow...
-	Child: Do you think I could be a bug hunter like you one day?
-	Child: Although... I think I'd still miss home...
-Child:...
+	Little Clover: Wow...
+	Little Clover: Do you think I could be a bug hunter like you one day?
+	Little Clover: Although... I think I'd still miss home...
+Little Clover:...
 <<SetSprite Sprite Player>>
 You: Wait for me here...I'll be back...
 <<SetSprite Sprite 0>>
-PRESS Y TO RETURN TO MAP
+PRESS Y TO END DIALOGUE SCENE
 
 
 ===
@@ -65,13 +65,13 @@ title: 2
 <<SetSprite Sprite Other>>
 The child is waiting for you...
 -> They're gone. The bugs are gone. You can go back home now.
-Child: Why do you think the bugs took over my home?
-->...
+Little Clover: Why do you think the bugs took over my home?
+-> ...
 -> It's just what bugs do. That's why we have to stop them.
-Child: Do you think they're looking for their own homes?
-Child: Like you are?
+Little Clover: Do you think they're looking for their own homes?
+Little Clover: Like you are?
 <<SetSprite Sprite 0>>
-PRESS Y TO RETURN TO MAP
+PRESS Y TO END DIALOGUE SCENE
 
 ===
 
@@ -104,7 +104,7 @@ Old Hunter: A product of necessity.
 Old Hunter: But maybe you can prove this old hunter wrong.
 Old Hunter: Good luck...
 <<SetSprite Sprite 0>>
-PRESS Y TO RETURN TO MAP
+PRESS Y TO END DIALOGUE SCENE
 
 
 ===
@@ -119,7 +119,7 @@ Old Hunter: But people... they know us.
 Old Hunter: They know what we do.
 Old Hunter: Good job kid.
 <<SetSprite Sprite 0>>
-PRESS Y TO RETURN TO MAP
+PRESS Y TO END DIALOGUE SCENE
 
 ===
 
@@ -139,6 +139,6 @@ Fly King: Bzzzzt!
 <<SetSprite Sprite Player>>
 Team Bug: Thanks for playing! This marks the end of the demo. Feel free to stick around to listen to the music. Stay tuned for future updates!
 <<SetSprite Sprite 0>>
-PRESS Y TO RETURN TO MAP
+PRESS Y TO END DIALOGUE SCENE
 
 ===
