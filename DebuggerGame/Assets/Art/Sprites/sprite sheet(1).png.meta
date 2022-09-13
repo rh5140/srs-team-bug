@@ -28,16 +28,28 @@ TextureImporter:
     second: BW_Back_3
   - first:
       213: 8267328160409861241
-    second: BW_Side_0
+    second: BW_Right_0
   - first:
       213: -3674486836909657410
-    second: BW_Side_1
+    second: BW_Right_1
   - first:
       213: -8340739196399829293
-    second: BW_Side_2
+    second: BW_Right_2
   - first:
       213: -3258695480650935315
-    second: BW_Side_3
+    second: BW_Right_3
+  - first:
+      213: 4759877298489453033
+    second: BW_Left_0
+  - first:
+      213: 6039128902142251371
+    second: BW_Left_1
+  - first:
+      213: -6506415489960883051
+    second: BW_Left_2
+  - first:
+      213: 1500275268499505564
+    second: BW_Left_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -143,11 +155,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 76
+        y: 114
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -164,11 +176,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 76
+        y: 114
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -185,11 +197,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 76
+        y: 114
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -206,11 +218,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 76
+        y: 114
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -227,11 +239,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 38
+        y: 76
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -248,11 +260,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 38
+        y: 76
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -269,11 +281,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 38
+        y: 76
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -290,11 +302,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 38
+        y: 76
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -307,15 +319,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW_Side_0
+      name: BW_Right_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 38
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -328,15 +340,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW_Side_1
+      name: BW_Right_1
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 38
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -349,15 +361,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW_Side_2
+      name: BW_Right_2
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 38
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -370,15 +382,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BW_Side_3
+      name: BW_Right_3
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 38
         width: 32
         height: 38
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -386,6 +398,90 @@ TextureImporter:
       bones: []
       spriteID: de351a4c9b9c6c2d0800000000000000
       internalID: -3258695480650935315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e9e8ee1f2b7e0240800000000000000
+      internalID: 4759877298489453033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW_Left_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b61dbf46dbb4fc350800000000000000
+      internalID: 6039128902142251371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW_Left_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c48c7959194b5a0800000000000000
+      internalID: -6506415489960883051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BW_Left_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91873c686c02d410800000000000000
+      internalID: 1500275268499505564
       vertices: []
       indices: 
       edges: []

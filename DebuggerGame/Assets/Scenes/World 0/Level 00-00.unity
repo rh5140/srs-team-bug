@@ -2283,6 +2283,7 @@ GameObject:
   - component: {fileID: 746611781}
   - component: {fileID: 746611780}
   - component: {fileID: 746611779}
+  - component: {fileID: 746611782}
   m_Layer: 5
   m_Name: WalkingAnimation
   m_TagString: Untagged
@@ -2348,7 +2349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5662007422927484889, guid: d65bc0d90816e324a8afdcf81445da91, type: 3}
+  m_Sprite: {fileID: 8267328160409861241, guid: 96851e4f4d20bc249aefc25df3ea3da8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2366,6 +2367,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746611777}
   m_CullTransparentMesh: 1
+--- !u!114 &746611782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746611777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13653f414c4224c429cab3666fff9416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 746611779}
+  movement: {x: 0, y: 0}
 --- !u!1001 &810222909
 PrefabInstance:
   m_ObjectHideFlags: 0
