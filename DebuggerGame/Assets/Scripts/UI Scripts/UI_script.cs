@@ -29,6 +29,7 @@ public class UI_script : MonoBehaviour
         Application.Quit();
     }
 
+    // UNUSED
     public void openCollection()
     {
         SceneManager.LoadScene("Collection");
@@ -46,11 +47,18 @@ public class UI_script : MonoBehaviour
         SceneManager.LoadScene("Save Menu");
     }
 
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    // UNUSED
     public void LoadCredits()
     {
         SceneManager.LoadScene("Credits");
     }
 
+    // UNUSED
     public void LoadControls()
     {
         SceneManager.LoadScene("Controls");

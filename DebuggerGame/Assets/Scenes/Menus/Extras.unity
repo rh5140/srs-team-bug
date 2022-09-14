@@ -815,12 +815,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1145388985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cf48b4f4ccd9241b591e9b868e7931, type: 3}
+  m_Script: {fileID: 11500000, guid: c530c561a9278ee4d97887e32ccf4e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenuUI: {fileID: 0}
-  WorldMap: {fileID: 0}
-  Inventory: {fileID: 0}
 --- !u!114 &1145388988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,8 +863,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1145388987}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: LoadMenu
+        m_TargetAssemblyTypeName: UI_script, Assembly-CSharp
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

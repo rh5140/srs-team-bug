@@ -236,7 +236,7 @@ MonoBehaviour:
 
     Q
 
-    ESC
+    Z
 
     R
 
@@ -650,12 +650,12 @@ MonoBehaviour:
 
     Release Held Bug
 
-    Pause Level
+    Undo
 
     Restart
-    Level
 
-    Check Controls
+    Check
+    Controls
 
     Instawin'
   m_isRightToLeft: 0
@@ -786,9 +786,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cf48b4f4ccd9241b591e9b868e7931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenuUI: {fileID: 0}
-  WorldMap: {fileID: 0}
-  Inventory: {fileID: 0}
+  eventSystem: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  controls: {fileID: 0}
+  inventory: {fileID: 0}
+  pauseMenuFirstSelected: {fileID: 0}
 --- !u!114 &1114837069
 MonoBehaviour:
   m_ObjectHideFlags: 0
