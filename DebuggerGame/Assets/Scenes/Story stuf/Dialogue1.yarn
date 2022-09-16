@@ -137,8 +137,8 @@ Fly King: Bzzzzzzzzzzzzzzzzzzt...
 -> I don't understand.
 Fly King: Bzzzzt!
 <<SetSprite Sprite Player>>
-Team Bug: Thanks for playing! This marks the end of the demo. Feel free to stick around to listen to the music. Stay tuned for future updates!
+Team Bug: Thanks for playing! This marks the end of the game. Feel free to stick around to listen to the music.
 <<SetSprite Sprite 0>>
-PRESS Y TO END DIALOGUE SCENE
+PRESS Y TO END DIALOGUE SCENE (You will be able to see the Fly King journal entry after you do this)
 
 ===
